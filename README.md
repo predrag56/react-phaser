@@ -1,3 +1,5 @@
+# React-Phaser Bindings
+
 ## Available Scripts
 
 In the project directory, you can run:
