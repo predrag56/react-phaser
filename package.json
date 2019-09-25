@@ -3,6 +3,11 @@
   "title": "Webpack React Boilerplate",
   "version": "0.1.0",
   "private": false,
+  "license": "MIT",
+  "author": "Firanolfind <firanolfind@gmail.com>",
+  "description": "Phaser.js bindings for React ",
+  "main": "src/index.js",
+  "repository": "https://gitlab.com/firanolfind/react-phaser.git",
   "scripts": {
     "precommit": "pretty-quick --staged",
     "start": "node scripts/start.js",
@@ -80,10 +85,5 @@
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "4.3.1",
     "yargs": "^14.0.0"
-  },
-  "description": "Phaser.js bindings for React ",
-  "main": "lib/index.js",
-  "repository": "https://gitlab.com/firanolfind/react-phaser.git",
-  "author": "Firanolfind <firanolfind@gmail.com>",
-  "license": "MIT"
+  }
 }
