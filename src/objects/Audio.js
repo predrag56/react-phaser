@@ -29,7 +29,6 @@ class Audio extends GameObject {
 		this.registered = true;
 
 		this.update(this.props);
-
 		return this.instance;
 	}
 }
