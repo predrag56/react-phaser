@@ -11,6 +11,7 @@ import {
 import TYPES from './types';
 import Scene, { addToScene, insertBeforeToScene, UPDATE } from './objects/Scene';
 import Image from './objects/Image';
+import Video from './objects/Video';
 
 const PhaserRenderer = Reconciler({
   appendInitialChild(parent, child) {
