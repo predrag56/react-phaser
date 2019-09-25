@@ -7,90 +7,90 @@ const defaultProps = {};
 const performedProps = {};
 
 class GameObject {
-  pool = [];
+	pool = [];
 
-  scenePool = [];
+	scenePool = [];
 
-  constructor(props) {
-    this.props = props;
-    this.id = shortid.generate();
-  }
+	constructor(props) {
+		this.props = props;
+		this.id = shortid.generate();
+	}
 
-  register(scene) {
-    console.warn('Register should be overwritten');
-  }
+	register(scene) {
+		console.warn('Register should be overwritten');
+	}
 
-  add(child) {
-    if (this.registered) {
-      const instance = child.register(this.scene);
-      this.instance.add(instance);
-    } else {
-      this.pool.push(child);
-    }
-  }
+	add(child) {
+		if (this.registered) {
+			const instance = child.register(this.scene);
+			this.instance.add(instance);
+		} else {
+			this.pool.push(child);
+		}
+	}
 
-  addToScene(child) {
-    if (this.registered) {
-      addToScene(this.scene, child);
-    } else {
-      this.scenePool.push(child);
-    }
-  }
+	addToScene(child) {
+		if (this.registered) {
+			addToScene(this.scene, child);
+		} else {
+			this.scenePool.push(child);
+		}
+	}
 
-  insertBefore(child, beforeChild) {
-    this.add(child);
-    insertBefore(this.instance.list, child.instance, beforeChild.instance);
-  }
+	insertBefore(child, beforeChild) {
+		this.add(child);
+		insertBefore(this.instance.list, child.instance, beforeChild.instance);
+	}
 
-  registerChildren() {
-    const { pool, scenePool, scene } = this;
+	registerChildren() {
+		const { pool, scenePool, scene } = this;
 
-    for (const elem of pool) {
-      const child = elem.register(this.scene);
-      this.instance.add(child);
-    }
+		for (const elem of pool) {
+			const child = elem.register(this.scene);
+			this.instance.add(child);
+		}
 
-    for (const child of scenePool) {
-      addToScene(scene, child);
-    }
-  }
+		for (const child of scenePool) {
+			addToScene(scene, child);
+		}
+	}
 
-  update(newProps, oldProps) {
-    const props = {
-      ...this.defaultProps,
-      ...pick(newProps, this.allowedProps),
-    };
+	update(newProps, oldProps) {
+		const props = {
+			...this.defaultProps,
+			...pick(newProps, this.allowedProps)
+		};
 
-    const { instance } = this;
-    if (!this.registered) return;
+		const { instance } = this;
+		if (!this.registered) return;
 
-    for (const key in props) {
-      const value = props[key];
+		for (const key in props) {
+			const value = props[key];
 
-      if (oldProps && oldProps[key] === value) {
-        continue;
-      }
+			if (oldProps && oldProps[key] === value) {
+				continue;
+			}
 
-      if (this.performedProps[key]) {
-        this.performedProps[key](instance, props, this);
-      } else {
-        instance[key] = value;
-      }
-    }
-    this.props = newProps;
-  }
+			if (this.performedProps[key]) {
+				this.performedProps[key](instance, props, this);
+			} else {
+				instance[key] = value;
+			}
+		}
+		this.props = newProps;
+	}
 
-  destroy() {
-    this.instance.destroy();
-    delete this.instance;
-  }
+	destroy() {
+		this.instance.destroy();
+		delete this.instance;
+	}
 }
 
 Object.assign(GameObject.prototype, {
-  instance: null,
-  registered: false,
-  performedProps,
-  allowedProps,
+	instance: null,
+	registered: false,
+	performedProps,
+	allowedProps
 });
 
 export default GameObject;
