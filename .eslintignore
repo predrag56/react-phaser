@@ -1,0 +1,15 @@
+build/*
+config/*
+nginx/*
+node_modules/*
+src/**/__test__/*.js
+src/serviceWorker.js
+public/*
+.*
+*.md
+*.sublime-project
+package.json
+replace.sh
+*.properties
+yarn.*
+Dockerfile
