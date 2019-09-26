@@ -1,1 +1,2 @@
-import TYPES from './types';
+export Game from './Game';
+export * from './types';
