@@ -40,7 +40,15 @@ class App extends Component {
 					<Image texture="crate" x={10} y={10} />
 					<Image texture="crate" x={80} y={80} />
 					<Image texture="crate" x={100} y={180} />
-					<Image texture="crate" x={440} y={300} />
+					<Image
+						interactive
+						texture="crate"
+						x={440}
+						y={300}
+						onMouseDown={(...args) => {
+							console.log('Privet!', args);
+						}}
+					/>
 					<Sprite
 						texture="gem"
 						play="diamond"

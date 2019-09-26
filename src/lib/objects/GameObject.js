@@ -1,14 +1,38 @@
+import Events from 'phaser/src/input/events';
 import { pick } from 'lodash';
 import shortid from 'shortid';
 import { insertBefore } from '../utils';
-import { addToScene, insertBeforeToScene } from './Scene';
+import { addToScene, insertBeforeToScene } from '../Scene';
+
 const allowedProps = [];
 const defaultProps = {};
 const performedProps = {};
+const eventMap = {
+	// onClick: Events.,
+	// onContextMenu: '',
+	// onDoubleClick: '',
+	onDrag: Events.DRAG,
+	onDragEnd: Events.DRAG_END,
+	onDragEnter: Events.DRAG_ENTER,
+	onDragLeave: Events.DRAG_LEAVE,
+	onDragOver: Events.DRAG_OVER,
+	onDragStart: Events.DRAG_START,
+	onDrop: Events.DROP,
+	onMouseDown: Events.POINTER_DOWN,
+	onMouseEnter: Events.POINTER_OVER,
+	onMouseLeave: Events.POINTER_OUT,
+	onMouseMove: Events.POINTER_MOVE,
+	onMouseOut: Events.POINTER_OUT,
+	onMouseOver: Events.POINTER_OVER,
+	onMouseUp: Events.POINTER_UP,
+
+	onDestroy: Events.DESTROY
+};
+
+const eventNames = Object.keys(eventMap);
 
 class GameObject {
 	pool = [];
-
 	scenePool = [];
 
 	constructor(props) {
@@ -58,7 +82,8 @@ class GameObject {
 	update(newProps, oldProps) {
 		const props = {
 			...this.defaultProps,
-			...pick(newProps, this.allowedProps)
+			...pick(newProps, this.allowedProps),
+			...pick(newProps, eventNames)
 		};
 
 		const { instance } = this;
@@ -71,12 +96,23 @@ class GameObject {
 				continue;
 			}
 
+			if (eventMap[key]) {
+				const eventName = eventMap[key];
+				if (oldProps && oldProps[eventName]) {
+					instance.removeListener(eventName, value, instance);
+				}
+				instance.addListener(eventName, value, instance);
+				continue;
+			}
+
 			if (this.performedProps[key]) {
 				this.performedProps[key](instance, props, this);
-			} else {
-				instance[key] = value;
+				continue;
 			}
+
+			instance[key] = value;
 		}
+
 		this.props = newProps;
 	}
 

@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { pick, omit } from 'lodash';
-import { insertBefore } from '../utils';
+import { insertBefore } from './utils';
 
 const IS_REGISTERED = Symbol('Scene.isRegistered');
 const POOL = Symbol('Scene.pool');

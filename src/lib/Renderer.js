@@ -9,7 +9,7 @@ import {
 } from 'scheduler';
 
 import TYPES from './types';
-import Scene, { addToScene, insertBeforeToScene, UPDATE } from './objects/Scene';
+import Scene, { addToScene, insertBeforeToScene, UPDATE } from './Scene';
 import Container from './objects/Container';
 import Sprite from './objects/Sprite';
 import Image from './objects/Image';

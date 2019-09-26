@@ -2,13 +2,33 @@ import Phaser from 'phaser';
 import GameObject from './GameObject';
 import TYPES from '../types';
 
-const allowedProps = ['texture', 'frame', 'x', 'y', 'z', 'origin', 'alpha', 'angle', 'scale', 'tint', 'visible'];
+const allowedProps = [
+  'texture',
+  'frame',
+  'x',
+  'y',
+  'z',
+  'origin',
+  'alpha',
+  'angle',
+  'scale',
+  'tint',
+  'visible',
+  'interactive'
+];
 
 const defaultProps = {
   origin: [0, 0]
 };
 
 const performedProps = {
+  interactive: (inst, { interactive }) => {
+    if (interactive) {
+      inst.setInteractive();
+    } else {
+      inst.disableInteractive();
+    }
+  },
   frame: (inst, { frame }) => inst.setFrame(frame),
   texture: (inst, { texture, frame }) => inst.setTexture(texture, frame),
   width: (inst, { width }) => inst.displayWidth(width),
@@ -24,7 +44,16 @@ class Image extends GameObject {
     this.registered = true;
     scene.add.displayList.add(this.instance);
     this.update(this.props);
+    window.img = this.instance;
     return this.instance;
+  }
+
+  onMouseDown() {
+    this.pressed = true;
+  }
+
+  onMouseUp() {
+    this.pressed = false;
   }
 }
 
