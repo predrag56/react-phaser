@@ -13,7 +13,6 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --config=.jestrc.json",
-    "server": "nodemon src/server --config .nodemonrc",
     "lint": "eslint ./src/index.js"
   },
   "dependencies": {
