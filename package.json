@@ -1,11 +1,11 @@
 {
-  "name": "react-phaser-bindings",
-  "title": "Webpack React Boilerplate",
   "version": "0.1.0",
+  "name": "react-phaser-bindings",
+  "title": "React Phaser Bindings",
+  "description": "Phaser.js bindings for React ",
   "private": false,
   "license": "MIT",
   "author": "Firanolfind <firanolfind@gmail.com>",
-  "description": "Phaser.js bindings for React ",
   "main": "src/index.js",
   "repository": "https://gitlab.com/firanolfind/react-phaser.git",
   "scripts": {
