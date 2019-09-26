@@ -1,2 +1,2 @@
-export Game from './Game';
-export * from './types';
+export Game from './lib/Game';
+export * from './lib/types';
