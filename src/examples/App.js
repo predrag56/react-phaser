@@ -9,7 +9,7 @@ var config = {
 
 const assets = [
 	['atlas', 'gem', 'media/gems.png', gemsJson],
-	['audio', 'background', 'media/bg_sound.mp3'],
+	['audio', 'background', 'media/music.mp3'],
 	['bitmapFont', 'bitfont', 'media/bitfont.png', 'media/bitfont.fnt'],
 	['image', 'background', 'media/sky.png'],
 	['image', 'crate', 'media/crate.png']

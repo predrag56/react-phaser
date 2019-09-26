@@ -16,7 +16,6 @@ class Container extends GameObject {
 		this.instance = new Phaser.GameObjects.Container(scene, x, y);
 		scene.add.displayList.add(this.instance);
 		this.registered = true;
-
 		this.update(this.props);
 		this.registerChildren();
 

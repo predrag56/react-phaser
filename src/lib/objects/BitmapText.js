@@ -48,7 +48,6 @@ class BitmapText extends GameObject {
 		this.instance = new Phaser.GameObjects.BitmapText(scene, x, y, font, children, size, align);
 		scene.add.existing(this.instance);
 		this.registered = true;
-
 		this.update(this.props);
 
 		return this.instance;

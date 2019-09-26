@@ -27,7 +27,6 @@ class Audio extends GameObject {
 		this.scene = scene;
 		this.instance = scene.sound.add(name);
 		this.registered = true;
-
 		this.update(this.props);
 		return this.instance;
 	}

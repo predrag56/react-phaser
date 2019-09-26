@@ -45,9 +45,7 @@ export const insertBeforeToScene = (scene, child, beforeChild) => {
 
 export default class Scene extends Phaser.Scene {
 	key = '';
-
 	[POOL] = [];
-
 	[IS_REGISTERED] = false;
 
 	constructor(props) {
@@ -75,8 +73,6 @@ export default class Scene extends Phaser.Scene {
 		this[PROPS] = props;
 
 		this.update = hooks.update || this.update;
-
-		window.sc = this;
 	}
 
 	[UPDATE](newProps, oldProps) {
@@ -94,9 +90,6 @@ export default class Scene extends Phaser.Scene {
 	}
 
 	register(game) {
-		// if (game.scene.getScene(this.key) || this[IS_REGISTERED]) {
-		//   return;
-		// }
 		game.scene.add(this.key, this);
 		this.game = game;
 		this[IS_REGISTERED] = true;
@@ -106,10 +99,6 @@ export default class Scene extends Phaser.Scene {
 
 	init(...args) {
 		const { init } = this[HOOKS];
-
-		// this[UPDATE](this[PROPS]);
-
-		console.log('init', this);
 
 		init && init.apply(this, args);
 	}

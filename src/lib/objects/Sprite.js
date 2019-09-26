@@ -45,13 +45,10 @@ class Sprite extends GameObject {
 		this.scene = scene;
 		this.instance = new Phaser.GameObjects.Sprite(scene, x, y, texture, frame);
 		this.registered = true;
-
 		scene.add.displayList.add(this.instance);
 		scene.add.updateList.add(this.instance);
-
 		this.registerAnimations();
 		this.update(this.props);
-		window.sprite = this;
 
 		return this.instance;
 	}

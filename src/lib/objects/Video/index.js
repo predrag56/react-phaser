@@ -23,11 +23,11 @@ const allowedProps = [
   'muted',
   'playsInline',
   'crossOrigin',
-  'playbackTimeChangeEventEnable',
+  'playbackTimeChangeEventEnable'
 ];
 
 const defaultProps = {
-  origin: [0, 0],
+  origin: [0, 0]
 };
 
 const performedProps = {
@@ -47,7 +47,7 @@ const performedProps = {
       inst.resume();
     }
   },
-  origin: (inst, { origin }) => inst.setOrigin(...origin),
+  origin: (inst, { origin }) => inst.setOrigin(...origin)
 };
 
 class Video extends GameObject {
@@ -55,12 +55,8 @@ class Video extends GameObject {
     this.scene = scene;
     this.instance = new VideoObject(scene, this.props);
     this.registered = true;
-
     scene.add.existing(this.instance);
-
     this.update(this.props);
-    window.vvvvideo = this;
-
     return this.instance;
   }
 }
@@ -70,7 +66,7 @@ Object.assign(Video.prototype, {
   type: TYPES.VIDEO,
   allowedProps,
   performedProps,
-  defaultProps,
+  defaultProps
 });
 
 export default Video;
