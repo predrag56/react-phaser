@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Phaser from 'phaser';
+import GameRenderer from './Renderer';
 import VideoPlugin from './objects/Video/plugin';
 
 const context = Symbol('Game.context');
@@ -74,7 +75,7 @@ class GameContext extends Component {
 			<div
 				ref={(ref) => (this[tagRef] = ref)}
 				className={className}
-				accessKey={accessKey}§
+				accessKey={accessKey}
 				tabIndex={tabIndex}
 				style={style}
 				title={title}

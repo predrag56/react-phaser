@@ -1,2 +1,3 @@
-export Game from './lib/Game';
+import Game from './lib/Game';
 export * from './lib/types';
+export { Game };
