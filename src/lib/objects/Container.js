@@ -1,13 +1,14 @@
 import Phaser from 'phaser';
 import GameObject from './GameObject';
+import { width, height } from './GameObject/performedProps';
 import TYPES from '../types';
 
 const performedProps = {
-	width: (inst, { width }) => inst.displayWidth(width),
-	height: (inst, { height }) => inst.displayHeight(height)
+	width,
+	height
 };
 
-const allowedProps = ['x', 'y', 'z', 'alpha', 'angle', 'scale', 'tint', 'visible'];
+const allowedProps = ['x', 'y', 'z', 'width', 'height', 'alpha', 'angle', 'scale', 'tint', 'visible'];
 
 class Container extends GameObject {
 	register(scene) {

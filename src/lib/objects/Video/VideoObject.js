@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { get } from 'lodash';
+import emptyObject from 'fbjs/lib/emptyObject';
 
 const IsPlainObject = Phaser.Utils.Objects.IsPlainObject;
 const GetValue = Phaser.Utils.Objects.GetValue;
@@ -8,7 +9,6 @@ const CanvasPool = Phaser.Display.Canvas.CanvasPool;
 const GameObject = Phaser.GameObjects.GameObject;
 const { getTintAppendFloatAlpha } = Phaser.Renderer.WebGL.Utils;
 
-const emptyObject = {};
 const videoTypes = ['webm', 'ogg', 'mp4', 'h264', 'vp9', 'hls'];
 const elementEvents = ['canplay', 'canplaythrough', 'loadstart', 'playing', 'stalled', 'ended', 'error', 'pause'];
 const elementProperties = {
