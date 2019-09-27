@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import GameObject from './GameObject';
+import { width, height, interactive, origin, textChildren } from './GameObject/performedProps';
 import TYPES from '../types';
 
 const allowedProps = [
@@ -14,37 +15,16 @@ const allowedProps = [
 	'scale',
 	'tint',
 	'visible',
-	'origin'
+	'origin',
+	'interactive'
 ];
 
-const defaultProps = {
-	origin: [0, 0]
-};
-
 const performedProps = {
-	width: (inst, { width }) => inst.displayWidth(width),
-	height: (inst, { height }) => inst.displayHeight(height),
-	children: (inst, { children }) => {
-		var error;
-		if (Array.isArray(children)) {
-			for (let i = 0, l = children.length; i < l; i++) {
-				const text = children[i];
-				if (typeof text !== 'string' && typeof text !== 'number') {
-					error = true;
-					break;
-				}
-			}
-		} else if (typeof children !== 'string' && typeof children !== 'number') {
-			error = true;
-		}
-
-		if (error) {
-			throw Error('Children type of <Text> must be "string" or "number"');
-		}
-
-		inst.text = children;
-	},
-	origin: (inst, { origin }) => inst.setOrigin(...origin)
+	width,
+	height,
+	children: textChildren,
+	origin,
+	interactive
 };
 
 class Text extends GameObject {
@@ -64,8 +44,7 @@ Object.assign(Text.prototype, {
 	texture: '',
 	type: TYPES.IMAGE,
 	performedProps,
-	allowedProps,
-	defaultProps
+	allowedProps
 });
 
 export default Text;

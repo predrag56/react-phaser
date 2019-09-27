@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { pick, get } from 'lodash';
 import TYPES from '../../types';
 import GameObject from '../GameObject';
+import { pause, width, height, origin } from '../GameObject/performedProps';
 import VideoObject from './VideoObject';
 
 const allowedProps = [
@@ -26,13 +27,9 @@ const allowedProps = [
   'playbackTimeChangeEventEnable'
 ];
 
-const defaultProps = {
-  origin: [0, 0]
-};
-
 const performedProps = {
-  width: (inst, { width }) => inst.resize(width, inst.height),
-  height: (inst, { height }) => inst.resize(inst.width, height),
+  width,
+  height,
   play: (inst, { play }) => {
     if (play) {
       inst.play();
@@ -40,14 +37,8 @@ const performedProps = {
       inst.pause();
     }
   },
-  pause: (inst, { pause }) => {
-    if (pause) {
-      inst.pause();
-    } else {
-      inst.resume();
-    }
-  },
-  origin: (inst, { origin }) => inst.setOrigin(...origin)
+  pause,
+  origin
 };
 
 class Video extends GameObject {
@@ -65,8 +56,7 @@ Object.assign(Video.prototype, {
   texture: '',
   type: TYPES.VIDEO,
   allowedProps,
-  performedProps,
-  defaultProps
+  performedProps
 });
 
 export default Video;

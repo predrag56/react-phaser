@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import GameObject from './GameObject';
+import { width, height, interactive, origin, texture, frame } from './GameObject/performedProps';
 import TYPES from '../types';
 
 const allowedProps = [
@@ -14,20 +15,18 @@ const allowedProps = [
 	'tint',
 	'visible',
 	'origin',
+	'interactive',
 	// 'animations', TODO or leave writeonceonly
 	'startFrame',
 	'play'
 ];
 
-const defaultProps = {
-	origin: [0, 0]
-};
-
 const performedProps = {
-	frame: (inst, { frame }) => inst.setFrame(frame),
-	texture: (inst, { texture, frame }) => inst.setTexture(texture, frame),
-	width: (inst, { width }) => inst.displayWidth(width),
-	height: (inst, { height }) => inst.displayHeight(height),
+	frame,
+	texture,
+	width,
+	height,
+	interactive,
 	play: (inst, { play }, sprite) => {
 		if (play) {
 			inst.play(sprite.getAnimationName(play));
@@ -35,13 +34,12 @@ const performedProps = {
 			inst.anims.stop();
 		}
 	},
-	origin: (inst, { origin }) => inst.setOrigin(...origin)
+	origin
 };
 
 class Sprite extends GameObject {
 	register(scene) {
 		const { x, y, texture, frame } = this.props;
-
 		this.scene = scene;
 		this.instance = new Phaser.GameObjects.Sprite(scene, x, y, texture, frame);
 		this.registered = true;
@@ -107,8 +105,7 @@ Object.assign(Sprite.prototype, {
 	texture: '',
 	type: TYPES.SPRITE,
 	allowedProps,
-	performedProps,
-	defaultProps
+	performedProps
 });
 
 export default Sprite;

@@ -1,5 +1,8 @@
 import GameObject from './GameObject';
+import { pause } from './GameObject/performedProps';
 import TYPES from '../types';
+
+const allowedProps = ['play', 'pause', 'marker', 'mute', 'volume', 'rate', 'detune', 'seek', 'loop', 'delay'];
 
 const performedProps = {
 	play: (inst, { play, marker }) => {
@@ -9,17 +12,9 @@ const performedProps = {
 			inst.stop();
 		}
 	},
-	pause: (inst, { pause }) => {
-		if (pause) {
-			inst.pause();
-		} else {
-			inst.resume();
-		}
-	},
+	pause,
 	delay: (inst, { delay }) => inst.audioPlayDelay(delay)
 };
-
-const allowedProps = ['play', 'pause', 'marker', 'mute', 'volume', 'rate', 'detune', 'seek', 'loop', 'delay'];
 
 class Audio extends GameObject {
 	register(scene) {
@@ -33,7 +28,6 @@ class Audio extends GameObject {
 }
 
 Object.assign(Audio.prototype, {
-	name: '',
 	type: TYPES.AUDIO,
 	performedProps,
 	allowedProps
