@@ -8,7 +8,7 @@ const allowedProps = [];
 const defaultProps = {};
 const performedProps = {};
 const eventMap = {
-	// onClick: Events.,
+	onClick: Events.POINTER_DOWN,
 	// onContextMenu: '',
 	// onDoubleClick: '',
 	onDrag: Events.DRAG,
@@ -101,7 +101,9 @@ class GameObject {
 				if (oldProps && oldProps[eventName]) {
 					instance.removeListener(eventName, value, instance);
 				}
-				instance.addListener(eventName, value, instance);
+				if (value) {
+					instance.addListener(eventName, value, instance);
+				}
 				continue;
 			}
 
