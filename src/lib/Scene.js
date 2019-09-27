@@ -45,7 +45,9 @@ export const insertBeforeToScene = (scene, child, beforeChild) => {
 
 export default class Scene extends Phaser.Scene {
 	key = '';
+
 	[POOL] = [];
+
 	[IS_REGISTERED] = false;
 
 	constructor(props) {

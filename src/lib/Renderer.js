@@ -17,6 +17,7 @@ import Audio from './objects/Audio';
 import Video from './objects/Video';
 import Text from './objects/Text';
 import BitmapText from './objects/BitmapText';
+import Zone from './objects/Zone';
 
 const PhaserRenderer = Reconciler({
 	appendInitialChild(parent, child) {
@@ -91,6 +92,8 @@ const PhaserRenderer = Reconciler({
 				return new Audio(props);
 			case TYPES.VIDEO:
 				return new Video(props);
+			case TYPES.ZONE:
+				return new Zone(props);
 			default:
 				return invariant('React-Phaser-Bindings: Can not insert node before itself');
 		}
