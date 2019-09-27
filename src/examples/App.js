@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Game, Scene, Sprite, Image, Text, BitmapText, Tween, Container, Audio, Video } from '../';
+import { Game, Scene, Sprite, Image, Text, BitmapText, Tween, Container, Audio, Video, Zone } from '../';
 import gemsJson from './gems.json';
 
 var config = {
@@ -133,6 +133,7 @@ class App extends Component {
 						ignoreIfPlaying={false}
 						startFrame={0}
 					/>
+					<Zone x={0} y={0} width={100} height={100} interactive onMouseDown={() => console.log('Privet Zone!')} />
 				</Scene>
 			</Game>
 		);

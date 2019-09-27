@@ -17,7 +17,8 @@ const TYPES = {
 	STAR: 'Star',
 	SHAPE: 'Shape',
 	AUDIO: 'Audio',
-	VIDEO: 'Video'
+	VIDEO: 'Video',
+	ZONE: 'Zone'
 };
 
 export const Scene = TYPES.SCENE;
@@ -30,6 +31,7 @@ export const BitmapText = TYPES.BITMAPTEXT;
 export const Tween = TYPES.TWEEN;
 export const Audio = TYPES.AUDIO;
 export const Video = TYPES.VIDEO;
+export const Zone = TYPES.ZONE;
 // export const Graphics = TYPES.GRAPHICS;
 // export const Circle = TYPES.CIRCLE;
 // export const Curve = TYPES.CURVE;
