@@ -7,7 +7,8 @@
   "license": "MIT",
   "author": "Firanolfind <firanolfind@gmail.com>",
   "main": "src/index.js",
-  "repository": "https://gitlab.com/firanolfind/react-phaser.git",
+  "repository": "https://github.com/firanolfind/react-phaser.git",
+  "homepage": "https://gitlab.com/firanolfind/react-phaser.git",
   "scripts": {
     "precommit": "pretty-quick --staged",
     "start": "node scripts/start.js",
