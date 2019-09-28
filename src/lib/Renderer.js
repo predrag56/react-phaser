@@ -7,6 +7,7 @@ import {
 	unstable_scheduleCallback as scheduleDeferredCallback,
 	unstable_cancelCallback as cancelDeferredCallback
 } from 'scheduler';
+import packageJson from '../../package.json';
 
 import TYPES from './types';
 import Scene, { addToScene, insertBeforeToScene, UPDATE } from './Scene';
@@ -179,6 +180,13 @@ const PhaserRenderer = Reconciler({
 	hideTextInstance(textInstance) {},
 	unhideInstance(instance, props) {},
 	unhideTextInstance(textInstance, text) {}
+});
+
+PhaserRenderer.injectIntoDevTools({
+	findFiberByHostInstance: () => null,
+	bundleType: process.env.NODE_ENV === 'production' ? 0 : 1,
+	rendererPackageName: packageJson.name,
+	version: packageJson.version
 });
 
 export default PhaserRenderer;
