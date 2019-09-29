@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import Video from './VideoObject.js';
-const BuildGameObject = Phaser.GameObjects.BuildGameObject;
+const { BuildGameObject } = Phaser.GameObjects;
 
 function VideoCanvasCreator(config, addToScene) {
 	const { width, height } = config;

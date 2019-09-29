@@ -30,7 +30,7 @@ const performedProps = {
 
 export const addToScene = (scene, child) => {
 	if (scene[IS_REGISTERED]) {
-		const instance = child.register(scene);
+		child.register(scene);
 	} else {
 		scene[POOL].push(child);
 	}
@@ -73,6 +73,8 @@ export default class Scene extends Phaser.Scene {
 		this[ASSETS] = assets;
 		this[HOOKS] = hooks;
 		this[PROPS] = props;
+
+		window.sc = this;
 
 		this.update = hooks.update || this.update;
 	}

@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 export const width = (inst, { width }) => inst.displayWidth(width);
 
 export const height = (inst, { height }) => inst.displayHeight(height);
@@ -54,3 +55,4 @@ export const textChildren = (inst, { children }) => {
 
 	inst.text = children;
 };
+/* eslint-enable no-shadow */

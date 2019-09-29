@@ -1,58 +1,65 @@
 import Phaser from 'phaser';
 import GameObject from './GameObject';
-import { width, height, interactive, origin, texture, frame } from './GameObject/performedProps';
+import {
+	width,
+	height,
+	interactive,
+	origin,
+	texture as textureFn,
+	frame as frameFn
+} from './GameObject/performedProps';
 import TYPES from '../types';
 
 const allowedProps = [
-  'texture',
-  'frame',
-  'x',
-  'y',
-  'z',
-  'width',
-  'height',
-  'origin',
-  'alpha',
-  'angle',
-  'scale',
-  'tint',
-  'visible',
-  'interactive'
+	'texture',
+	'frame',
+	'x',
+	'y',
+	'z',
+	'width',
+	'height',
+	'origin',
+	'alpha',
+	'angle',
+	'scale',
+	'tint',
+	'visible',
+	'interactive'
 ];
 
 const performedProps = {
-  interactive,
-  frame,
-  texture,
-  width,
-  height,
-  origin
+	interactive,
+	frame: frameFn,
+	texture: textureFn,
+	width,
+	height,
+	origin
 };
 
 class Image extends GameObject {
-  register(scene) {
-    const { x, y, texture, frame } = this.props;
-    this.scene = scene;
-    this.instance = new Phaser.GameObjects.Image(scene, x, y, texture, frame);
-    this.registered = true;
-    scene.add.displayList.add(this.instance);
-    this.update(this.props);
-    return this.instance;
-  }
+	register(scene) {
+		const { x, y, texture, frame } = this.props;
+		this.scene = scene;
+		this.instance = new Phaser.GameObjects.Image(scene, x, y, texture, frame);
+		this.registered = true;
+		scene.add.displayList.add(this.instance);
+		this.update(this.props);
+		return this.instance;
+	}
 
-  onMouseDown() {
-    this.pressed = true;
-  }
+	onMouseDown() {
+		this.pressed = true;
+	}
 
-  onMouseUp() {
-    this.pressed = false;
-  }
+	onMouseUp() {
+		this.pressed = false;
+	}
 }
 
 Object.assign(Image.prototype, {
-  type: TYPES.IMAGE,
-  performedProps,
-  allowedProps
+	type: TYPES.IMAGE,
+	performedProps,
+	allowedProps
 });
 
 export default Image;

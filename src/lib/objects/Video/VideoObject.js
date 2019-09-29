@@ -2,11 +2,8 @@ import Phaser from 'phaser';
 import { get } from 'lodash';
 import emptyObject from 'fbjs/lib/emptyObject';
 
-const IsPlainObject = Phaser.Utils.Objects.IsPlainObject;
-const GetValue = Phaser.Utils.Objects.GetValue;
-const Components = Phaser.GameObjects.Components;
-const CanvasPool = Phaser.Display.Canvas.CanvasPool;
-const GameObject = Phaser.GameObjects.GameObject;
+const { CanvasPool } = Phaser.Display.Canvas;
+const { Components, GameObject } = Phaser.GameObjects.Components;
 const { getTintAppendFloatAlpha } = Phaser.Renderer.WebGL.Utils;
 
 const videoTypes = ['webm', 'ogg', 'mp4', 'h264', 'vp9', 'hls'];
@@ -25,26 +22,7 @@ const elementProperties = {
 	crossOrigin: 'anonymous'
 };
 
-const CreateVideoElement = function(config = emptyObject) {
-	const element = document.createElement('video');
-	const { eventEmitter } = config;
-
-	for (let key in elementProperties) {
-		let value = get(config, key, elementProperties[key]);
-		if (value !== undefined) {
-			element[key] = value;
-		}
-	}
-
-	if (eventEmitter) {
-		for (let key of elementEvents) {
-			element.addEventListener(key, () => eventEmitter.emit(key, this));
-		}
-	}
-
-	return element;
-};
-
+/* eslint-disable */
 class VideoGameObject extends GameObject {
 	constructor(scene, config) {
 		const { src, x = 0, y = 0, width = 1, height = 1 } = config;
@@ -597,5 +575,6 @@ Phaser.Class.mixin(VideoGameObject, [
 	Components.Transform,
 	Components.Visible
 ]);
+/* eslint-enable */
 
 export default VideoGameObject;

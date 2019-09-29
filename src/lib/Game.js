@@ -39,19 +39,7 @@ class GameContext extends Component {
 		GameRenderer.updateContainer(this.props.children, this[mountNode], this);
 	}
 
-	[setRef](value) {
-		const { forwardedRef } = this.props;
-		if (!forwardedRef) {
-			return;
-		}
-		if (typeof forwardedRef === 'function') {
-			forwardedRef(value);
-		} else {
-			forwardedRef.current = value;
-		}
-	}
-
-	componentDidUpdate(prevProps) {
+	componentDidUpdate() {
 		if (!window) {
 			return;
 		}
@@ -69,13 +57,26 @@ class GameContext extends Component {
 		this[context].destroy();
 	}
 
+	[setRef](value) {
+		const { forwardedRef } = this.props;
+		if (!forwardedRef) {
+			return;
+		}
+		if (typeof forwardedRef === 'function') {
+			forwardedRef(value);
+		} else {
+			forwardedRef.current = value;
+		}
+	}
+
 	render() {
-		const { accessKey, className, role, style, tabIndex, title } = this.props;
+		const { className, role, style, tabIndex, title } = this.props;
 		return (
 			<div
-				ref={(ref) => (this[tagRef] = ref)}
+				ref={(ref) => {
+					this[tagRef] = ref;
+				}}
 				className={className}
-				accessKey={accessKey}
 				tabIndex={tabIndex}
 				style={style}
 				title={title}

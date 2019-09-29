@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Game, Scene, Sprite, Image, Text, BitmapText, Tween, Container, Audio, Video, Zone } from '../';
+import { Game, Scene, Sprite, Image, Text, BitmapText, Audio, Zone } from '../';
 import gemsJson from './gems.json';
 
 var config = {
@@ -16,12 +16,48 @@ const assets = [
 ];
 
 class App extends Component {
+	state = {
+		x: 60
+	};
+
+	handleGem = () => {
+		console.log('clicked!');
+		this.setState(({ x }) => ({
+			x: x === 60 ? 180 : 60
+		}));
+	};
+
 	render() {
+		const { x } = this.state;
 		return (
 			<Game config={config}>
 				<Scene name="demo" assets={assets} active>
-					<Audio name="background" play loop />
+					<Audio name="background" play={false} loop />
 					<Image texture="background" x={0} y={0} />
+					<Sprite
+						interactive
+						transition="x 400 Sine.easeInOut, y 400 Sine.easeInOut, x 300 Sine.easeInOut"
+						texture="gem"
+						play="ruby"
+						x={x}
+						y={50}
+						animations={[
+							{
+								key: 'ruby',
+								repeat: -1,
+								generateFrameNames: {
+									prefix: 'ruby_',
+									suffix: '',
+									start: 0,
+									end: 6,
+									zeroPad: 4
+								}
+							}
+						]}
+						onClick={this.handleGem}
+						ignoreIfPlaying={false}
+						startFrame={0}
+					/>
 					<BitmapText x="310" y="70" font="bitfont" size={22} align="left">
 						DEMO SCENE
 					</BitmapText>
@@ -37,8 +73,6 @@ class App extends Component {
 					>
 						React Phaser
 					</Text>
-					<Image texture="crate" x={10} y={10} />
-					<Image texture="crate" x={80} y={80} />
 					<Image texture="crate" x={100} y={180} />
 					<Image
 						interactive
@@ -81,27 +115,6 @@ class App extends Component {
 								repeat: -1,
 								generateFrameNames: {
 									prefix: 'prism_',
-									suffix: '',
-									start: 0,
-									end: 6,
-									zeroPad: 4
-								}
-							}
-						]}
-						ignoreIfPlaying={false}
-						startFrame={0}
-					/>
-					<Sprite
-						texture="gem"
-						play="ruby"
-						x={500}
-						y={450}
-						animations={[
-							{
-								key: 'ruby',
-								repeat: -1,
-								generateFrameNames: {
-									prefix: 'ruby_',
 									suffix: '',
 									start: 0,
 									end: 6,

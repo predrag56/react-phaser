@@ -20,6 +20,7 @@ import Text from './objects/Text';
 import BitmapText from './objects/BitmapText';
 import Zone from './objects/Zone';
 
+/* eslint-disable no-unused-vars */
 const PhaserRenderer = Reconciler({
 	appendInitialChild(parent, child) {
 		if (parent instanceof Scene) {
@@ -188,5 +189,6 @@ PhaserRenderer.injectIntoDevTools({
 	rendererPackageName: packageJson.name,
 	version: packageJson.version
 });
+/* eslint-enable no-unused-vars */
 
 export default PhaserRenderer;

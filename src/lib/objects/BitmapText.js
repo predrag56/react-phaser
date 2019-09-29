@@ -1,6 +1,15 @@
 import Phaser from 'phaser';
 import GameObject from './GameObject';
-import { fontSize, font, width, height, align, origin, interactive, textChildren } from './GameObject/performedProps';
+import {
+	fontSize,
+	font as fontFn,
+	width,
+	height,
+	align as alignFn,
+	origin,
+	interactive,
+	textChildren
+} from './GameObject/performedProps';
 import TYPES from '../types';
 
 const allowedProps = [
@@ -20,10 +29,10 @@ const allowedProps = [
 const performedProps = {
 	children: textChildren,
 	fontSize,
-	font,
+	font: fontFn,
 	width,
 	height,
-	align,
+	align: alignFn,
 	origin,
 	interactive
 };
