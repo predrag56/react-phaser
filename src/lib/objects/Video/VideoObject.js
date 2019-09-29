@@ -3,7 +3,7 @@ import { get } from 'lodash';
 import emptyObject from 'fbjs/lib/emptyObject';
 
 const { CanvasPool } = Phaser.Display.Canvas;
-const { Components, GameObject } = Phaser.GameObjects.Components;
+const { Components, GameObject } = Phaser.GameObjects;
 const { getTintAppendFloatAlpha } = Phaser.Renderer.WebGL.Utils;
 
 const videoTypes = ['webm', 'ogg', 'mp4', 'h264', 'vp9', 'hls'];

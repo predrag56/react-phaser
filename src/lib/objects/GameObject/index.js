@@ -10,6 +10,7 @@ const defaultProps = {
 	origin: [0, 0]
 };
 const performedProps = {};
+const transitionProps = [];
 const eventMap = {
 	onClick: Events.POINTER_DOWN,
 	onDrag: Events.DRAG,
@@ -33,7 +34,10 @@ const eventNames = Object.keys(eventMap);
 
 class GameObject {
 	pool = [];
+
 	scenePool = [];
+
+	transitionsPool = [];
 
 	constructor(props) {
 		this.props = props;
@@ -41,7 +45,7 @@ class GameObject {
 	}
 
 	register(scene) {
-		console.warn('Register should be overwritten');
+		console.warn(`Register method of ${this} should be overwritten`);
 	}
 
 	add(child) {
@@ -92,8 +96,9 @@ class GameObject {
 
 		for (const key in props) {
 			const value = props[key];
+			const oldValue = oldProps && oldProps[key];
 
-			if (oldProps && oldProps[key] === value) {
+			if (oldProps && oldValue === value) {
 				continue;
 			}
 
@@ -108,6 +113,11 @@ class GameObject {
 				continue;
 			}
 
+			if (this.hasTransition(key)) {
+				this.triggerTransitionTween(key, value, oldValue);
+				continue;
+			}
+
 			if (this.performedProps[key]) {
 				this.performedProps[key](instance, props, this);
 				continue;
@@ -117,6 +127,75 @@ class GameObject {
 		}
 
 		this.props = newProps;
+	}
+
+	hasTransition(key) {
+		return this.transitionProps.indexOf(key) > -1 && this.transitionsConfig && this.transitionsConfig[key];
+	}
+
+	registerTransitions() {
+		this.transitionsConfig = this.parseTransitionsProps();
+	}
+
+	parseTransitionsProps() {
+		const { transition } = this.props;
+		if (!transition) return null;
+
+		if (typeof transition === 'object') {
+			return transition;
+		}
+
+		if (typeof transition === 'string') {
+			return transition
+				.split(',')
+				.map((elem) =>
+					elem
+						.trim()
+						.split(' ')
+						.map((el) => el.trim())
+				)
+				.reduce((acc, [key, ...params]) => {
+					acc[key] = params;
+
+					return acc;
+				}, {});
+		}
+
+		return null;
+	}
+
+	triggerTransitionTween(key, value, oldValue) {
+		var config = this.transitionsConfig[key];
+
+		if (Array.isArray(config)) {
+			const [duration, ease] = config;
+
+			config = {
+				duration,
+				ease
+			};
+		}
+
+		const tween = this.scene.add.tween({
+			targets: this.instance,
+			props: {
+				[key]: {
+					value,
+					...config
+				}
+			},
+			onComplete: () => this.removeTransitionTween(key)
+		});
+
+		this.transitionsPool[key] = tween;
+	}
+
+	removeTransitionTween(key) {
+		const tween = this.transitionsPool[key];
+		if (tween.isPlaying()) {
+			tween.stop();
+		}
+		delete this.transitionsPool[key];
 	}
 
 	destroy() {
@@ -130,6 +209,7 @@ Object.assign(GameObject.prototype, {
 	registered: false,
 	performedProps,
 	allowedProps,
+	transitionProps,
 	defaultProps: emptyObject
 });
 

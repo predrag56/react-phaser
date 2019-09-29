@@ -1,6 +1,13 @@
 import Phaser from 'phaser';
 import GameObject from './GameObject';
-import { width, height, interactive, origin, texture, frame } from './GameObject/performedProps';
+import {
+	width,
+	height,
+	interactive,
+	origin,
+	texture as textureFn,
+	frame as frameFn
+} from './GameObject/performedProps';
 import TYPES from '../types';
 
 const allowedProps = [
@@ -21,15 +28,17 @@ const allowedProps = [
 	'play'
 ];
 
+const transitionProps = ['x', 'y'];
+
 const performedProps = {
-	frame,
-	texture,
+	frame: frameFn,
+	texture: textureFn,
 	width,
 	height,
 	interactive,
-	play: (inst, { play }, sprite) => {
+	play: (inst, { play }, object) => {
 		if (play) {
-			inst.play(sprite.getAnimationName(play));
+			inst.play(object.getAnimationName(play));
 		} else {
 			inst.anims.stop();
 		}
@@ -45,8 +54,13 @@ class Sprite extends GameObject {
 		this.registered = true;
 		scene.add.displayList.add(this.instance);
 		scene.add.updateList.add(this.instance);
+		this.registerTransitions();
 		this.registerAnimations();
 		this.update(this.props);
+
+		if (this.props.play === 'ruby') {
+			window.ruby = this;
+		}
 
 		return this.instance;
 	}
@@ -105,7 +119,8 @@ Object.assign(Sprite.prototype, {
 	texture: '',
 	type: TYPES.SPRITE,
 	allowedProps,
-	performedProps
+	performedProps,
+	transitionProps
 });
 
 export default Sprite;

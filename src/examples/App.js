@@ -17,18 +17,20 @@ const assets = [
 
 class App extends Component {
 	state = {
-		x: 60
+		x: 60,
+		y: 10
 	};
 
 	handleGem = () => {
 		console.log('clicked!');
-		this.setState(({ x }) => ({
-			x: x === 60 ? 180 : 60
+		this.setState(({ x, y }) => ({
+			x: x === 60 ? 380 : 60,
+			y: y === 10 ? 180 : 10
 		}));
 	};
 
 	render() {
-		const { x } = this.state;
+		const { x, y } = this.state;
 		return (
 			<Game config={config}>
 				<Scene name="demo" assets={assets} active>
@@ -36,11 +38,11 @@ class App extends Component {
 					<Image texture="background" x={0} y={0} />
 					<Sprite
 						interactive
-						transition="x 400 Sine.easeInOut, y 400 Sine.easeInOut, x 300 Sine.easeInOut"
+						transition="x 400 Sine.easeInOut, y 400 Sine.easeInOut"
 						texture="gem"
 						play="ruby"
 						x={x}
-						y={50}
+						y={y}
 						animations={[
 							{
 								key: 'ruby',
