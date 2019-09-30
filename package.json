@@ -6,7 +6,7 @@
   "private": false,
   "license": "MIT",
   "author": "Firanolfind <firanolfind@gmail.com>",
-  "main": "src/index.js",
+  "main": "./index.js",
   "repository": "https://github.com/firanolfind/react-phaser.git",
   "homepage": "https://gitlab.com/firanolfind/react-phaser.git",
   "scripts": {
