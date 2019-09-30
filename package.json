@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.2",
   "name": "react-phaser-bindings",
   "title": "React Phaser Bindings",
   "description": "Phaser.js bindings for React",
