@@ -38,7 +38,7 @@ class App extends Component {
 					<Image texture="background" x={0} y={0} />
 					<Sprite
 						interactive
-						transition="x 400 Sine.easeInOut, y 400 Sine.easeInOut"
+						transition="x 4000 Sine.easeInOut, y 4000 Sine.easeInOut"
 						texture="gem"
 						play="ruby"
 						x={x}

@@ -167,6 +167,8 @@ class GameObject {
 	triggerTransitionTween(key, value, oldValue) {
 		var config = this.transitionsConfig[key];
 
+		this.removeTransitionTween(key);
+
 		if (Array.isArray(config)) {
 			const [duration, ease] = config;
 
@@ -192,6 +194,11 @@ class GameObject {
 
 	removeTransitionTween(key) {
 		const tween = this.transitionsPool[key];
+
+		if (!tween) {
+			return;
+		}
+
 		if (tween.isPlaying()) {
 			tween.stop();
 		}
