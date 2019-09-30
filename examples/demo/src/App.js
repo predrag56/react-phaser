@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Game, Scene, Sprite, Image, Text, BitmapText, Audio, Zone } from '../';
+import { Game, Scene, Sprite, Image, Text, BitmapText, Audio, Zone } from 'react-phaser-bindings';
 import gemsJson from './gems.json';
 
 var config = {
