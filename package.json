@@ -1,8 +1,8 @@
 {
-  "version": "0.2.1",
+  "version": "1.0.0",
   "name": "react-phaser-bindings",
   "title": "React Phaser Bindings",
-  "description": "Phaser.js bindings for React ",
+  "description": "Phaser.js bindings for React",
   "private": false,
   "license": "MIT",
   "author": "Firanolfind <firanolfind@gmail.com>",
@@ -10,9 +10,7 @@
   "repository": "https://github.com/firanolfind/react-phaser.git",
   "homepage": "https://gitlab.com/firanolfind/react-phaser.git",
   "scripts": {
-    "precommit": "pretty-quick --staged",
     "build": "rollup --config ./config/rollup.config.js && rollup --config ./config/rollup.config.js --environment NODE_ENV:production",
-    "test": "node scripts/test.js --config=.jestrc.json",
     "lint": "eslint ./src/index.js"
   },
   "peerDependencies": {
