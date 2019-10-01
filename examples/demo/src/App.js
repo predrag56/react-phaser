@@ -24,8 +24,8 @@ class App extends Component {
 	handleGem = () => {
 		console.log('clicked!');
 		this.setState(({ x, y }) => ({
-			x: x === 60 ? 380 : 60,
-			y: y === 10 ? 180 : 10
+			x: x === 60 ? 400 : 60,
+			y: y === 10 ? 400 : 10
 		}));
 	};
 
@@ -38,7 +38,7 @@ class App extends Component {
 					<Image texture="background" x={0} y={0} />
 					<Sprite
 						interactive
-						transition="x 4000 Sine.easeInOut, y 4000 Sine.easeInOut"
+						transition="x 150 Quad.easeInOut, y 150 Quad.easeInOut"
 						texture="gem"
 						play="ruby"
 						x={x}
