@@ -1,15 +1,11 @@
 import Phaser from 'phaser';
 import GameObject from './GameObject';
 import TYPES from '../types';
+import { interactive, origin } from './GameObject/performedProps';
 
 const performedProps = {
-	interactive: (inst, { interactive }) => {
-		if (interactive) {
-			inst.setInteractive();
-		} else {
-			inst.disableInteractive();
-		}
-	}
+	interactive,
+	origin
 	// TODO: check drop zone more detail later
 	// isRadius: (inst, { width, height, radius, isRadius }) => {
 	// 	if (isRadius) {
@@ -20,7 +16,7 @@ const performedProps = {
 	// }
 };
 
-const allowedProps = ['x', 'y', 'width', 'height', 'interactive'];
+const allowedProps = ['x', 'y', 'width', 'height', 'interactive', 'origin'];
 
 class Zone extends GameObject {
 	register(scene) {

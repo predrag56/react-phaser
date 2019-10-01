@@ -3,7 +3,7 @@ import emptyObject from 'fbjs/lib/emptyObject';
 import { pick } from 'lodash';
 import shortid from 'shortid';
 import { insertBefore } from '../../utils';
-import { addToScene, insertBeforeToScene } from '../../Scene';
+import { addToScene } from '../../Scene';
 
 const allowedProps = [];
 const defaultProps = {
@@ -12,7 +12,7 @@ const defaultProps = {
 const performedProps = {};
 const transitionProps = [];
 const eventMap = {
-	onClick: Events.POINTER_DOWN,
+	onClick: Events.POINTER_UP,
 	onDrag: Events.DRAG,
 	onDragEnd: Events.DRAG_END,
 	onDragEnter: Events.DRAG_ENTER,
