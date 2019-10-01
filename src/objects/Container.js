@@ -1,12 +1,8 @@
 import Phaser from 'phaser';
 import GameObject from './GameObject';
-import { width, height } from './GameObject/performedProps';
 import TYPES from '../types';
 
-const performedProps = {
-	width,
-	height
-};
+const performedProps = {};
 
 const allowedProps = ['x', 'y', 'z', 'width', 'height', 'alpha', 'angle', 'scale', 'tint', 'visible'];
 

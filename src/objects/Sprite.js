@@ -28,7 +28,7 @@ const allowedProps = [
 	'play'
 ];
 
-const transitionProps = ['x', 'y'];
+const transitionProps = ['x', 'y', 'alpha', 'angle', 'scale', 'tint'];
 
 const performedProps = {
 	frame: frameFn,
