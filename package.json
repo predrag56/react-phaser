@@ -14,6 +14,20 @@
     "lint": "eslint ./src/index.js"
   },
   "peerDependencies": {
+    "lodash": ">= 4.17.15",
+    "phaser": ">= 3.x.x",
+    "react": ">= 16.9.x",
+    "react-dom": ">= 16.9.x"
+  },
+  "devDependencies": {
+    "@babel/core": "7.6.0",
+    "babel-eslint": "10.0.3",
+    "babel-jest": "^24.9.0",
+    "babel-plugin-named-asset-import": "^0.3.4",
+    "babel-preset-react-app": "^9.0.2",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "enzyme-to-json": "^3.4.0",
     "eslint": "^6.4.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-config-react-app": "^5.0.2",
@@ -30,23 +44,9 @@
     "jest-environment-jsdom-fourteen": "0.1.0",
     "jest-resolve": "24.9.0",
     "jest-watch-typeahead": "0.4.0",
-    "lodash": ">= 4.17.15",
-    "phaser": ">= 3.x.x",
     "prettier": "^1.18.2",
-    "react": ">= 16.9.x",
     "react-app-polyfill": "^1.0.3",
     "react-dev-utils": "^9.0.4",
-    "react-dom": ">= 16.9.x"
-  },
-  "devDependencies": {
-    "@babel/core": "7.6.0",
-    "babel-eslint": "10.0.3",
-    "babel-jest": "^24.9.0",
-    "babel-plugin-named-asset-import": "^0.3.4",
-    "babel-preset-react-app": "^9.0.2",
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
-    "enzyme-to-json": "^3.4.0",
     "rollup": "^1.22.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
@@ -56,9 +56,8 @@
   },
   "dependencies": {
     "fbjs": "^1.0.0",
-    "lodash": "^4.17.15",
     "react-reconciler": "^0.22.1",
     "scheduler": "^0.16.1",
-    "shortid": "^2.2.15"
+    "short-unique-id": "^1.1.1"
   }
 }

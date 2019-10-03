@@ -1,8 +1,7 @@
 import Events from 'phaser/src/input/events';
 import emptyObject from 'fbjs/lib/emptyObject';
 import { pick } from 'lodash';
-import shortid from 'shortid';
-import { insertBefore } from '../../utils';
+import { insertBefore, shortId } from '../../utils';
 import { addToScene } from '../../Scene';
 
 const allowedProps = [];
@@ -41,7 +40,7 @@ class GameObject {
 
 	constructor(props) {
 		this.props = props;
-		this.id = shortid.generate();
+		this.id = shortId.randomUUID(5);
 	}
 
 	register(scene) {

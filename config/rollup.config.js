@@ -31,7 +31,9 @@ module.exports = {
 			exclude: 'node_modules/**, *.json',
 			runtimeHelpers: true
 		}),
-		resolve(),
+		resolve({
+			preferBuiltins: false
+		}),
 		commonjs({
 			include: 'node_modules/**',
 			namedExports: {

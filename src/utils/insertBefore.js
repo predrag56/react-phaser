@@ -1,4 +1,4 @@
-export const insertBefore = (arr, b, a) => {
+export default (arr, b, a) => {
 	const indexA = arr.indexOf(a);
 	if (indexA < -1) return arr;
 	const indexB = arr.indexOf(b);
