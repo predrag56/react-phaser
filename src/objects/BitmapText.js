@@ -23,7 +23,8 @@ const allowedProps = [
 	'width',
 	'height',
 	'align',
-	'origin'
+	'origin',
+	'visible'
 ];
 
 const performedProps = {

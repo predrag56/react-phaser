@@ -97,7 +97,7 @@ const PhaserRenderer = Reconciler({
 			case TYPES.ZONE:
 				return new Zone(props);
 			default:
-				return invariant('React-Phaser-Bindings: Can not insert node before itself');
+				return invariant('React-Phaser-Bindings: Unsupported component type');
 		}
 	},
 

@@ -6,7 +6,8 @@ import { addToScene } from '../../Scene';
 
 const allowedProps = [];
 const defaultProps = {
-	origin: [0, 0]
+	origin: [0, 0],
+	visible: true
 };
 const performedProps = {};
 const transitionProps = [];
