@@ -103,8 +103,8 @@ class GameObject {
 
 			if (eventMap[key]) {
 				const eventName = eventMap[key];
-				if (oldProps && oldProps[eventName]) {
-					instance.removeListener(eventName, value, instance);
+				if (oldProps && oldValue) {
+					instance.removeListener(eventName, oldValue, instance);
 				}
 				if (value) {
 					instance.addListener(eventName, value, instance);

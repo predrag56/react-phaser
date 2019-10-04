@@ -58,10 +58,6 @@ class Sprite extends GameObject {
 		this.registerAnimations();
 		this.update(this.props);
 
-		if (this.props.play === 'ruby') {
-			window.ruby = this;
-		}
-
 		return this.instance;
 	}
 
