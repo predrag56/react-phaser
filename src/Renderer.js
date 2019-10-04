@@ -158,7 +158,6 @@ const PhaserRenderer = Reconciler({
 
 	removeChild(parentInstance, child) {
 		if (!(child instanceof Phaser.Scene)) {
-			console.log('destroy', parentInstance, child);
 			child.destroy();
 		}
 	},
