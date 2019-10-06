@@ -16,6 +16,13 @@ module.exports = {
 		file: outputFile,
 		format: 'cjs'
 	},
+	watch: {
+		chokidar: {
+			usePolling: false
+		},
+		include: 'src/**',
+		exclude: ['node_modules/**', 'examples/**', 'lib/**', 'config/**']
+	},
 	plugins: [
 		json({
 			exclude: 'node_modules/**',

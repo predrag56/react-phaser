@@ -1,6 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { Provider, connect, ReactReduxContext } from 'react-redux';
+import { createStore } from 'redux';
 import { Game, Scene, Sprite, Image, Text, BitmapText, Audio, Zone } from 'react-phaser-bindings';
 import gemsJson from './gems.json';
+
+const store = createStore(() => ({ lol: true }));
 
 var config = {
 	width: 800,
@@ -30,129 +34,62 @@ class App extends Component {
 	};
 
 	render() {
-		const { x, y } = this.state;
+		const { x, y, show } = this.state;
 		return (
 			<Game config={config}>
-				<Scene name="demo" assets={assets} active>
-					<Audio name="background" play={false} loop />
-					<Image texture="background" x={0} y={0} />
-					<Sprite
-						interactive
-						transition="x 150 Quad.easeInOut, y 150 Quad.easeInOut"
-						texture="gem"
-						play="ruby"
-						x={x}
-						y={y}
-						animations={[
-							{
-								key: 'ruby',
-								repeat: -1,
-								generateFrameNames: {
-									prefix: 'ruby_',
-									suffix: '',
-									start: 0,
-									end: 6,
-									zeroPad: 4
-								}
-							}
-						]}
-						onClick={this.handleGem}
-						ignoreIfPlaying={false}
-						startFrame={0}
-					/>
-					<BitmapText x="310" y="70" font="bitfont" size={22} align="left">
-						DEMO SCENE
-					</BitmapText>
-					<Text
-						scale={1}
-						angle={0}
-						x={315}
-						y={127}
-						style={{
-							fill: '#000',
-							fontSize: '20px'
-						}}
-					>
-						React Phaser
-					</Text>
-					<Image texture="crate" x={100} y={180} />
-					<Image
-						interactive
-						texture="crate"
-						x={440}
-						y={300}
-						onMouseDown={(...args) => {
-							console.log('Privet!', args);
-						}}
-					/>
-					<Sprite
-						texture="gem"
-						play="diamond"
-						x={20}
-						y={250}
-						animations={[
-							{
-								key: 'diamond',
-								repeat: -1,
-								generateFrameNames: {
-									prefix: 'diamond_',
-									suffix: '',
-									start: 0,
-									end: 15,
-									zeroPad: 4
-								}
-							}
-						]}
-						ignoreIfPlaying={false}
-						startFrame={0}
-					/>
-					<Sprite
-						texture="gem"
-						play="prism"
-						x={600}
-						y={150}
-						animations={[
-							{
-								key: 'prism',
-								repeat: -1,
-								generateFrameNames: {
-									prefix: 'prism_',
-									suffix: '',
-									start: 0,
-									end: 6,
-									zeroPad: 4
-								}
-							}
-						]}
-						ignoreIfPlaying={false}
-						startFrame={0}
-					/>
-					<Sprite
-						texture="gem"
-						play="square"
-						x={200}
-						y={350}
-						animations={[
-							{
-								key: 'square',
-								repeat: -1,
-								generateFrameNames: {
-									prefix: 'square_',
-									suffix: '',
-									start: 0,
-									end: 14,
-									zeroPad: 4
-								}
-							}
-						]}
-						ignoreIfPlaying={false}
-						startFrame={0}
-					/>
-					<Zone x={0} y={0} width={100} height={100} interactive onMouseDown={() => console.log('Privet Zone!')} />
-				</Scene>
+				<Provider store={store}>
+					<Scene name="demo" assets={assets} active>
+						<ReactReduxContext.Consumer>
+							{function() {
+								console.log('consumer', arguments);
+								return null;
+							}}
+						</ReactReduxContext.Consumer>
+						<Demo />
+						<Image interactive texture="background" x={0} y={0} onClick={() => this.setState({ show: !show })} />
+						{show && (
+							<Fragment>
+								<Zone
+									x={0}
+									y={0}
+									width={100}
+									height={100}
+									interactive
+									onMouseDown={() => console.log('Privet Zone!')}
+								/>
+								<Sprite
+									interactive
+									transition="x 150 Quad.easeInOut, y 150 Quad.easeInOut"
+									texture="gem"
+									play="ruby"
+									x={x}
+									y={y}
+									animations={[
+										{
+											key: 'ruby',
+											repeat: -1,
+											generateFrameNames: {
+												prefix: 'ruby_',
+												suffix: '',
+												start: 0,
+												end: 6,
+												zeroPad: 4
+											}
+										}
+									]}
+									onClick={this.handleGem}
+									ignoreIfPlaying={false}
+									startFrame={0}
+								/>
+							</Fragment>
+						)}
+					</Scene>
+				</Provider>
 			</Game>
 		);
 	}
 }
+
+const Demo = connect((state) => console.log(state) || { gameInfo: state.lol })(() => []);
 
 export default App;

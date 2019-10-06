@@ -2,6 +2,9 @@ import Phaser from 'phaser';
 import Reconciler from 'react-reconciler';
 import invariant from 'fbjs/lib/invariant';
 import emptyObject from 'fbjs/lib/emptyObject';
+
+console.log(Reconciler);
+
 import {
 	unstable_now as now,
 	unstable_scheduleCallback as scheduleDeferredCallback,
@@ -22,7 +25,27 @@ import Zone from './objects/Zone';
 
 /* eslint-disable no-unused-vars */
 const PhaserRenderer = Reconciler({
+	getChildHostContext() {
+		console.log('getChildHostContext', arguments);
+	},
+
+	getRootHostContext() {
+		console.log('getRootHostContext', arguments);
+	},
+
+	unmountResponderInstance() {
+		console.log('unmountResponderInstance', arguments);
+	},
+
+	mountResponderInstance() {
+		console.log('mountResponderInstance', arguments);
+	},
+	updateContainerAtExpirationTime() {
+		console.log('updateContainerAtExpirationTime', arguments);
+	},
+
 	appendInitialChild(parent, child) {
+		console.log('appendInitialChild', arguments);
 		if (parent instanceof Scene) {
 			addToScene(parent, child);
 			return;
