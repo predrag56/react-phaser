@@ -18,7 +18,8 @@ const TYPES = {
 	SHAPE: 'Shape',
 	AUDIO: 'Audio',
 	VIDEO: 'Video',
-	ZONE: 'Zone'
+	ZONE: 'Zone',
+	PARTICLES: 'Particles'
 };
 
 export const Scene = TYPES.SCENE;
@@ -32,6 +33,7 @@ export const Tween = TYPES.TWEEN;
 export const Audio = TYPES.AUDIO;
 export const Video = TYPES.VIDEO;
 export const Zone = TYPES.ZONE;
+export const Particles = TYPES.PARTICLES;
 // export const Graphics = TYPES.GRAPHICS;
 // export const Circle = TYPES.CIRCLE;
 // export const Curve = TYPES.CURVE;

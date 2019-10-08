@@ -22,6 +22,7 @@ import Video from './objects/Video';
 import Text from './objects/Text';
 import BitmapText from './objects/BitmapText';
 import Zone from './objects/Zone';
+import Particles from './objects/Particles';
 
 /* eslint-disable no-unused-vars */
 const PhaserRenderer = Reconciler({
@@ -119,6 +120,8 @@ const PhaserRenderer = Reconciler({
 				return new Video(props);
 			case TYPES.ZONE:
 				return new Zone(props);
+			case TYPES.PARTICLES:
+				return new Particles(props);
 			default:
 				return invariant('React-Phaser-Bindings: Unsupported component type');
 		}

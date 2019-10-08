@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { Provider, connect, ReactReduxContext } from 'react-redux';
 import { createStore } from 'redux';
-import { Game, Scene, Sprite, Image, Text, BitmapText, Audio, Zone } from 'react-phaser-bindings';
+import { Game, Scene, Sprite, Image, Text, BitmapText, Audio, Zone, Particles } from 'react-phaser-bindings';
+
 import gemsJson from './gems.json';
+import flares from './flares.json';
 
 const store = createStore(() => ({ lol: true }));
 
@@ -13,6 +15,7 @@ var config = {
 
 const assets = [
 	['atlas', 'gem', 'media/gems.png', gemsJson],
+	['atlas', 'flares', 'media/flares.png', flares],
 	['audio', 'background', 'media/music.mp3'],
 	['bitmapFont', 'bitfont', 'media/bitfont.png', 'media/bitfont.fnt'],
 	['image', 'background', 'media/sky.png'],
@@ -22,7 +25,8 @@ const assets = [
 class App extends Component {
 	state = {
 		x: 60,
-		y: 10
+		y: 10,
+		param: false
 	};
 
 	handleGem = () => {
@@ -37,59 +41,148 @@ class App extends Component {
 		const { x, y, show } = this.state;
 		return (
 			<Game config={config}>
-				<Provider store={store}>
-					<Scene name="demo" assets={assets} active>
-						<ReactReduxContext.Consumer>
-							{function() {
-								console.log('consumer', arguments);
-								return null;
-							}}
-						</ReactReduxContext.Consumer>
-						<Demo />
-						<Image interactive texture="background" x={0} y={0} onClick={() => this.setState({ show: !show })} />
-						{show && (
-							<Fragment>
-								<Zone
-									x={0}
-									y={0}
-									width={100}
-									height={100}
-									interactive
-									onMouseDown={() => console.log('Privet Zone!')}
-								/>
-								<Sprite
-									interactive
-									transition="x 150 Quad.easeInOut, y 150 Quad.easeInOut"
-									texture="gem"
-									play="ruby"
-									x={x}
-									y={y}
-									animations={[
-										{
-											key: 'ruby',
-											repeat: -1,
-											generateFrameNames: {
-												prefix: 'ruby_',
-												suffix: '',
-												start: 0,
-												end: 6,
-												zeroPad: 4
-											}
-										}
-									]}
-									onClick={this.handleGem}
-									ignoreIfPlaying={false}
-									startFrame={0}
-								/>
-							</Fragment>
-						)}
-					</Scene>
-				</Provider>
+				<Scene name="demo" assets={assets} active>
+					<Audio name="background" play={false} loop />
+					<Image texture="background" x={0} y={0} />
+					<Sprite
+						interactive
+						transition="x 150 Quad.easeInOut, y 150 Quad.easeInOut"
+						texture="gem"
+						play="ruby"
+						x={x}
+						y={y}
+						animations={[
+							{
+								key: 'ruby',
+								repeat: -1,
+								generateFrameNames: {
+									prefix: 'ruby_',
+									suffix: '',
+									start: 0,
+									end: 6,
+									zeroPad: 4
+								}
+							}
+						]}
+						onClick={this.handleGem}
+						ignoreIfPlaying={false}
+						startFrame={0}
+					/>
+					<BitmapText x="310" y="70" font="bitfont" size={22} align="left">
+						DEMO SCENE
+					</BitmapText>
+					<Text
+						scale={1}
+						angle={0}
+						x={315}
+						y={127}
+						style={{
+							fill: '#000',
+							fontSize: '20px'
+						}}
+					>
+						React Phaser
+					</Text>
+					<Image
+						interactive
+						texture="crate"
+						x={100}
+						y={180}
+						onClick={() => this.setState({ param: !this.state.param })}
+					/>
+					<Image
+						interactive
+						texture="crate"
+						x={440}
+						y={300}
+						onMouseDown={(...args) => {
+							console.log('Privet!', args);
+						}}
+					/>
+					<Particles
+						texture="flares"
+						frame="red"
+						start={this.state.param}
+						config={{
+							radial: false,
+							x: 100,
+							y: { min: 0, max: 560, steps: 256 },
+							lifespan: 2000,
+							speedX: { min: 200, max: 400 },
+							quantity: 4,
+							gravityY: -50,
+							scale: { start: 0.6, end: 0, ease: 'Power3' },
+							blendMode: 'ADD'
+						}}
+					/>
+					<Sprite
+						texture="gem"
+						play="diamond"
+						x={20}
+						y={250}
+						animations={[
+							{
+								key: 'diamond',
+								repeat: -1,
+								generateFrameNames: {
+									prefix: 'diamond_',
+									suffix: '',
+									start: 0,
+									end: 15,
+									zeroPad: 4
+								}
+							}
+						]}
+						ignoreIfPlaying={false}
+						startFrame={0}
+					/>
+					<Sprite
+						texture="gem"
+						play="prism"
+						x={600}
+						y={150}
+						animations={[
+							{
+								key: 'prism',
+								repeat: -1,
+								generateFrameNames: {
+									prefix: 'prism_',
+									suffix: '',
+									start: 0,
+									end: 6,
+									zeroPad: 4
+								}
+							}
+						]}
+						ignoreIfPlaying={false}
+						startFrame={0}
+					/>
+					<Sprite
+						texture="gem"
+						play="square"
+						x={200}
+						y={350}
+						animations={[
+							{
+								key: 'square',
+								repeat: -1,
+								generateFrameNames: {
+									prefix: 'square_',
+									suffix: '',
+									start: 0,
+									end: 14,
+									zeroPad: 4
+								}
+							}
+						]}
+						ignoreIfPlaying={false}
+						startFrame={0}
+					/>
+					<Zone x={0} y={0} width={100} height={100} interactive onMouseDown={() => console.log('Privet Zone!')} />
+				</Scene>
 			</Game>
 		);
 	}
 }
-
-const Demo = connect((state) => console.log(state) || { gameInfo: state.lol })(() => []);
 
 export default App;
