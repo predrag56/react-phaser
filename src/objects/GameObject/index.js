@@ -1,5 +1,6 @@
 import Events from 'phaser/src/input/events';
 import emptyObject from 'fbjs/lib/emptyObject';
+import invariant from 'fbjs/lib/invariant';
 import { pick } from 'lodash';
 import { insertBefore, shortId } from '../../utils';
 import { addToScene } from '../../Scene';
@@ -44,8 +45,8 @@ class GameObject {
 		this.id = shortId.randomUUID(5);
 	}
 
-	register(scene) {
-		console.warn(`Register method of ${this} should be overwritten`);
+	register() {
+		invariant(`Register method of ${this} should be overwritten`);
 	}
 
 	add(child) {
