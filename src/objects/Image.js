@@ -46,14 +46,6 @@ class Image extends GameObject {
 		this.update(this.props);
 		return this.instance;
 	}
-
-	onMouseDown() {
-		this.pressed = true;
-	}
-
-	onMouseUp() {
-		this.pressed = false;
-	}
 }
 
 Object.assign(Image.prototype, {

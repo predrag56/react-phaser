@@ -46,7 +46,6 @@ const PhaserRenderer = Reconciler({
 	},
 
 	appendInitialChild(parent, child) {
-		console.log('appendInitialChild', arguments);
 		if (parent instanceof Scene) {
 			addToScene(parent, child);
 			return;
