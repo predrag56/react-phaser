@@ -1,8 +1,19 @@
 import React, { Component, Fragment } from 'react';
 import { Provider, connect, ReactReduxContext } from 'react-redux';
 import { createStore } from 'redux';
-import { Game, Scene, Sprite, Image, Text, BitmapText, Audio, Zone, Particles } from 'react-phaser-bindings';
-
+import {
+	Game,
+	Scene,
+	Sprite,
+	Image,
+	Text,
+	BitmapText,
+	Audio,
+	Zone,
+	Tween,
+	Container,
+	Particles
+} from 'react-phaser-bindings';
 import gemsJson from './gems.json';
 import flares from './flares.json';
 
@@ -99,19 +110,21 @@ class App extends Component {
 							console.log('Privet!', args);
 						}}
 					/>
+
 					<Particles
 						texture="flares"
 						frame="red"
-						start={this.state.param}
-						animation={{
-							repeat: -1,
-							generateFrameNames: {
-								prefix: 'ruby_',
-								suffix: '',
-								start: 0,
-								end: 6,
-								zeroPad: 4
-							}
+						config={{
+							radial: true,
+							x: 400,
+							y: 300,
+							blendMode: 'SCREEN',
+							scale: { start: 3, end: 0 },
+							gravityY: 1000,
+							speed: 400,
+							opacity: { start: 1, end: 0 },
+							quantity: 2,
+							lifespan: 700
 						}}
 						config={{
 							radial: false,
@@ -164,31 +177,31 @@ class App extends Component {
 								}
 							}
 						]}
-						ignoreIfPlaying={false}
-						startFrame={0}
 					/>
 					<Sprite
+						interactive
+						transition="x 150 Quad.easeInOut, y 150 Quad.easeInOut"
 						texture="gem"
-						play="square"
-						x={200}
-						y={350}
+						play="ruby"
+						x={x}
+						y={y}
 						animations={[
 							{
-								key: 'square',
+								key: 'ruby',
 								repeat: -1,
 								generateFrameNames: {
-									prefix: 'square_',
+									prefix: 'ruby_',
 									suffix: '',
 									start: 0,
-									end: 14,
+									end: 6,
 									zeroPad: 4
 								}
 							}
 						]}
+						onClick={this.handleGem}
 						ignoreIfPlaying={false}
 						startFrame={0}
 					/>
-					<Zone x={0} y={0} width={100} height={100} interactive onMouseDown={() => console.log('Privet Zone!')} />
 				</Scene>
 			</Game>
 		);
