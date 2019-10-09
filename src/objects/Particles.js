@@ -4,7 +4,7 @@ import invariant from 'fbjs/lib/invariant';
 import { texture as textureFn } from './GameObject/performedProps';
 import TYPES from '../types';
 
-const allowedProps = ['texture', 'frame', 'pause', 'start'];
+const allowedProps = ['texture', 'frame', 'pause', 'start', 'animation'];
 
 const performedProps = {
 	texture: textureFn,
@@ -32,6 +32,7 @@ class Particles extends GameObject {
 		this.instance = scene.add.particles(texture);
 		this.emitter = this.instance.createEmitter();
 		this.registered = true;
+		this.textureName = texture;
 		this.update(this.props);
 		return this.instance;
 	}
@@ -70,6 +71,56 @@ class Particles extends GameObject {
 		this.emitter.stop();
 		this.instance.destroy();
 		delete this.instance;
+	}
+
+	getAnimationName(name) {
+		return name && `${this.id}_${name}`;
+	}
+
+	prepareAnimationConfig({ frames, generateFrameNames, generateFrameNumbers, ...config }) {
+		const { texture } = this.props;
+		const { anims } = this.scene;
+
+		if (!frames) {
+			if (generateFrameNames) {
+				frames = anims.generateFrameNames(texture, generateFrameNames);
+			}
+
+			if (generateFrameNumbers) {
+				frames = anims.generateFrameNumbers(texture, generateFrameNames);
+			}
+		}
+
+		return {
+			...config,
+			frames
+		};
+	}
+
+	registerAnimation() {
+		const { anims, key: sceneKey } = this.scene;
+		const { animation } = this.props;
+
+		if (!animation) {
+			return;
+		}
+
+		const key = this.getAnimationName(this.textureName);
+		let anim = anims.get(key);
+
+		if (anim) {
+			console.warn(`Animation "${key}" is already registered in this Scene "${sceneKey}"`);
+			return;
+		}
+
+		const config = {
+			key,
+			...animation
+		};
+
+		anim = new Phaser.Animations.Animation(anims, key, this.prepareAnimationConfig(config));
+		anims.anims.set(key, anim);
+		anims.emit(Phaser.Animations.Events.ADD_ANIMATION, key, anim);
 	}
 }
 

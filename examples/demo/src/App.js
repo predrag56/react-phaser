@@ -103,6 +103,16 @@ class App extends Component {
 						texture="flares"
 						frame="red"
 						start={this.state.param}
+						animation={{
+							repeat: -1,
+							generateFrameNames: {
+								prefix: 'ruby_',
+								suffix: '',
+								start: 0,
+								end: 6,
+								zeroPad: 4
+							}
+						}}
 						config={{
 							radial: false,
 							x: 100,
