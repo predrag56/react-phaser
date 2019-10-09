@@ -1,10 +1,11 @@
-import GameObject from './GameObject';
 import emptyObject from 'fbjs/lib/emptyObject';
 import invariant from 'fbjs/lib/invariant';
-import { texture as textureFn } from './GameObject/performedProps';
-import TYPES from '../types';
+import GameObject from '../GameObject';
+import { texture as textureFn } from '../GameObject/performedProps';
+import TYPES from '../../types';
+import AnimatedParticle from './AnimatedParticle';
 
-const allowedProps = ['texture', 'frame', 'pause', 'start', 'animation'];
+const allowedProps = ['texture', 'frame', 'pause', 'start'];
 
 const performedProps = {
 	texture: textureFn,
@@ -27,28 +28,48 @@ const performedProps = {
 
 class Particles extends GameObject {
 	register(scene) {
-		const { texture } = this.props;
+		const { texture, animation } = this.props;
 		this.scene = scene;
 		this.instance = scene.add.particles(texture);
 		this.emitter = this.instance.createEmitter();
 		this.registered = true;
 		this.textureName = texture;
+
+		const animName = this.getAnimationName();
+		this.getAnimatedParticleClass = function(emitter) {
+			return new AnimatedParticle(scene, animName, emitter);
+		};
+
+		if (animation) {
+			this.isAnimated = true;
+			this.registerAnimation();
+		}
+
 		this.update(this.props);
+
+		window.particle = this;
+
 		return this.instance;
 	}
 
 	update(newProps = emptyObject, oldProps = emptyObject) {
 		const newConfig = {
 			...newProps.config,
-			frame: newProps.frame
+			frame: newProps.frame,
+			animation: undefined
 		};
 
 		const oldConfig = {
 			...oldProps.config,
-			frame: oldProps.frame
+			frame: oldProps.frame,
+			animation: undefined
 		};
 
 		if (JSON.stringify(newConfig) !== JSON.stringify(oldConfig)) {
+			if (this.isAnimated) {
+				newConfig.particleClass = this.getAnimatedParticleClass;
+			}
+
 			this.emitter.fromJSON(newConfig);
 		}
 
@@ -73,8 +94,8 @@ class Particles extends GameObject {
 		delete this.instance;
 	}
 
-	getAnimationName(name) {
-		return name && `${this.id}_${name}`;
+	getAnimationName() {
+		return `${this.id}_${this.textureName}`;
 	}
 
 	prepareAnimationConfig({ frames, generateFrameNames, generateFrameNumbers, ...config }) {
@@ -87,7 +108,7 @@ class Particles extends GameObject {
 			}
 
 			if (generateFrameNumbers) {
-				frames = anims.generateFrameNumbers(texture, generateFrameNames);
+				frames = anims.generateFrameNumbers(texture, generateFrameNumbers);
 			}
 		}
 
@@ -105,7 +126,7 @@ class Particles extends GameObject {
 			return;
 		}
 
-		const key = this.getAnimationName(this.textureName);
+		const key = this.getAnimationName();
 		let anim = anims.get(key);
 
 		if (anim) {
@@ -122,9 +143,12 @@ class Particles extends GameObject {
 		anims.anims.set(key, anim);
 		anims.emit(Phaser.Animations.Events.ADD_ANIMATION, key, anim);
 	}
+
+	// TODO: destroy registered private animation after destroy
 }
 
 Object.assign(Particles.prototype, {
+	isAnimated: false,
 	type: TYPES.PARTICLES,
 	performedProps,
 	allowedProps
