@@ -58,6 +58,8 @@ class Sprite extends GameObject {
 		this.registerAnimations();
 		this.update(this.props);
 
+		window.sprite = this;
+
 		return this.instance;
 	}
 
