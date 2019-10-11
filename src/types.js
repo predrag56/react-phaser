@@ -19,7 +19,8 @@ const TYPES = {
 	AUDIO: 'Audio',
 	VIDEO: 'Video',
 	ZONE: 'Zone',
-	PARTICLES: 'Particles'
+	PARTICLES: 'Particles',
+	BLITTER: 'Blitter'
 };
 
 export const Scene = TYPES.SCENE;
@@ -34,6 +35,7 @@ export const Audio = TYPES.AUDIO;
 export const Video = TYPES.VIDEO;
 export const Zone = TYPES.ZONE;
 export const Particles = TYPES.PARTICLES;
+export const Blitter = TYPES.BLITTER;
 // export const Graphics = TYPES.GRAPHICS;
 // export const Circle = TYPES.CIRCLE;
 // export const Curve = TYPES.CURVE;
