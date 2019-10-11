@@ -12,10 +12,12 @@ import {
 	Zone,
 	Tween,
 	Container,
-	Particles
+	Particles,
+	Blitter
 } from 'react-phaser-bindings';
 import gemsJson from './gems.json';
 import flares from './flares.json';
+import isoblocksJson from './isoblocks.json';
 
 var config = {
 	width: 800,
@@ -24,6 +26,7 @@ var config = {
 
 const assets = [
 	['atlas', 'coins', 'media/coins.png', 'media/coins.json'],
+	['atlas', 'blocks', 'media/isoblocks.png', isoblocksJson],
 	['atlas', 'gem', 'media/gems.png', gemsJson],
 	['atlas', 'flares', 'media/flares.png', flares],
 	['audio', 'background', 'media/music.mp3'],
@@ -47,12 +50,59 @@ class PlaygroundGame extends Component {
 		}));
 	};
 
+	onShow = () => {
+		this.setState(({ param }) => ({
+			param: !param
+		}));
+	};
+
 	render() {
-		const { x, y, show } = this.state;
+		const { x, y, show, param } = this.state;
 		return (
 			<Game config={config}>
 				<Scene name="scene" assets={assets} active>
-					<Particles
+					<Blitter
+						x={0}
+						y={0}
+						texture="blocks"
+						frame="block-040"
+						data={[
+							{
+								x: 100,
+								y: 100,
+								frame: 'block-000',
+								visible: true,
+								reset: false,
+								alpha: 1,
+								flip: {
+									x: true,
+									y: false
+								}
+							},
+							{
+								x: 200,
+								y: 200,
+								frame: 'block-001'
+							},
+							{
+								x: 300,
+								y: 300,
+								frame: 'block-0002'
+							},
+							{
+								x: 400,
+								y: 400,
+								frame: 'block-003'
+							},
+							{
+								x: 500,
+								y: 500,
+								frame: 'block-004'
+							}
+						]}
+					/>
+					<Image interactive texture="crate" x={40} y={30} onMouseDown={this.onShow} />
+					{/* <Particles
 						texture="coins"
 						frame="Gold_21.png"
 						animation={{
@@ -87,7 +137,7 @@ class PlaygroundGame extends Component {
 							stepRate: 200,
 							frequency: 100
 						}}
-					/>
+					/> */}
 				</Scene>
 			</Game>
 		);

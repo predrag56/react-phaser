@@ -103,6 +103,10 @@ class GameObject {
 				continue;
 			}
 
+			if (typeof value === 'object' && JSON.stringify(value) === JSON.stringify(oldValue)) {
+				continue;
+			}
+
 			if (eventMap[key]) {
 				const eventName = eventMap[key];
 				if (oldProps && oldValue) {
