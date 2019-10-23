@@ -23,7 +23,6 @@ var config = {
 };
 
 const assets = [
-	['atlas', 'coins', 'media/coins.png', 'media/coins.json'],
 	['atlas', 'gem', 'media/gems.png', gemsJson],
 	['atlas', 'flares', 'media/flares.png', flares],
 	['audio', 'background', 'media/music.mp3'],
@@ -40,7 +39,6 @@ class DemoGame extends Component {
 	};
 
 	handleGem = () => {
-		console.log('clicked!');
 		this.setState(({ x, y }) => ({
 			x: x === 60 ? 400 : 60,
 			y: y === 10 ? 400 : 10
@@ -252,42 +250,6 @@ class DemoGame extends Component {
 							blendMode: 'SCENE',
 							scale: 0.6,
 							gravityY: 1000,
-							angle: { min: 0, max: 360 },
-							speed: 500,
-							quantity: 3,
-							lifespan: 1500,
-							stepRate: 200,
-							frequency: 100
-						}}
-					/>
-					<Particles
-						texture="coins"
-						frame="Gold_21.png"
-						animation={{
-							repeat: -1,
-							speed: 12,
-							generateFrameNames: {
-								prefix: 'Gold_',
-								suffix: '.png',
-								start: 21,
-								end: 30,
-								zeroPad: 2
-							},
-							generateFrameNamess: {
-								prefix: 'ruby_',
-								suffix: '',
-								start: 0,
-								end: 6,
-								zeroPad: 4
-							}
-						}}
-						config={{
-							radial: true,
-							x: 400,
-							y: 250,
-							blendMode: 'SCENE',
-							scale: 0.07,
-							gravityY: 3000,
 							angle: { min: 0, max: 360 },
 							speed: 500,
 							quantity: 3,
