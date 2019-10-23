@@ -50,7 +50,7 @@ class DemoGame extends Component {
 		return (
 			<Game config={config}>
 				<Scene name="demo" assets={assets} active>
-					<Audio name="background" play loop />
+					<Audio name="background" play loop volume={0.1} />
 					<Image texture="background" x={0} y={0} />
 					<Sprite
 						interactive
