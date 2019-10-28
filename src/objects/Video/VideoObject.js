@@ -334,7 +334,7 @@ class VideoGameObject extends GameObject {
 			}
 		}
 
-		for (let key of elementEvents) {
+		for (const key of elementEvents) {
 			element.addEventListener(key, () => this.emit(key, this));
 		}
 

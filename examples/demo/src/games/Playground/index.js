@@ -12,10 +12,12 @@ import {
 	Zone,
 	Tween,
 	Container,
-	Particles
+	Particles,
+	Blitter
 } from 'react-phaser-bindings';
 import gemsJson from './gems.json';
 import flares from './flares.json';
+import isoblocksJson from './isoblocks.json';
 
 var config = {
 	width: 800,
@@ -23,9 +25,10 @@ var config = {
 };
 
 const assets = [
+	['image', 'crate', 'media/crate.png'],
 	['atlas', 'gem', 'media/gems.png', gemsJson],
-	['atlas', 'flares', 'media/flares.png', flares],
-	['image', 'crate', 'media/crate.png']
+	['atlas', 'coins', 'media/coins.png', 'media/coins.json'],
+	['atlas', 'blocks', 'media/isoblocks.png', isoblocksJson]
 ];
 
 window.tweensConfig = [
@@ -128,8 +131,14 @@ class PlaygroundGame extends Component {
 		}));
 	};
 
+	onShow = () => {
+		this.setState(({ param }) => ({
+			param: !param
+		}));
+	};
+
 	render() {
-		const { x, y, show } = this.state;
+		const { x, y, show, param } = this.state;
 		return (
 			<Game config={config}>
 				<Scene name="scene" assets={assets} active>
@@ -146,6 +155,83 @@ class PlaygroundGame extends Component {
 						<Image texture="gem" frame="square_0002" x={9 * 70} y={30} />
 						<Image texture="gem" frame="ruby_0000" x={10 * 70} y={30} />
 					</Container>
+					<Blitter
+						x={0}
+						y={0}
+						texture="blocks"
+						frame="block-040"
+						data={[
+							{
+								x: 100,
+								y: 100,
+								frame: 'block-000',
+								visible: true,
+								reset: false,
+								alpha: 1,
+								flip: {
+									x: true,
+									y: false
+								}
+							},
+							{
+								x: 200,
+								y: 200,
+								frame: 'block-001'
+							},
+							{
+								x: 300,
+								y: 300,
+								frame: 'block-0002'
+							},
+							{
+								x: 400,
+								y: 400,
+								frame: 'block-003'
+							},
+							{
+								x: 500,
+								y: 500,
+								frame: 'block-004'
+							}
+						]}
+					/>
+					<Image interactive texture="crate" x={40} y={30} onMouseDown={this.onShow} />
+					{/* <Particles
+						texture="coins"
+						frame="Gold_21.png"
+						animation={{
+							repeat: -1,
+							speed: 12,
+							generateFrameNames: {
+								prefix: 'Gold_',
+								suffix: '.png',
+								start: 21,
+								end: 30,
+								zeroPad: 2
+							},
+							generateFrameNamess: {
+								prefix: 'ruby_',
+								suffix: '',
+								start: 0,
+								end: 6,
+								zeroPad: 4
+							}
+						}}
+						config={{
+							radial: true,
+							x: 400,
+							y: 250,
+							blendMode: 'SCENE',
+							scale: 0.07,
+							gravityY: 3000,
+							angle: { min: 0, max: 360 },
+							speed: 500,
+							quantity: 3,
+							lifespan: 1500,
+							stepRate: 200,
+							frequency: 100
+						}}
+					/> */}
 				</Scene>
 			</Game>
 		);
