@@ -24,8 +24,7 @@ class VideoPlugin extends Phaser.Plugins.BasePlugin {
 	}
 
 	start() {
-		var eventEmitter = this.game.events;
-		eventEmitter.once('destroy', this.destroy, this);
+		this.game.events.once('destroy', this.destroy, this);
 	}
 }
 

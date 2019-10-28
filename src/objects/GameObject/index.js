@@ -12,7 +12,7 @@ const defaultProps = {
 };
 const performedProps = {};
 const transitionProps = [];
-const eventMap = {
+const defaultEventMap = {
 	onClick: Events.POINTER_UP,
 	onDrag: Events.DRAG,
 	onDragEnd: Events.DRAG_END,
@@ -31,8 +31,6 @@ const eventMap = {
 	onDestroy: Events.DESTROY
 };
 
-const eventNames = Object.keys(eventMap);
-
 class GameObject {
 	pool = [];
 
@@ -43,6 +41,13 @@ class GameObject {
 	constructor(props) {
 		this.props = props;
 		this.id = shortId.randomUUID(5);
+
+		this.fullEventMap = {
+			...defaultEventMap,
+			...this.eventMap
+		};
+
+		this.eventNames = Object.keys(this.fullEventMap);
 	}
 
 	register() {
@@ -89,10 +94,10 @@ class GameObject {
 			...pick(defaultProps, this.allowedProps),
 			...this.defaultProps,
 			...pick(newProps, this.allowedProps),
-			...pick(newProps, eventNames)
+			...pick(newProps, this.eventNames)
 		};
 
-		const { instance } = this;
+		const { instance, fullEventMap } = this;
 		if (!this.registered) return;
 
 		for (const key in props) {
@@ -107,8 +112,8 @@ class GameObject {
 				continue;
 			}
 
-			if (eventMap[key]) {
-				const eventName = eventMap[key];
+			if (fullEventMap[key]) {
+				const eventName = fullEventMap[key];
 				if (oldProps && oldValue) {
 					instance.removeListener(eventName, oldValue, instance);
 				}
@@ -222,7 +227,8 @@ Object.assign(GameObject.prototype, {
 	performedProps,
 	allowedProps,
 	transitionProps,
-	defaultProps: emptyObject
+	defaultProps: emptyObject,
+	eventMap: emptyObject
 });
 
 export default GameObject;
