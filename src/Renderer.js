@@ -3,8 +3,6 @@ import Reconciler from 'react-reconciler';
 import invariant from 'fbjs/lib/invariant';
 import emptyObject from 'fbjs/lib/emptyObject';
 
-console.log(Reconciler);
-
 import {
 	unstable_now as now,
 	unstable_scheduleCallback as scheduleDeferredCallback,
@@ -24,6 +22,8 @@ import BitmapText from './objects/BitmapText';
 import Zone from './objects/Zone';
 import Particles from './objects/Particles';
 import Tween from './objects/Tween';
+import Blitter from './objects/Blitter';
+import Input from './objects/Input';
 
 /* eslint-disable no-unused-vars */
 const PhaserRenderer = Reconciler({
@@ -124,6 +124,10 @@ const PhaserRenderer = Reconciler({
 				return new Particles(props);
 			case TYPES.TWEEN:
 				return new Tween(props);
+			case TYPES.BLITTER:
+				return new Blitter(props);
+			case TYPES.INPUT:
+				return new Input(props);
 			default:
 				return invariant('React-Phaser-Bindings: Unsupported component type');
 		}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Phaser from 'phaser';
 import GameRenderer from './Renderer';
 import VideoPlugin from './objects/Video/plugin';
+import TextInputPlugin from './objects/Input/plugin';
 
 const context = Symbol('Game.context');
 const tagRef = Symbol('Game.tagRef');
@@ -21,6 +22,9 @@ class GameContext extends Component {
 			...config,
 			autoStart: false,
 			parent: this[tagRef],
+			dom: {
+				createContainer: true
+			},
 			plugins: {
 				global: [
 					...plugins,
@@ -28,10 +32,16 @@ class GameContext extends Component {
 						key: 'Video',
 						plugin: VideoPlugin,
 						start: true
+					},
+					{
+						key: 'TextInput',
+						plugin: TextInputPlugin,
+						start: true
 					}
 				]
 			}
 		});
+		window.game = game;
 
 		this[context] = game;
 		this[setRef](game);
@@ -78,7 +88,10 @@ class GameContext extends Component {
 				}}
 				className={className}
 				tabIndex={tabIndex}
-				style={style}
+				style={{
+					display: 'inline-block',
+					...style
+				}}
 				title={title}
 				role={role}
 			/>
