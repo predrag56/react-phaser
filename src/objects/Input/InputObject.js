@@ -108,6 +108,22 @@ class InputText extends DOMElement {
 		this.node.value = value;
 	}
 
+	get width() {
+		return this.node && parseFloat(this.node.style.width);
+	}
+
+	set width(value) {
+		if (this.node) this.node.style.width = value + 'px';
+	}
+
+	get height() {
+		return this.node && parseFloat(this.node.style.height);
+	}
+
+	set height(value) {
+		if (this.node) this.node.style.height = value + 'px';
+	}
+
 	selectText() {
 		this.node.select();
 		return this;
@@ -163,18 +179,23 @@ class InputText extends DOMElement {
 		this.node.spellcheck = value;
 	}
 
+	set style(styleProps = emptyObject) {
+		if (!this.node) return;
+		for (const key in styleProps) {
+			const prop = styleProperties[key];
+			if (!prop) continue;
+			this.node.style[prop[0]] = styleProps[key];
+		}
+		return this.node.style;
+	}
+
+	get style() {
+		return this.node && this.node.style;
+	}
+
 	setSpellCheck(value) {
 		this.spellCheck = value;
 		return this;
-	}
-
-	setStyle(key, value) {
-		this.node.style[key] = value;
-		return this;
-	}
-
-	getStyle(key) {
-		return this.node.style[key];
 	}
 
 	scrollToBottom() {

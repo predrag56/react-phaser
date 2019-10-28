@@ -2,9 +2,7 @@ import TYPES from '../../types';
 import GameObject from '../GameObject';
 import InputObject from './InputObject';
 
-const allowedProps = ['x', 'y', 'width', 'height', 'placeholder', 'value', 'readonly', 'style'];
-
-const performedProps = {};
+const allowedProps = ['x', 'y', 'width', 'height', 'placeholder', 'value', 'readonly', 'style', 'tooltip'];
 
 const eventMap = {
 	onInput: 'input',
@@ -28,7 +26,6 @@ class Input extends GameObject {
 
 Object.assign(Input.prototype, {
 	type: TYPES.INPUT,
-	performedProps,
 	allowedProps,
 	eventMap
 });

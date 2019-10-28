@@ -41,7 +41,6 @@ class GameContext extends Component {
 				]
 			}
 		});
-		console.log(this[tagRef]);
 		window.game = game;
 
 		this[context] = game;
