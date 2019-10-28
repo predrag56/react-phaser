@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
-import { get } from 'lodash';
+import { get, isNil } from 'lodash';
 import emptyObject from 'fbjs/lib/emptyObject';
-
 const { DOMElement } = Phaser.GameObjects;
 
 import { stopPropagationTouchEvents } from '../../utils/stopPropagation';
@@ -10,7 +9,9 @@ const elementProperties = {
 	id: undefined,
 	placeholder: undefined,
 	readonly: false,
+	disabled: false,
 	spellcheck: false,
+	tooltip: '',
 	autocomplete: 'off'
 };
 
@@ -25,8 +26,6 @@ const styleProperties = {
 	borderColor: ['borderColor', 'transparent'],
 	outline: ['outline', 'none']
 };
-
-const elementEvents = ['input', 'change', 'click', 'dblclick', 'focus', 'blur'];
 
 /* eslint-disable */
 class InputText extends DOMElement {
@@ -69,7 +68,7 @@ class InputText extends DOMElement {
 
 		style.width = width + 'px';
 		style.height = height + 'px';
-		element.title = tooltip;
+		element.title = !isNil(tooltip) ? tooltip : '';
 
 		super(scene, x, y, element, style);
 		this.type = 'InputText';
@@ -142,7 +141,7 @@ class InputText extends DOMElement {
 	}
 
 	set tooltip(value) {
-		this.node.title = value;
+		this.node.title = !isNil(value) ? value : '';
 	}
 
 	setTooltip(value) {
