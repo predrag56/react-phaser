@@ -1,5 +1,6 @@
 import Events from 'phaser/src/input/events';
 import emptyObject from 'fbjs/lib/emptyObject';
+import invariant from 'fbjs/lib/invariant';
 import { pick } from 'lodash';
 import { insertBefore, shortId } from '../../utils';
 import { addToScene } from '../../Scene';
@@ -11,7 +12,7 @@ const defaultProps = {
 };
 const performedProps = {};
 const transitionProps = [];
-const eventMap = {
+const defaultEventMap = {
 	onClick: Events.POINTER_UP,
 	onDrag: Events.DRAG,
 	onDragEnd: Events.DRAG_END,
@@ -30,8 +31,6 @@ const eventMap = {
 	onDestroy: Events.DESTROY
 };
 
-const eventNames = Object.keys(eventMap);
-
 class GameObject {
 	pool = [];
 
@@ -42,15 +41,22 @@ class GameObject {
 	constructor(props) {
 		this.props = props;
 		this.id = shortId.randomUUID(5);
+
+		this.fullEventMap = {
+			...defaultEventMap,
+			...this.eventMap
+		};
+
+		this.eventNames = Object.keys(this.fullEventMap);
 	}
 
-	register(scene) {
-		console.warn(`Register method of ${this} should be overwritten`);
+	register() {
+		invariant(`Register method of ${this} should be overwritten`);
 	}
 
 	add(child) {
 		if (this.registered) {
-			const instance = child.register(this.scene);
+			const instance = child.register(this.scene, this);
 			this.instance.add(instance);
 		} else {
 			this.pool.push(child);
@@ -88,10 +94,10 @@ class GameObject {
 			...pick(defaultProps, this.allowedProps),
 			...this.defaultProps,
 			...pick(newProps, this.allowedProps),
-			...pick(newProps, eventNames)
+			...pick(newProps, this.eventNames)
 		};
 
-		const { instance } = this;
+		const { instance, fullEventMap } = this;
 		if (!this.registered) return;
 
 		for (const key in props) {
@@ -102,8 +108,12 @@ class GameObject {
 				continue;
 			}
 
-			if (eventMap[key]) {
-				const eventName = eventMap[key];
+			if (typeof value === 'object' && JSON.stringify(value) === JSON.stringify(oldValue)) {
+				continue;
+			}
+
+			if (fullEventMap[key]) {
+				const eventName = fullEventMap[key];
 				if (oldProps && oldValue) {
 					instance.removeListener(eventName, oldValue, instance);
 				}
@@ -217,7 +227,8 @@ Object.assign(GameObject.prototype, {
 	performedProps,
 	allowedProps,
 	transitionProps,
-	defaultProps: emptyObject
+	defaultProps: emptyObject,
+	eventMap: emptyObject
 });
 
 export default GameObject;

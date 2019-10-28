@@ -1,5 +1,5 @@
 {
-  "version": "1.0.7",
+  "version": "1.1.0",
   "name": "react-phaser-bindings",
   "title": "React Phaser Bindings",
   "description": "Phaser.js bindings for React",
@@ -10,6 +10,7 @@
   "repository": "https://github.com/firanolfind/react-phaser.git",
   "homepage": "https://gitlab.com/firanolfind/react-phaser.git",
   "scripts": {
+    "start": "rollup --config ./config/rollup.config.js --watch",
     "build": "rollup --config ./config/rollup.config.js && rollup --config ./config/rollup.config.js --environment NODE_ENV:production",
     "lint": "eslint ./src/index.js"
   },
@@ -25,6 +26,7 @@
     "babel-jest": "^24.9.0",
     "babel-plugin-named-asset-import": "^0.3.4",
     "babel-preset-react-app": "^9.0.2",
+    "chokidar": "^3.2.1",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "enzyme-to-json": "^3.4.0",

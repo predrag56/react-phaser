@@ -16,6 +16,13 @@ module.exports = {
 		file: outputFile,
 		format: 'cjs'
 	},
+	watch: {
+		chokidar: {
+			usePolling: false
+		},
+		include: 'src/**',
+		exclude: ['node_modules/**', 'examples/**', 'lib/**', 'config/**']
+	},
 	plugins: [
 		json({
 			exclude: 'node_modules/**',
@@ -37,7 +44,7 @@ module.exports = {
 		commonjs({
 			include: 'node_modules/**',
 			namedExports: {
-				lodash: ['pick', 'omit', 'get'],
+				lodash: ['pick', 'omit', 'get', 'isNil'],
 				scheduler: ['unstable_now', 'unstable_scheduleCallback', 'unstable_cancelCallback']
 			}
 		})

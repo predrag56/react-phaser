@@ -44,15 +44,8 @@ class Image extends GameObject {
 		this.registered = true;
 		scene.add.displayList.add(this.instance);
 		this.update(this.props);
+		window.img = this;
 		return this.instance;
-	}
-
-	onMouseDown() {
-		this.pressed = true;
-	}
-
-	onMouseUp() {
-		this.pressed = false;
 	}
 }
 
