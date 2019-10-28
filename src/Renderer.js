@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import Reconciler from 'react-reconciler';
 import invariant from 'fbjs/lib/invariant';
 import emptyObject from 'fbjs/lib/emptyObject';
+
 import {
 	unstable_now as now,
 	unstable_scheduleCallback as scheduleDeferredCallback,
@@ -19,9 +20,32 @@ import Video from './objects/Video';
 import Text from './objects/Text';
 import BitmapText from './objects/BitmapText';
 import Zone from './objects/Zone';
+import Particles from './objects/Particles';
+import Tween from './objects/Tween';
+import Blitter from './objects/Blitter';
+import Input from './objects/Input';
 
 /* eslint-disable no-unused-vars */
 const PhaserRenderer = Reconciler({
+	getChildHostContext() {
+		console.log('getChildHostContext', arguments);
+	},
+
+	getRootHostContext() {
+		console.log('getRootHostContext', arguments);
+	},
+
+	unmountResponderInstance() {
+		console.log('unmountResponderInstance', arguments);
+	},
+
+	mountResponderInstance() {
+		console.log('mountResponderInstance', arguments);
+	},
+	updateContainerAtExpirationTime() {
+		console.log('updateContainerAtExpirationTime', arguments);
+	},
+
 	appendInitialChild(parent, child) {
 		if (parent instanceof Scene) {
 			addToScene(parent, child);
@@ -96,6 +120,14 @@ const PhaserRenderer = Reconciler({
 				return new Video(props);
 			case TYPES.ZONE:
 				return new Zone(props);
+			case TYPES.PARTICLES:
+				return new Particles(props);
+			case TYPES.TWEEN:
+				return new Tween(props);
+			case TYPES.BLITTER:
+				return new Blitter(props);
+			case TYPES.INPUT:
+				return new Input(props);
 			default:
 				return invariant('React-Phaser-Bindings: Unsupported component type');
 		}

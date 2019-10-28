@@ -58,6 +58,8 @@ class Sprite extends GameObject {
 		this.registerAnimations();
 		this.update(this.props);
 
+		window.sprite = this;
+
 		return this.instance;
 	}
 
@@ -75,7 +77,7 @@ class Sprite extends GameObject {
 			}
 
 			if (generateFrameNumbers) {
-				frames = anims.generateFrameNumbers(texture, generateFrameNames);
+				frames = anims.generateFrameNumbers(texture, generateFrameNumbers);
 			}
 		}
 
@@ -109,6 +111,8 @@ class Sprite extends GameObject {
 			});
 		}
 	}
+
+	// TODO: destroy registered private animation after destroy
 }
 
 Object.assign(Sprite.prototype, {
