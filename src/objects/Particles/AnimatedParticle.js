@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import Particle from 'phaser/src/gameobjects/particles/Particle';
 
 class AnimatedParticle extends Particle {
@@ -10,8 +11,13 @@ class AnimatedParticle extends Particle {
 		this.anims.play(animationName);
 	}
 
+	/* eslint-disable class-methods-use-this */
 	emit() {}
+
+	/* eslint-disable class-methods-use-this */
 	setSizeToFrame() {}
+
+	/* eslint-disable class-methods-use-this */
 	updateDisplayOrigin() {}
 
 	update(delta, step, processors) {
