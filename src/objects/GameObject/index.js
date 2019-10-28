@@ -51,7 +51,7 @@ class GameObject {
 
 	add(child) {
 		if (this.registered) {
-			const instance = child.register(this.scene);
+			const instance = child.register(this.scene, this);
 			this.instance.add(instance);
 		} else {
 			this.pool.push(child);

@@ -117,24 +117,24 @@ class PlaygroundGame extends Component {
 	state = {
 		x: 300,
 		y: 10,
-		param: false
+		param: false,
+		play: null
 	};
 
-	handleGem = () => {
-		console.log('clicked!');
-		this.setState(({ x, y }) => ({
-			x: x === 60 ? 400 : 60,
-			y: y === 10 ? 400 : 10
+	handleClick = () => {
+		console.log('?');
+		this.setState(({ play }) => ({
+			play: play === 'spin' ? 'finish' : 'spin'
 		}));
 	};
 
 	render() {
-		const { x, y, show } = this.state;
+		const { x, y, play } = this.state;
 		return (
 			<Game config={config}>
 				<Scene name="scene" assets={assets} active>
 					<Container x={10} y={0}>
-						<Image texture="gem" frame="prism_0002" x={0} y={30} />
+						<Image texture="gem" frame="prism_0002" x={0} y={30} onClick={this.handleClick} interactive />
 						<Image texture="gem" frame="square_0002" x={70} y={30} />
 						<Image texture="gem" frame="ruby_0000" x={2 * 70} y={30} />
 						<Image texture="gem" frame="diamond_0000" x={3 * 70} y={30} />
@@ -145,6 +145,39 @@ class PlaygroundGame extends Component {
 						<Image texture="gem" frame="prism_0002" x={8 * 70} y={30} />
 						<Image texture="gem" frame="square_0002" x={9 * 70} y={30} />
 						<Image texture="gem" frame="ruby_0000" x={10 * 70} y={30} />
+					</Container>
+					<Container x={0} y={0} width={100} height={100}>
+						<Tween
+							play={play}
+							animations={{
+								spin: {
+									repeat: -1,
+									// yoyo: true,
+									props: { y: -100, x: -100, opacity: 0.5 },
+									duration: 1000
+								},
+								finish: {
+									// repeat: 1,
+									// yoyo: true,
+									props: { y: 300, x: -100, opacity: 0.5 },
+									duration: 1000
+								}
+							}}
+						>
+							<Container x={0} y={300} width={100} height={300}>
+								<Image texture="gem" frame="prism_0002" x={0} y={30} />
+								<Image texture="gem" frame="square_0002" x={70} y={30} />
+								<Image texture="gem" frame="ruby_0000" x={2 * 70} y={30} />
+								<Image texture="gem" frame="diamond_0000" x={3 * 70} y={30} />
+								<Image texture="gem" frame="prism_0002" x={4 * 70} y={30} />
+								<Image texture="gem" frame="square_0002" x={5 * 70} y={30} />
+								<Image texture="gem" frame="ruby_0000" x={6 * 70} y={30} />
+								<Image texture="gem" frame="diamond_0000" x={7 * 70} y={30} />
+								<Image texture="gem" frame="prism_0002" x={8 * 70} y={30} />
+								<Image texture="gem" frame="square_0002" x={9 * 70} y={30} />
+								<Image texture="gem" frame="ruby_0000" x={10 * 70} y={30} />
+							</Container>
+						</Tween>
 					</Container>
 				</Scene>
 			</Game>

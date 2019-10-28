@@ -23,6 +23,7 @@ import Text from './objects/Text';
 import BitmapText from './objects/BitmapText';
 import Zone from './objects/Zone';
 import Particles from './objects/Particles';
+import Tween from './objects/Tween';
 
 /* eslint-disable no-unused-vars */
 const PhaserRenderer = Reconciler({
@@ -121,6 +122,8 @@ const PhaserRenderer = Reconciler({
 				return new Zone(props);
 			case TYPES.PARTICLES:
 				return new Particles(props);
+			case TYPES.TWEEN:
+				return new Tween(props);
 			default:
 				return invariant('React-Phaser-Bindings: Unsupported component type');
 		}
