@@ -19,7 +19,7 @@ class Input extends GameObject {
 		this.registered = true;
 		scene.add.existing(this.instance);
 		this.update(this.props);
-		window.input = this;
+
 		return this.instance;
 	}
 }
