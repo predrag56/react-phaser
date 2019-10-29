@@ -89,6 +89,10 @@ class GameObject {
 		}
 	}
 
+	forceUpdate(props) {
+		this.update(props, emptyObject);
+	}
+
 	update(newProps, oldProps) {
 		const props = {
 			...pick(defaultProps, this.allowedProps),

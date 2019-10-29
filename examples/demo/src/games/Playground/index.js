@@ -123,10 +123,10 @@ class PlaygroundGame extends Component {
 		play: null
 	};
 
-	handleClick = () => {
+	handlePlayStop = () => {
 		console.log('?');
 		this.setState(({ play }) => ({
-			play: play === 'spin' ? 'finish' : 'spin'
+			play: play ? false : 'spin'
 		}));
 	};
 
@@ -136,24 +136,44 @@ class PlaygroundGame extends Component {
 			<Game config={config}>
 				<Scene name="scene" assets={assets} active>
 					<Container x={0} y={0} width={100} height={100}>
+						<Text interactive x={350} y={250} width={100} onClick={this.handlePlayStop}>
+							PLAY / STOP
+						</Text>
 						<Tween
 							play={play}
+							//onComplete={this.handlePlayStop}
 							animations={{
+								// spin: {
+								// 	// repeat: -1,
+								// 	// yoyo: true,
+								// 	props: [{ y: 0, x: 0, opacity: 1 }, { y: 500, x: 0, opacity: 0.5 }],
+								// 	duration: 300
+								// }
 								spin: {
-									repeat: -1,
-									// yoyo: true,
-									props: { y: -100, x: -100, opacity: 0.5 },
+									complex: true,
+									queue: ['spinStart', 'spinLoop', 'spinEnd']
+								},
+								spinStart: {
+									repeat: 0,
+									props: [{ y: 250, x: 0 }, { y: 700, x: 0 }],
+									ease: 'Sine.In',
 									duration: 1000
 								},
-								finish: {
-									// repeat: 1,
-									// yoyo: true,
-									props: { y: 300, x: -100, opacity: 0.5 },
+								spinLoop: {
+									repeat: -1,
+									props: [{ y: -100, x: 0 }, { y: 700, x: 0 }],
+									ease: 'Linear',
+									duration: 500
+								},
+								spinEnd: {
+									repeat: 0,
+									props: [{ y: -100, x: 0 }, { y: 250, x: 0 }],
+									ease: 'Sine.Out',
 									duration: 1000
 								}
 							}}
 						>
-							<Container x={0} y={300} width={100} height={300}>
+							<Container x={0} y={250} width={100} height={300}>
 								<Image texture="gem" frame="prism_0002" x={0} y={30} />
 								<Image texture="gem" frame="square_0002" x={70} y={30} />
 								<Image texture="gem" frame="ruby_0000" x={2 * 70} y={30} />
@@ -168,7 +188,7 @@ class PlaygroundGame extends Component {
 							</Container>
 						</Tween>
 					</Container>
-					<Blitter
+					{/*<Blitter
 						x={0}
 						y={0}
 						texture="blocks"
@@ -177,14 +197,7 @@ class PlaygroundGame extends Component {
 							{
 								x: 100,
 								y: 100,
-								frame: 'block-000',
-								visible: true,
-								reset: false,
-								alpha: 1,
-								flip: {
-									x: true,
-									y: false
-								}
+								frame: 'block-000'
 							},
 							{
 								x: 200,
@@ -207,7 +220,7 @@ class PlaygroundGame extends Component {
 								frame: 'block-004'
 							}
 						]}
-					/>
+					/>*/}
 					{/* <Particles
 						texture="coins"
 						frame="Gold_21.png"

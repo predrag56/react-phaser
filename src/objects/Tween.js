@@ -3,6 +3,7 @@ import GameObject from './GameObject';
 import Scene, { insertBeforeToScene } from '../Scene';
 import { insertBefore } from '../utils';
 import TYPES from '../types';
+import emptyObject from 'fbjs/lib/emptyObject';
 import { omit } from 'lodash';
 
 const performedProps = {
@@ -17,6 +18,8 @@ const performedProps = {
 
 const allowedProps = ['play'];
 
+const getInst = (el) => el.instance;
+
 class Tween extends GameObject {
 	register(scene, parent) {
 		const { animations } = this.props;
@@ -25,7 +28,7 @@ class Tween extends GameObject {
 		window.tween = this;
 
 		this.parent = parent;
-		this.instancePool = [];
+		this.children = [];
 		this.tweenQueue = [];
 		this.animationPool = {};
 
@@ -34,13 +37,17 @@ class Tween extends GameObject {
 		this.registerChildren();
 		this.update(this.props);
 
-		return this.instancePool;
+		return this.getTargets();
+	}
+
+	getTargets() {
+		return this.children.map(getInst);
 	}
 
 	add(child) {
 		if (this.registered) {
 			const instance = child.register(this.scene);
-			this.instancePool.push(instance);
+			this.children.push(child);
 			this.parent.add(instance);
 			this.pool.push(child);
 		} else {
@@ -61,11 +68,11 @@ class Tween extends GameObject {
 	}
 
 	registerChildren() {
-		const { instancePool, pool, scenePool, scene } = this;
+		const { children, pool, scenePool, scene } = this;
 
 		for (const elem of pool) {
 			const child = elem.register(this.scene);
-			instancePool.push(child);
+			children.push(elem);
 		}
 
 		for (const child of scenePool) {
@@ -88,7 +95,17 @@ class Tween extends GameObject {
 	}
 
 	play(key) {
+		const { replaceAnimation } = this.props;
+		const { queue, complex } = this.animationsConfig[key];
+		if (complex) {
+			this.play(queue[0]);
+			this.tweenQueue.push(...queue.slice(1));
+			return;
+		}
+		this.shouldStop = false;
+
 		if (this.instance) {
+			this.tweenQueue = [];
 			this.tweenQueue.push(key);
 		} else {
 			this.startTween(key);
@@ -101,26 +118,38 @@ class Tween extends GameObject {
 			this.instance = null;
 		}
 
-		this.shouldStop = false;
-
 		const key = this.tweenQueue.shift();
+
 		if (key) this.startTween(key);
 	}
 
 	startTween(key) {
-		const { instancePool, scene, tweenQueue, animationsConfig } = this;
+		const { children, scene, tweenQueue, animationsConfig } = this;
 		const config = animationsConfig[key];
 
 		if (!config) return;
 
-		const tween = scene.add.tween({
-			...config,
-			targets: instancePool,
-			onComplete: () => this.handleOnComplete(key),
-			onLoop: () => this.handleOnLoop(key)
-		});
+		let { props } = config;
+		let from = emptyObject;
+		if (props instanceof Array) {
+			[from, props] = props;
+		}
 
-		this.instance = tween;
+		if (from !== emptyObject) {
+			children.forEach((child) => child.forceUpdate(from));
+		}
+
+		setTimeout(() => {
+			const tween = scene.add.tween({
+				...config,
+				props,
+				targets: this.getTargets(),
+				onComplete: () => this.handleOnComplete(key),
+				onLoop: () => this.handleOnLoop(key)
+			});
+
+			this.instance = tween;
+		});
 
 		return tween;
 	}
@@ -134,7 +163,7 @@ class Tween extends GameObject {
 	handleOnComplete(key) {
 		const { onComplete } = this.props || {};
 
-		if (onComplete) {
+		if (onComplete && !this.tweenQueue.length) {
 			onComplete(key);
 		}
 
@@ -148,7 +177,7 @@ class Tween extends GameObject {
 			onLoop(key);
 		}
 
-		if (this.tweenQueue.length || this.shouldStop) {
+		if (this.shouldStop) {
 			this.next();
 		}
 	}
