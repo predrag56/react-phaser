@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Phaser from 'phaser';
 import GameRenderer from './Renderer';
-import VideoPlugin from './objects/Video/plugin';
 import TextInputPlugin from './objects/Input/plugin';
 
 const context = Symbol('Game.context');
@@ -28,11 +27,6 @@ class GameContext extends Component {
 			plugins: {
 				global: [
 					...plugins,
-					{
-						key: 'Video',
-						plugin: VideoPlugin,
-						start: true
-					},
 					{
 						key: 'TextInput',
 						plugin: TextInputPlugin,
