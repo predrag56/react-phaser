@@ -9,7 +9,7 @@ const ASSETS = Symbol('Scene.assets');
 const PROPS = Symbol('Scene.props');
 export const UPDATE = Symbol('Scene.update');
 
-const SCENE_HOOKS = ['init', 'preload', 'create', 'update'];
+const SCENE_HOOKS = ['init', 'preload', 'create', 'beforecreate', 'update'];
 
 const performedProps = {
 	active: (inst, { active, name }) => {
@@ -104,7 +104,7 @@ export default class Scene extends Phaser.Scene {
 	init(...args) {
 		const { init } = this[HOOKS];
 
-		init && init.apply(this, args);
+		init && init.call(this, this, ...args);
 	}
 
 	preload(...args) {
@@ -113,16 +113,19 @@ export default class Scene extends Phaser.Scene {
 		});
 
 		const { preload } = this[HOOKS];
-		preload && preload.apply(this, args);
+		preload && preload.call(this, this, ...args);
 	}
 
 	create(...args) {
 		const pool = this[POOL];
+		const { create, beforecreate } = this[HOOKS];
+
+		beforecreate && beforecreate.call(this, this, ...args);
+
 		for (let i = 0, l = pool.length; i < l; i++) {
 			pool[i].register(this);
 		}
 
-		const { create } = this[HOOKS];
-		create && create.apply(this, args);
+		create && create.call(this, this, ...args);
 	}
 }
