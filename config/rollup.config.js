@@ -44,7 +44,7 @@ module.exports = {
 		commonjs({
 			include: 'node_modules/**',
 			namedExports: {
-				lodash: ['pick', 'omit', 'get', 'isNil'],
+				lodash: ['pick', 'omit', 'get', 'isNil', 'noop'],
 				scheduler: ['unstable_now', 'unstable_scheduleCallback', 'unstable_cancelCallback']
 			}
 		})

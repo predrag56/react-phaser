@@ -148,7 +148,7 @@ class PlaygroundGame extends Component {
 			<Game config={config}>
 				<Scene name="scene" assets={assets} active>
 					<Container x={0} y={0} width={100} height={100}>
-						<Text interactive x={350} y={250} width={100} onClick={this.toggleFlag}>
+						<Text interactive x={350} y={250} width={100} onClick={this.handlePlayStop}>
 							PLAY / STOP
 						</Text>
 						<Circle
@@ -212,12 +212,6 @@ class PlaygroundGame extends Component {
 							play={play}
 							//onComplete={this.handlePlayStop}
 							animations={{
-								// spin: {
-								// 	// repeat: -1,
-								// 	// yoyo: true,
-								// 	props: [{ y: 0, x: 0, opacity: 1 }, { y: 500, x: 0, opacity: 0.5 }],
-								// 	duration: 300
-								// }
 								spin: {
 									complex: true,
 									queue: ['spinStart', 'spinLoop', 'spinEnd']
@@ -229,7 +223,7 @@ class PlaygroundGame extends Component {
 									duration: 1000
 								},
 								spinLoop: {
-									repeat: -1,
+									repeat: 3,
 									props: [{ y: -100, x: 0 }, { y: 700, x: 0 }],
 									ease: 'Linear',
 									duration: 500
