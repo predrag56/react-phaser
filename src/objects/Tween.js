@@ -37,10 +37,10 @@ class Tween extends GameObject {
 		this.registerChildren();
 		this.update(this.props);
 
-		return this.getTargets();
+		return this.getChildren();
 	}
 
-	getTargets() {
+	getChildren() {
 		return this.children.map(getInst);
 	}
 
@@ -144,7 +144,7 @@ class Tween extends GameObject {
 			const tween = scene.add.tween({
 				...config,
 				props,
-				targets: this.getTargets(),
+				targets: this.getChildren(),
 				onComplete: () => {
 					onComplete && onComplete(key);
 					this.handleOnComplete(key);

@@ -41,15 +41,14 @@ export const Particles = TYPES.PARTICLES;
 export const Blitter = TYPES.BLITTER;
 export const Input = TYPES.INPUT;
 export const Mask = TYPES.MASK;
-// export const Graphics = TYPES.GRAPHICS;
 export const Circle = TYPES.CIRCLE;
-// export const Curve = TYPES.CURVE;
-// export const Line = TYPES.LINE;
 export const Ellipse = TYPES.ELLIPSE;
 export const Rectangle = TYPES.RECTANGLE;
 export const Triangle = TYPES.TRIANGLE;
 export const Polygon = TYPES.POLYGON;
 export const Star = TYPES.STAR;
-// export const Shape = TYPES.SHAPE;
+// export const Graphics = TYPES.GRAPHICS;
+// export const Curve = TYPES.CURVE;
+// export const Line = TYPES.LINE;
 
 export default TYPES;

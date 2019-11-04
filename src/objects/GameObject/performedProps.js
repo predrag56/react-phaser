@@ -66,8 +66,7 @@ export const mask = (inst, { mask }) => {
 	}
 };
 
-export const setFillStyle = (inst, { fillColor, alpha }) =>
-	console.log(',/???', fillColor) || inst.setFillStyle(fillColor, alpha);
+export const setFillStyle = (inst, { fillColor, alpha }) => inst.setFillStyle(fillColor, alpha);
 
 export const setStrokeStyle = (inst, { strokeWidth, strokeColor, strokeAlpha }) =>
 	inst.setStrokeStyle(strokeWidth, strokeColor, strokeAlpha);
