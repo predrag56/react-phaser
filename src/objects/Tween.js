@@ -129,6 +129,7 @@ class Tween extends GameObject {
 
 		if (!config) return;
 
+		const { onLoop, onComplete, onStart } = config;
 		let { props } = config;
 		let from = emptyObject;
 		if (props instanceof Array) {
@@ -144,8 +145,17 @@ class Tween extends GameObject {
 				...config,
 				props,
 				targets: this.getTargets(),
-				onComplete: () => this.handleOnComplete(key),
-				onLoop: () => this.handleOnLoop(key)
+				onComplete: () => {
+					onComplete && onComplete(key);
+					this.handleOnComplete(key);
+				},
+				onLoop: () => {
+					onLoop && onLoop(key);
+					this.handleOnLoop(key);
+				},
+				onStart: () => {
+					onStart && onStart(key);
+				}
 			});
 
 			this.instance = tween;
@@ -185,7 +195,7 @@ class Tween extends GameObject {
 
 Object.assign(Tween.prototype, {
 	shouldStop: false,
-	type: TYPES.CONTAINER,
+	type: TYPES.TWEEN,
 	performedProps,
 	allowedProps
 });

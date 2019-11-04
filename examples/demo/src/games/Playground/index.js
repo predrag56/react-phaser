@@ -13,7 +13,9 @@ import {
 	Tween,
 	Container,
 	Particles,
-	Blitter
+	Blitter,
+	Circle,
+	Ellipse
 } from 'react-phaser-bindings';
 import gemsJson from './gems.json';
 import flares from './flares.json';
@@ -139,7 +141,19 @@ class PlaygroundGame extends Component {
 						<Text interactive x={350} y={250} width={100} onClick={this.handlePlayStop}>
 							PLAY / STOP
 						</Text>
-						<Tween
+						<Circle
+							x={100}
+							y={100}
+							radius={150}
+							fillColor="0xffff00"
+							alpha={1}
+							strokeWidth={10}
+							strokeColor="0xff0000"
+							strokeAlpha={0.7}
+							stroke
+						/>
+						<Ellipse x={300} y={300} width={150} height={100} angle={30} fillColor="0xff5f00" />
+						{/*<Tween
 							play={play}
 							//onComplete={this.handlePlayStop}
 							animations={{
@@ -186,7 +200,7 @@ class PlaygroundGame extends Component {
 								<Image texture="gem" frame="square_0002" x={9 * 70} y={30} />
 								<Image texture="gem" frame="ruby_0000" x={10 * 70} y={30} />
 							</Container>
-						</Tween>
+						</Tween>*/}
 					</Container>
 					{/*<Blitter
 						x={0}

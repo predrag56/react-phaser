@@ -19,11 +19,17 @@ import Audio from './objects/Audio';
 import Video from './objects/Video';
 import Text from './objects/Text';
 import BitmapText from './objects/BitmapText';
+import Circle from './objects/Circle';
+import Ellipse from './objects/Ellipse';
+import Triangle from './objects/Triangle';
+import Rectangle from './objects/Rectangle';
+import Star from './objects/Star';
 import Zone from './objects/Zone';
 import Particles from './objects/Particles';
 import Tween from './objects/Tween';
 import Blitter from './objects/Blitter';
 import Input from './objects/Input';
+import Mask from './objects/Mask';
 
 /* eslint-disable no-unused-vars */
 const PhaserRenderer = Reconciler({
@@ -118,6 +124,18 @@ const PhaserRenderer = Reconciler({
 				return new Audio(props);
 			case TYPES.VIDEO:
 				return new Video(props);
+
+			case TYPES.CIRCLE:
+				return new Circle(props);
+			case TYPES.ELLIPSE:
+				return new Ellipse(props);
+			case TYPES.TRIANGLE:
+				return new Triangle(props);
+			case TYPES.RECTANGLE:
+				return new Rectangle(props);
+			case TYPES.STAR:
+				return new Star(props);
+
 			case TYPES.ZONE:
 				return new Zone(props);
 			case TYPES.PARTICLES:
@@ -128,6 +146,8 @@ const PhaserRenderer = Reconciler({
 				return new Blitter(props);
 			case TYPES.INPUT:
 				return new Input(props);
+			case TYPES.MASK:
+				return new Mask(props);
 			default:
 				return invariant('React-Phaser-Bindings: Unsupported component type');
 		}

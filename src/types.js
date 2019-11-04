@@ -21,7 +21,8 @@ const TYPES = {
 	ZONE: 'Zone',
 	PARTICLES: 'Particles',
 	BLITTER: 'Blitter',
-	INPUT: 'Input'
+	INPUT: 'Input',
+	MASK: 'Mask'
 };
 
 export const Scene = TYPES.SCENE;
@@ -38,14 +39,15 @@ export const Zone = TYPES.ZONE;
 export const Particles = TYPES.PARTICLES;
 export const Blitter = TYPES.BLITTER;
 export const Input = TYPES.INPUT;
+export const Mask = TYPES.MASK;
 // export const Graphics = TYPES.GRAPHICS;
-// export const Circle = TYPES.CIRCLE;
+export const Circle = TYPES.CIRCLE;
 // export const Curve = TYPES.CURVE;
 // export const Line = TYPES.LINE;
-// export const Ellipse = TYPES.ELLIPSE;
-// export const Rectangle = TYPES.RECTANGLE;
-// export const Triangle = TYPES.TRIANGLE;
-// export const Star = TYPES.STAR;
+export const Ellipse = TYPES.ELLIPSE;
+export const Rectangle = TYPES.RECTANGLE;
+export const Triangle = TYPES.TRIANGLE;
+export const Star = TYPES.STAR;
 // export const Shape = TYPES.SHAPE;
 
 export default TYPES;
