@@ -15,7 +15,8 @@ import {
 	Particles,
 	Blitter,
 	Circle,
-	Ellipse
+	Ellipse,
+	Rectangle
 } from 'react-phaser-bindings';
 import gemsJson from './gems.json';
 import flares from './flares.json';
@@ -122,23 +123,29 @@ class PlaygroundGame extends Component {
 	state = {
 		x: 300,
 		y: 10,
-		play: null
+		play: null,
+		flag: false
 	};
 
 	handlePlayStop = () => {
-		console.log('?');
 		this.setState(({ play }) => ({
 			play: play ? false : 'spin'
 		}));
 	};
 
+	toggleFlag = () =>
+		this.setState(({ flag }) => ({
+			flag: !flag
+		}));
+
 	render() {
-		const { x, y, play } = this.state;
+		const { x, y, play, flag } = this.state;
+		console.log('stroke!', flag);
 		return (
 			<Game config={config}>
 				<Scene name="scene" assets={assets} active>
 					<Container x={0} y={0} width={100} height={100}>
-						<Text interactive x={350} y={250} width={100} onClick={this.handlePlayStop}>
+						<Text interactive x={350} y={250} width={100} onClick={this.toggleFlag}>
 							PLAY / STOP
 						</Text>
 						<Circle
@@ -150,9 +157,32 @@ class PlaygroundGame extends Component {
 							strokeWidth={10}
 							strokeColor="0xff0000"
 							strokeAlpha={0.7}
+							stroke={flag}
+						/>
+						<Ellipse
+							x={300}
+							y={300}
+							width={150}
+							height={100}
+							angle={30}
+							fillColor="0xff5f00"
+							strokeWidth={10}
+							strokeColor="0xff0000"
+							strokeAlpha={0.7}
 							stroke
 						/>
-						<Ellipse x={300} y={300} width={150} height={100} angle={30} fillColor="0xff5f00" />
+						<Rectangle
+							x={560}
+							y={360}
+							width={150}
+							height={100}
+							angle={-30}
+							fillColor="0x005fff"
+							strokeWidth={3}
+							strokeColor="0x00ff00"
+							strokeAlpha={1}
+							stroke
+						/>
 						{/*<Tween
 							play={play}
 							//onComplete={this.handlePlayStop}

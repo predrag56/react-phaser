@@ -1,61 +1,52 @@
-import Phaser from 'phaser';
 import GameObject from './GameObject';
-import {
-	width,
-	height,
-	interactive,
-	origin,
-	mask,
-	texture as textureFn,
-	frame as frameFn
-} from './GameObject/performedProps';
+import { setFillStyle, stroke, interactive, origin, size } from './GameObject/performedProps';
 import TYPES from '../types';
 
 const allowedProps = [
-	'texture',
-	'frame',
 	'x',
 	'y',
 	'z',
 	'width',
 	'height',
-	'origin',
+	'color',
 	'alpha',
 	'angle',
+	'strokeWidth',
+	'strokeColor',
+	'strokeAlpha',
+	'smoothness',
 	'scale',
-	'tint',
 	'visible',
 	'interactive',
-	'mask'
+	'stroke'
 ];
 
 const performedProps = {
 	interactive,
-	frame: frameFn,
-	texture: textureFn,
-	width,
-	height,
+	width: size,
+	height: size,
+	fillColor: setFillStyle,
 	origin,
-	mask
+	stroke
 };
 
-class Image extends GameObject {
+class Rectangle extends GameObject {
 	register(scene) {
-		const { x, y, texture, frame } = this.props;
+		const { x, y, width, height, fillColor } = this.props;
 		this.scene = scene;
-		this.instance = new Phaser.GameObjects.Image(scene, x, y, texture, frame);
+		this.instance = scene.add.rectangle(x, y, width, height, fillColor);
 		this.registered = true;
-		scene.add.displayList.add(this.instance);
+		window.rectangle = this;
 		this.update(this.props);
 
 		return this.instance;
 	}
 }
 
-Object.assign(Image.prototype, {
-	type: TYPES.IMAGE,
+Object.assign(Rectangle.prototype, {
+	type: TYPES.RECTANGLE,
 	performedProps,
 	allowedProps
 });
 
-export default Image;
+export default Rectangle;

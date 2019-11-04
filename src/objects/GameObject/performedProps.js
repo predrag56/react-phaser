@@ -76,7 +76,7 @@ export const stroke = (inst, { stroke, ...props }) => {
 	if (stroke) {
 		setStrokeStyle(inst, props);
 	} else {
-		inst.isStroke = false;
+		inst.isStroked = false;
 	}
 };
 
