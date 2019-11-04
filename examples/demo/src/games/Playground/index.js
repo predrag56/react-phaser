@@ -16,7 +16,8 @@ import {
 	Blitter,
 	Circle,
 	Ellipse,
-	Rectangle
+	Rectangle,
+	Triangle
 } from 'react-phaser-bindings';
 import gemsJson from './gems.json';
 import flares from './flares.json';
@@ -176,6 +177,16 @@ class PlaygroundGame extends Component {
 							y={360}
 							width={150}
 							height={100}
+							angle={-30}
+							fillColor="0x005fff"
+							strokeWidth={3}
+							strokeColor="0x00ff00"
+							strokeAlpha={1}
+							stroke
+						/>
+						<Triangle
+							x={560}
+							y={100}
 							angle={-30}
 							fillColor="0x005fff"
 							strokeWidth={3}

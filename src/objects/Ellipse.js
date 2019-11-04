@@ -9,7 +9,7 @@ const allowedProps = [
 	'z',
 	'width',
 	'height',
-	'color',
+	'fillColor',
 	'alpha',
 	'angle',
 	'strokeWidth',
