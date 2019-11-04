@@ -19,7 +19,7 @@ import Particles from './objects/Particles';
 import Tween from './objects/Tween';
 import Blitter from './objects/Blitter';
 import Input from './objects/Input';
-// import Mask from './objects/Mask';
+import Mask from './objects/Mask';
 
 export default {
 	[TYPES.SCENE]: Scene,
@@ -40,5 +40,6 @@ export default {
 	[TYPES.PARTICLES]: Particles,
 	[TYPES.TWEEN]: Tween,
 	[TYPES.BLITTER]: Blitter,
-	[TYPES.INPUT]: Input
+	[TYPES.INPUT]: Input,
+	[TYPES.MASK]: Mask
 };

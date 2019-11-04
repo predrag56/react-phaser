@@ -1,30 +1,23 @@
 import Phaser from 'phaser';
 import { noop } from 'lodash';
 import GameObject from './';
-import Scene, { insertBeforeToScene } from '../../Scene';
+import Scene, { insertBeforeToScene, addToScene } from '../../Scene';
 import { insertBefore } from '../../utils';
-
-const getInst = (el) => el.instance;
 
 class Transparent extends GameObject {
 	register(scene, parent) {
 		this.scene = scene;
 		this.parent = parent;
-		this.children = [];
 
-		this.preRegister();
+		this.preRegister(scene, parent);
 
 		this.registered = true;
 		this.registerChildren();
 		this.update(this.props);
 
-		this.postRegister();
+		this.postRegister(scene, parent);
 
 		return this.getChildren();
-	}
-
-	getChildren() {
-		return this.children.map(getInst);
 	}
 
 	add(child) {

@@ -13,6 +13,7 @@ const TYPES = {
 	LINE: 'Line',
 	ELLIPSE: 'Ellipse',
 	RECTANGLE: 'Rectangle',
+	ROUNDEDRECTANGLE: 'RoundedRectangle',
 	TRIANGLE: 'Triangle',
 	POLYGON: 'Polygon',
 	STAR: 'Star',
@@ -44,6 +45,7 @@ export const Mask = TYPES.MASK;
 export const Circle = TYPES.CIRCLE;
 export const Ellipse = TYPES.ELLIPSE;
 export const Rectangle = TYPES.RECTANGLE;
+export const RoundedRectangle = TYPES.ROUNDEDRECTANGLE;
 export const Triangle = TYPES.TRIANGLE;
 export const Polygon = TYPES.POLYGON;
 export const Star = TYPES.STAR;

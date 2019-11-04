@@ -19,7 +19,8 @@ import {
 	Rectangle,
 	Triangle,
 	Polygon,
-	Star
+	Star,
+	Mask
 } from 'react-phaser-bindings';
 import gemsJson from './gems.json';
 import flares from './flares.json';
@@ -143,113 +144,115 @@ class PlaygroundGame extends Component {
 
 	render() {
 		const { x, y, play, flag } = this.state;
-		console.log('stroke!', flag);
+
 		return (
 			<Game config={config}>
 				<Scene name="scene" assets={assets} active>
 					<Container x={0} y={0} width={100} height={100}>
+						<Mask type="Rectangle" x={100} y={100} width={550} height={200} fillColor="0xffffff">
+							<Circle
+								x={100}
+								y={100}
+								radius={150}
+								fillColor="0xffff00"
+								alpha={1}
+								strokeWidth={10}
+								strokeColor="0xff0000"
+								strokeAlpha={0.7}
+								stroke={flag}
+							/>
+							<Ellipse
+								x={300}
+								y={300}
+								width={150}
+								height={100}
+								angle={30}
+								fillColor="0xff5f00"
+								strokeWidth={10}
+								strokeColor="0xff0000"
+								strokeAlpha={0.7}
+								stroke
+							/>
+							<Rectangle
+								x={560}
+								y={360}
+								width={150}
+								height={100}
+								angle={-30}
+								fillColor="0x005fff"
+								strokeWidth={3}
+								strokeColor="0x00ff00"
+								strokeAlpha={1}
+								stroke
+							/>
+							<Polygon
+								x={360}
+								y={100}
+								points={[0, 0, 100, 100, 100, 200, flag ? 400 : 300, 20]}
+								angle={0}
+								fillColor="0x005fff"
+								strokeWidth={3}
+								strokeColor="0x00ff00"
+								strokeAlpha={1}
+								stroke
+							/>
+							<Star
+								x={560}
+								y={100}
+								points={flag ? 5 : 10}
+								angle={0}
+								fillColor="0x005fff"
+								strokeWidth={3}
+								strokeColor="0x00ff00"
+								strokeAlpha={1}
+								stroke
+							/>
+							<Tween
+								play={play}
+								//onComplete={this.handlePlayStop}
+								animations={{
+									spin: {
+										complex: true,
+										queue: ['spinStart', 'spinLoop', 'spinEnd']
+									},
+									spinStart: {
+										repeat: 0,
+										props: [{ y: 250, x: 0 }, { y: 700, x: 0 }],
+										ease: 'Sine.In',
+										duration: 1000
+									},
+									spinLoop: {
+										repeat: 3,
+										props: [{ y: -100, x: 0 }, { y: 700, x: 0 }],
+										ease: 'Linear',
+										duration: 500
+									},
+									spinEnd: {
+										repeat: 0,
+										props: [{ y: -100, x: 0 }, { y: 250, x: 0 }],
+										ease: 'Sine.Out',
+										duration: 1000
+									}
+								}}
+							>
+								<Container x={0} y={250} width={100} height={300}>
+									<Image texture="gem" frame="prism_0002" x={0} y={30} />
+									<Image texture="gem" frame="square_0002" x={70} y={30} />
+									<Image texture="gem" frame="ruby_0000" x={2 * 70} y={30} />
+									<Image texture="gem" frame="diamond_0000" x={3 * 70} y={30} />
+									<Image texture="gem" frame="prism_0002" x={4 * 70} y={30} />
+									<Image texture="gem" frame="square_0002" x={5 * 70} y={30} />
+									<Image texture="gem" frame="ruby_0000" x={6 * 70} y={30} />
+									<Image texture="gem" frame="diamond_0000" x={7 * 70} y={30} />
+									<Image texture="gem" frame="prism_0002" x={8 * 70} y={30} />
+									<Image texture="gem" frame="square_0002" x={9 * 70} y={30} />
+									<Image texture="gem" frame="ruby_0000" x={10 * 70} y={30} />
+								</Container>
+							</Tween>
+						</Mask>
 						<Text interactive x={350} y={250} width={100} onClick={this.handlePlayStop}>
 							PLAY / STOP
 						</Text>
-						<Circle
-							x={100}
-							y={100}
-							radius={150}
-							fillColor="0xffff00"
-							alpha={1}
-							strokeWidth={10}
-							strokeColor="0xff0000"
-							strokeAlpha={0.7}
-							stroke={flag}
-						/>
-						<Ellipse
-							x={300}
-							y={300}
-							width={150}
-							height={100}
-							angle={30}
-							fillColor="0xff5f00"
-							strokeWidth={10}
-							strokeColor="0xff0000"
-							strokeAlpha={0.7}
-							stroke
-						/>
-						<Rectangle
-							x={560}
-							y={360}
-							width={150}
-							height={100}
-							angle={-30}
-							fillColor="0x005fff"
-							strokeWidth={3}
-							strokeColor="0x00ff00"
-							strokeAlpha={1}
-							stroke
-						/>
-						<Polygon
-							x={360}
-							y={100}
-							points={[0, 0, 100, 100, 100, 200, flag ? 400 : 300, 20]}
-							angle={0}
-							fillColor="0x005fff"
-							strokeWidth={3}
-							strokeColor="0x00ff00"
-							strokeAlpha={1}
-							stroke
-						/>
-						<Star
-							x={560}
-							y={100}
-							points={flag ? 5 : 10}
-							angle={0}
-							fillColor="0x005fff"
-							strokeWidth={3}
-							strokeColor="0x00ff00"
-							strokeAlpha={1}
-							stroke
-						/>
-						{/*<Tween
-							play={play}
-							//onComplete={this.handlePlayStop}
-							animations={{
-								spin: {
-									complex: true,
-									queue: ['spinStart', 'spinLoop', 'spinEnd']
-								},
-								spinStart: {
-									repeat: 0,
-									props: [{ y: 250, x: 0 }, { y: 700, x: 0 }],
-									ease: 'Sine.In',
-									duration: 1000
-								},
-								spinLoop: {
-									repeat: 3,
-									props: [{ y: -100, x: 0 }, { y: 700, x: 0 }],
-									ease: 'Linear',
-									duration: 500
-								},
-								spinEnd: {
-									repeat: 0,
-									props: [{ y: -100, x: 0 }, { y: 250, x: 0 }],
-									ease: 'Sine.Out',
-									duration: 1000
-								}
-							}}
-						>
-							<Container x={0} y={250} width={100} height={300}>
-								<Image texture="gem" frame="prism_0002" x={0} y={30} />
-								<Image texture="gem" frame="square_0002" x={70} y={30} />
-								<Image texture="gem" frame="ruby_0000" x={2 * 70} y={30} />
-								<Image texture="gem" frame="diamond_0000" x={3 * 70} y={30} />
-								<Image texture="gem" frame="prism_0002" x={4 * 70} y={30} />
-								<Image texture="gem" frame="square_0002" x={5 * 70} y={30} />
-								<Image texture="gem" frame="ruby_0000" x={6 * 70} y={30} />
-								<Image texture="gem" frame="diamond_0000" x={7 * 70} y={30} />
-								<Image texture="gem" frame="prism_0002" x={8 * 70} y={30} />
-								<Image texture="gem" frame="square_0002" x={9 * 70} y={30} />
-								<Image texture="gem" frame="ruby_0000" x={10 * 70} y={30} />
-							</Container>
-						</Tween>*/}
 					</Container>
 					{/*<Blitter
 						x={0}
