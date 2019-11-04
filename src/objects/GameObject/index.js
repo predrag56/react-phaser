@@ -132,8 +132,6 @@ class GameObject {
 				continue;
 			}
 
-			console.log(key, value);
-
 			if (this.performedProps[key]) {
 				this.performedProps[key](instance, props, this);
 				continue;

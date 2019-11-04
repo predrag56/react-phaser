@@ -23,6 +23,7 @@ import Circle from './objects/Circle';
 import Ellipse from './objects/Ellipse';
 import Triangle from './objects/Triangle';
 import Rectangle from './objects/Rectangle';
+import Polygon from './objects/Polygon';
 import Star from './objects/Star';
 import Zone from './objects/Zone';
 import Particles from './objects/Particles';
@@ -133,6 +134,8 @@ const PhaserRenderer = Reconciler({
 				return new Triangle(props);
 			case TYPES.RECTANGLE:
 				return new Rectangle(props);
+			case TYPES.POLYGON:
+				return new Polygon(props);
 			case TYPES.STAR:
 				return new Star(props);
 

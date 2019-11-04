@@ -1,61 +1,52 @@
-import Phaser from 'phaser';
 import GameObject from './GameObject';
-import {
-	width,
-	height,
-	interactive,
-	origin,
-	mask,
-	texture as textureFn,
-	frame as frameFn
-} from './GameObject/performedProps';
+import { setFillStyle, stroke, interactive, origin } from './GameObject/performedProps';
+import GetAABB from 'phaser/src/geom/polygon/GetAABB';
+import GeomPolygon from 'phaser/src/geom/polygon/Polygon';
 import TYPES from '../types';
 
 const allowedProps = [
-	'texture',
-	'frame',
 	'x',
 	'y',
 	'z',
-	'width',
-	'height',
-	'origin',
+	'points',
+	'innerRadius',
+	'outerRadius',
+	'fillColor',
 	'alpha',
 	'angle',
+	'strokeWidth',
+	'strokeColor',
+	'strokeAlpha',
+	'smoothness',
 	'scale',
-	'tint',
 	'visible',
 	'interactive',
-	'mask'
+	'stroke'
 ];
 
 const performedProps = {
 	interactive,
-	frame: frameFn,
-	texture: textureFn,
-	width,
-	height,
+	fillColor: setFillStyle,
 	origin,
-	mask
+	stroke
 };
 
-class Image extends GameObject {
+class Star extends GameObject {
 	register(scene) {
-		const { x, y, texture, frame } = this.props;
+		const { x, y, points, innerRadius, outerRadius, fillColor } = this.props;
 		this.scene = scene;
-		this.instance = new Phaser.GameObjects.Image(scene, x, y, texture, frame);
+		this.instance = scene.add.star(x, y, points, innerRadius, outerRadius, fillColor);
 		this.registered = true;
-		scene.add.displayList.add(this.instance);
 		this.update(this.props);
 
 		return this.instance;
 	}
 }
 
-Object.assign(Image.prototype, {
-	type: TYPES.IMAGE,
+Object.assign(Star.prototype, {
+	type: TYPES.STAR,
 	performedProps,
 	allowedProps
 });
 
-export default Image;
+export default Star;

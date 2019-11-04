@@ -17,7 +17,9 @@ import {
 	Circle,
 	Ellipse,
 	Rectangle,
-	Triangle
+	Triangle,
+	Polygon,
+	Star
 } from 'react-phaser-bindings';
 import gemsJson from './gems.json';
 import flares from './flares.json';
@@ -184,10 +186,22 @@ class PlaygroundGame extends Component {
 							strokeAlpha={1}
 							stroke
 						/>
-						<Triangle
+						<Polygon
+							x={360}
+							y={100}
+							points={[0, 0, 100, 100, 100, 200, flag ? 400 : 300, 20]}
+							angle={0}
+							fillColor="0x005fff"
+							strokeWidth={3}
+							strokeColor="0x00ff00"
+							strokeAlpha={1}
+							stroke
+						/>
+						<Star
 							x={560}
 							y={100}
-							angle={-30}
+							points={flag ? 5 : 10}
+							angle={0}
 							fillColor="0x005fff"
 							strokeWidth={3}
 							strokeColor="0x00ff00"
