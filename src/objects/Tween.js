@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
-import GameObject from './GameObject';
-import Scene, { insertBeforeToScene } from '../Scene';
-import { insertBefore } from '../utils';
-import TYPES from '../types';
 import { omit } from 'lodash';
+import emptyObject from 'fbjs/lib/emptyObject';
+import TransparentGameObject from './GameObject/Transparent';
+import TYPES from '../types';
+
+const allowedProps = ['play'];
 
 const performedProps = {
 	play: (inst, { play }, object) => {
@@ -15,62 +16,16 @@ const performedProps = {
 	}
 };
 
-const allowedProps = ['play'];
-
-class Tween extends GameObject {
-	register(scene, parent) {
+class Tween extends TransparentGameObject {
+	preRegister(scene, parent) {
 		const { animations } = this.props;
-		this.scene = scene;
 
-		window.tween = this;
-
-		this.parent = parent;
-		this.instancePool = [];
 		this.tweenQueue = [];
 		this.animationPool = {};
 
+		window.tween = this;
+
 		this.animationsConfig = this.prepareConfig(animations);
-		this.registered = true;
-		this.registerChildren();
-		this.update(this.props);
-
-		return this.instancePool;
-	}
-
-	add(child) {
-		if (this.registered) {
-			const instance = child.register(this.scene);
-			this.instancePool.push(instance);
-			this.parent.add(instance);
-			this.pool.push(child);
-		} else {
-			this.pool.push(child);
-		}
-	}
-
-	insertBefore(child, beforeChild) {
-		const { parent } = this;
-
-		this.add(child);
-
-		if (parent instanceof Scene) {
-			insertBeforeToScene(parent, child.instance, beforeChild.instance);
-		} else {
-			insertBefore(parent.instance.list, child.instance, beforeChild.instance);
-		}
-	}
-
-	registerChildren() {
-		const { instancePool, pool, scenePool, scene } = this;
-
-		for (const elem of pool) {
-			const child = elem.register(this.scene);
-			instancePool.push(child);
-		}
-
-		for (const child of scenePool) {
-			addToScene(scene, child);
-		}
 	}
 
 	prepareConfig(configs) {
@@ -88,7 +43,19 @@ class Tween extends GameObject {
 	}
 
 	play(key) {
+		const { replaceAnimation } = this.props;
+		console.log(key, this.animationsConfig);
+		const { queue, complex } = this.animationsConfig[key];
+
+		if (complex) {
+			this.play(queue[0]);
+			this.tweenQueue.push(...queue.slice(1));
+			return;
+		}
+		this.shouldStop = false;
+
 		if (this.instance) {
+			this.tweenQueue = [];
 			this.tweenQueue.push(key);
 		} else {
 			this.startTween(key);
@@ -101,26 +68,48 @@ class Tween extends GameObject {
 			this.instance = null;
 		}
 
-		this.shouldStop = false;
-
 		const key = this.tweenQueue.shift();
+
 		if (key) this.startTween(key);
 	}
 
 	startTween(key) {
-		const { instancePool, scene, tweenQueue, animationsConfig } = this;
+		const { children, scene, tweenQueue, animationsConfig } = this;
 		const config = animationsConfig[key];
 
 		if (!config) return;
 
-		const tween = scene.add.tween({
-			...config,
-			targets: instancePool,
-			onComplete: () => this.handleOnComplete(key),
-			onLoop: () => this.handleOnLoop(key)
-		});
+		const { onLoop, onComplete, onStart } = config;
+		let { props } = config;
+		let from = emptyObject;
+		if (props instanceof Array) {
+			[from, props] = props;
+		}
 
-		this.instance = tween;
+		if (from !== emptyObject) {
+			children.forEach((child) => child.forceUpdate(from));
+		}
+
+		setTimeout(() => {
+			const tween = scene.add.tween({
+				...config,
+				props,
+				targets: this.getChildren(),
+				onComplete: () => {
+					onComplete && onComplete(key);
+					this.handleOnComplete(key);
+				},
+				onLoop: () => {
+					onLoop && onLoop(key);
+					this.handleOnLoop(key);
+				},
+				onStart: () => {
+					onStart && onStart(key);
+				}
+			});
+
+			this.instance = tween;
+		});
 
 		return tween;
 	}
@@ -134,7 +123,7 @@ class Tween extends GameObject {
 	handleOnComplete(key) {
 		const { onComplete } = this.props || {};
 
-		if (onComplete) {
+		if (onComplete && !this.tweenQueue.length) {
 			onComplete(key);
 		}
 
@@ -148,7 +137,7 @@ class Tween extends GameObject {
 			onLoop(key);
 		}
 
-		if (this.tweenQueue.length || this.shouldStop) {
+		if (this.shouldStop) {
 			this.next();
 		}
 	}
@@ -156,7 +145,7 @@ class Tween extends GameObject {
 
 Object.assign(Tween.prototype, {
 	shouldStop: false,
-	type: TYPES.CONTAINER,
+	type: TYPES.TWEEN,
 	performedProps,
 	allowedProps
 });

@@ -3,6 +3,8 @@ export const width = (inst, { width }) => inst.displayWidth(width);
 
 export const height = (inst, { height }) => inst.displayHeight(height);
 
+export const size = (inst, { width, height }) => inst.setSize(width, height);
+
 export const origin = (inst, { origin }) => inst.setOrigin(...origin);
 
 export const frame = (inst, { frame }) => inst.setFrame(frame);
@@ -55,4 +57,26 @@ export const textChildren = (inst, { children }) => {
 
 	inst.text = children;
 };
+
+export const mask = (inst, { mask }) => {
+	if (mask) {
+		inst.setMask(mask);
+	} else {
+		inst.clearMask();
+	}
+};
+
+export const setFillStyle = (inst, { fillColor, alpha }) => inst.setFillStyle(fillColor, alpha);
+
+export const setStrokeStyle = (inst, { strokeWidth, strokeColor, strokeAlpha }) =>
+	inst.setStrokeStyle(strokeWidth, strokeColor, strokeAlpha);
+
+export const stroke = (inst, { stroke, ...props }) => {
+	if (stroke) {
+		setStrokeStyle(inst, props);
+	} else {
+		inst.isStroked = false;
+	}
+};
+
 /* eslint-enable no-shadow */

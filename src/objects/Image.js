@@ -5,6 +5,7 @@ import {
 	height,
 	interactive,
 	origin,
+	mask,
 	texture as textureFn,
 	frame as frameFn
 } from './GameObject/performedProps';
@@ -24,7 +25,8 @@ const allowedProps = [
 	'scale',
 	'tint',
 	'visible',
-	'interactive'
+	'interactive',
+	'mask'
 ];
 
 const performedProps = {
@@ -33,7 +35,8 @@ const performedProps = {
 	texture: textureFn,
 	width,
 	height,
-	origin
+	origin,
+	mask
 };
 
 class Image extends GameObject {
@@ -44,7 +47,7 @@ class Image extends GameObject {
 		this.registered = true;
 		scene.add.displayList.add(this.instance);
 		this.update(this.props);
-		window.img = this;
+
 		return this.instance;
 	}
 }

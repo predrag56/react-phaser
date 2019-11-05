@@ -1,12 +1,12 @@
 import TYPES from '../../types';
 import GameObject from '../GameObject';
 import { pause, width, height, origin } from '../GameObject/performedProps';
-import VideoObject from './VideoObject';
 
 const allowedProps = [
 	'x',
 	'y',
 	'z',
+	'texture',
 	'alpha',
 	'angle',
 	'scale',
@@ -22,8 +22,22 @@ const allowedProps = [
 	'muted',
 	'playsInline',
 	'crossOrigin',
-	'playbackTimeChangeEventEnable'
+	'playbackTimeChangeEventEnable',
+	'exit'
 ];
+
+const eventMap = {
+	onPlay: 'play',
+	onStop: 'stop',
+	onCreated: 'created',
+	onComplete: 'complete',
+	onUnlocked: 'unlocked',
+	onLoop: 'loop',
+	onSeeking: 'seeking',
+	onSeeked: 'seeked',
+	onTimeout: 'timeout',
+	onError: 'error'
+};
 
 const performedProps = {
 	width,
@@ -32,7 +46,7 @@ const performedProps = {
 		if (play) {
 			inst.play();
 		} else {
-			inst.pause();
+			inst.stop();
 		}
 	},
 	pause,
@@ -41,11 +55,12 @@ const performedProps = {
 
 class Video extends GameObject {
 	register(scene) {
+		const { x, y, texture } = this.props;
 		this.scene = scene;
-		this.instance = new VideoObject(scene, this.props);
+		this.instance = scene.add.video(x, y, texture);
 		this.registered = true;
-		scene.add.existing(this.instance);
 		this.update(this.props);
+
 		return this.instance;
 	}
 }
@@ -54,7 +69,8 @@ Object.assign(Video.prototype, {
 	texture: '',
 	type: TYPES.VIDEO,
 	allowedProps,
-	performedProps
+	performedProps,
+	eventMap
 });
 
 export default Video;
