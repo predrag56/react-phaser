@@ -31,12 +31,16 @@ const defaultEventMap = {
 	onDestroy: Events.DESTROY
 };
 
+const getInst = (el) => el.getChildren();
+
 class GameObject {
 	pool = [];
 
 	scenePool = [];
 
 	transitionsPool = [];
+
+	children = [];
 
 	constructor(props) {
 		this.props = props;
@@ -48,6 +52,20 @@ class GameObject {
 		};
 
 		this.eventNames = Object.keys(this.fullEventMap);
+	}
+
+	getChildren() {
+		const children = [];
+
+		if (this.instance) {
+			children.push(this.instance);
+		}
+
+		if (this.children) {
+			children.push(...this.children.map((el) => el.getChildren()).reduce((acc, el) => acc.concat(el), []));
+		}
+
+		return children.filter((el) => el);
 	}
 
 	register() {
@@ -94,15 +112,15 @@ class GameObject {
 	}
 
 	update(newProps, oldProps) {
+		const { instance, fullEventMap } = this;
+		if (!this.registered) return;
+
 		const props = {
 			...pick(defaultProps, this.allowedProps),
 			...this.defaultProps,
 			...pick(newProps, this.allowedProps),
 			...pick(newProps, this.eventNames)
 		};
-
-		const { instance, fullEventMap } = this;
-		if (!this.registered) return;
 
 		for (const key in props) {
 			const value = props[key];
@@ -137,7 +155,9 @@ class GameObject {
 				continue;
 			}
 
-			instance[key] = value;
+			if (instance) {
+				instance[key] = value;
+			}
 		}
 
 		this.props = newProps;

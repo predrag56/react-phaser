@@ -10,20 +10,9 @@ import {
 } from 'scheduler';
 import { version, name } from '../package.json';
 
-import TYPES from './types';
 import Scene, { addToScene, insertBeforeToScene, UPDATE } from './Scene';
-import Container from './objects/Container';
-import Sprite from './objects/Sprite';
-import Image from './objects/Image';
 import Audio from './objects/Audio';
-import Video from './objects/Video';
-import Text from './objects/Text';
-import BitmapText from './objects/BitmapText';
-import Zone from './objects/Zone';
-import Particles from './objects/Particles';
-import Tween from './objects/Tween';
-import Blitter from './objects/Blitter';
-import Input from './objects/Input';
+import Components from './ComponentsMap';
 
 /* eslint-disable no-unused-vars */
 const PhaserRenderer = Reconciler({
@@ -91,7 +80,7 @@ const PhaserRenderer = Reconciler({
 	},
 
 	appendChildToContainer(game, child) {
-		if (child instanceof Phaser.Scene) {
+		if (child instanceof Scene) {
 			child.register(game);
 		}
 	},
@@ -101,36 +90,11 @@ const PhaserRenderer = Reconciler({
 	},
 
 	createInstance(type, props, scope) {
-		switch (type) {
-			case TYPES.SCENE:
-				return new Scene(props);
-			case TYPES.CONTAINER:
-				return new Container(props);
-			case TYPES.IMAGE:
-				return new Image(props);
-			case TYPES.SPRITE:
-				return new Sprite(props);
-			case TYPES.TEXT:
-				return new Text(props);
-			case TYPES.BITMAPTEXT:
-				return new BitmapText(props);
-			case TYPES.AUDIO:
-				return new Audio(props);
-			case TYPES.VIDEO:
-				return new Video(props);
-			case TYPES.ZONE:
-				return new Zone(props);
-			case TYPES.PARTICLES:
-				return new Particles(props);
-			case TYPES.TWEEN:
-				return new Tween(props);
-			case TYPES.BLITTER:
-				return new Blitter(props);
-			case TYPES.INPUT:
-				return new Input(props);
-			default:
-				return invariant('React-Phaser-Bindings: Unsupported component type');
-		}
+		const Node = Components[type];
+
+		invariant(Node, `React-Phaser-Bindings: Unsupported component type: ${type}`);
+
+		return new Node(props);
 	},
 
 	createTextInstance(text, rootContainerInstance, paperScope) {
@@ -189,7 +153,7 @@ const PhaserRenderer = Reconciler({
 	},
 
 	removeChild(parentInstance, child) {
-		if (!(child instanceof Phaser.Scene)) {
+		if (!(child instanceof Scene)) {
 			child.destroy();
 		}
 	},
@@ -199,13 +163,10 @@ const PhaserRenderer = Reconciler({
 	commitMount(instance, type, newProps) {},
 
 	commitUpdate(instance, updatePayload, type, oldProps, newProps, scope) {
-		switch (type) {
-			case TYPES.SCENE:
-				instance[UPDATE](newProps, oldProps);
-				break;
-			default:
-				instance.update(newProps, oldProps);
-				break;
+		if (instance instanceof Scene) {
+			instance[UPDATE](newProps, oldProps);
+		} else {
+			instance.update(newProps, oldProps);
 		}
 	},
 

@@ -1,10 +1,10 @@
 import Phaser from 'phaser';
-import GameObject from './GameObject';
-import Scene, { insertBeforeToScene } from '../Scene';
-import { insertBefore } from '../utils';
-import TYPES from '../types';
-import emptyObject from 'fbjs/lib/emptyObject';
 import { omit } from 'lodash';
+import emptyObject from 'fbjs/lib/emptyObject';
+import TransparentGameObject from './GameObject/Transparent';
+import TYPES from '../types';
+
+const allowedProps = ['play'];
 
 const performedProps = {
 	play: (inst, { play }, object) => {
@@ -16,68 +16,16 @@ const performedProps = {
 	}
 };
 
-const allowedProps = ['play'];
-
-const getInst = (el) => el.instance;
-
-class Tween extends GameObject {
-	register(scene, parent) {
+class Tween extends TransparentGameObject {
+	preRegister(scene, parent) {
 		const { animations } = this.props;
-		this.scene = scene;
 
-		window.tween = this;
-
-		this.parent = parent;
-		this.children = [];
 		this.tweenQueue = [];
 		this.animationPool = {};
 
+		window.tween = this;
+
 		this.animationsConfig = this.prepareConfig(animations);
-		this.registered = true;
-		this.registerChildren();
-		this.update(this.props);
-
-		return this.getTargets();
-	}
-
-	getTargets() {
-		return this.children.map(getInst);
-	}
-
-	add(child) {
-		if (this.registered) {
-			const instance = child.register(this.scene);
-			this.children.push(child);
-			this.parent.add(instance);
-			this.pool.push(child);
-		} else {
-			this.pool.push(child);
-		}
-	}
-
-	insertBefore(child, beforeChild) {
-		const { parent } = this;
-
-		this.add(child);
-
-		if (parent instanceof Scene) {
-			insertBeforeToScene(parent, child.instance, beforeChild.instance);
-		} else {
-			insertBefore(parent.instance.list, child.instance, beforeChild.instance);
-		}
-	}
-
-	registerChildren() {
-		const { children, pool, scenePool, scene } = this;
-
-		for (const elem of pool) {
-			const child = elem.register(this.scene);
-			children.push(elem);
-		}
-
-		for (const child of scenePool) {
-			addToScene(scene, child);
-		}
 	}
 
 	prepareConfig(configs) {
@@ -129,6 +77,7 @@ class Tween extends GameObject {
 
 		if (!config) return;
 
+		const { onLoop, onComplete, onStart } = config;
 		let { props } = config;
 		let from = emptyObject;
 		if (props instanceof Array) {
@@ -143,9 +92,18 @@ class Tween extends GameObject {
 			const tween = scene.add.tween({
 				...config,
 				props,
-				targets: this.getTargets(),
-				onComplete: () => this.handleOnComplete(key),
-				onLoop: () => this.handleOnLoop(key)
+				targets: this.getChildren(),
+				onComplete: () => {
+					onComplete && onComplete(key);
+					this.handleOnComplete(key);
+				},
+				onLoop: () => {
+					onLoop && onLoop(key);
+					this.handleOnLoop(key);
+				},
+				onStart: () => {
+					onStart && onStart(key);
+				}
 			});
 
 			this.instance = tween;
@@ -185,7 +143,7 @@ class Tween extends GameObject {
 
 Object.assign(Tween.prototype, {
 	shouldStop: false,
-	type: TYPES.CONTAINER,
+	type: TYPES.TWEEN,
 	performedProps,
 	allowedProps
 });
