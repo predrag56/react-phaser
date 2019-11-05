@@ -149,7 +149,14 @@ class PlaygroundGame extends Component {
 			<Game config={config}>
 				<Scene name="scene" assets={assets} active>
 					<Container x={0} y={0} width={100} height={100}>
-						<Mask type="Rectangle" x={100} y={100} width={550} height={200} fillColor="0xffffff">
+						<Mask
+							type={flag ? 'Ellipse' : 'Rectangle'}
+							x={100}
+							y={100}
+							width={flag ? 550 : 100}
+							height={flag ? 200 : 300}
+							inverse={flag}
+						>
 							<Circle
 								x={100}
 								y={100}
@@ -250,7 +257,7 @@ class PlaygroundGame extends Component {
 								</Container>
 							</Tween>
 						</Mask>
-						<Text interactive x={350} y={250} width={100} onClick={this.handlePlayStop}>
+						<Text interactive x={350} y={250} width={100} onClick={this.toggleFlag}>
 							PLAY / STOP
 						</Text>
 					</Container>
