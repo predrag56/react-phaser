@@ -104,6 +104,8 @@ class Mask extends TransparentGameObject {
 	}
 
 	update(newProps, oldProps) {
+		if (!this.registered) return;
+
 		const pureNewProps = omit(newProps, maskProps, 'children', 'type', 'fillColor');
 		const pureOldProps = omit(oldProps, maskProps, 'children', 'type', 'fillColor');
 
