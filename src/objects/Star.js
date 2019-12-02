@@ -13,6 +13,7 @@ const allowedProps = [
 	'outerRadius',
 	'fillColor',
 	'alpha',
+	'origin',
 	'angle',
 	'strokeWidth',
 	'strokeColor',

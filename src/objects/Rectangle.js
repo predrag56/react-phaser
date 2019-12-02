@@ -16,6 +16,7 @@ const allowedProps = [
 	'strokeAlpha',
 	'smoothness',
 	'scale',
+	'origin',
 	'visible',
 	'interactive',
 	'stroke'
