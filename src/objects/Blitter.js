@@ -28,6 +28,7 @@ class Blitter extends GameObject {
 		this.instance = scene.add.blitter(x, y, texture, frame);
 		this.registered = true;
 		this.update(this.props);
+		this.postRegister();
 
 		return this.instance;
 	}

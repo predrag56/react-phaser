@@ -1,7 +1,7 @@
 import Events from 'phaser/src/input/events';
 import emptyObject from 'fbjs/lib/emptyObject';
 import invariant from 'fbjs/lib/invariant';
-import { pick } from 'lodash';
+import { pick, noop } from 'lodash';
 import { insertBefore, shortId } from '../../utils';
 import { addToScene } from '../../Scene';
 
@@ -251,6 +251,7 @@ Object.assign(GameObject.prototype, {
 	performedProps,
 	allowedProps,
 	transitionProps,
+	postRegister: noop,
 	defaultProps: emptyObject,
 	eventMap: emptyObject
 });

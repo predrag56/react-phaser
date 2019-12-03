@@ -15,8 +15,7 @@ class Container extends GameObject {
 		this.registered = true;
 		this.update(this.props);
 		this.registerChildren();
-
-		window.container = this;
+		this.postRegister();
 
 		return this.instance;
 	}

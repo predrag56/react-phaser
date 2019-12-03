@@ -37,8 +37,8 @@ class Rectangle extends GameObject {
 		this.scene = scene;
 		this.instance = scene.add.rectangle(x, y, width, height, fillColor);
 		this.registered = true;
-		window.rectangle = this;
 		this.update(this.props);
+		this.postRegister();
 
 		return this.instance;
 	}

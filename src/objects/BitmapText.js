@@ -46,6 +46,7 @@ class BitmapText extends GameObject {
 		scene.add.existing(this.instance);
 		this.registered = true;
 		this.update(this.props);
+		this.postRegister();
 
 		return this.instance;
 	}

@@ -26,6 +26,8 @@ class Zone extends GameObject {
 		this.registered = true;
 		scene.add.displayList.add(this.instance);
 		this.update(this.props);
+		this.postRegister();
+
 		return this.instance;
 	}
 }
