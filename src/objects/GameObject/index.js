@@ -112,8 +112,10 @@ class GameObject {
 	}
 
 	update(newProps, oldProps) {
-		const { instance, fullEventMap } = this;
 		if (!this.registered) return;
+		if (newProps.immutable) return;
+
+		const { instance, fullEventMap } = this;
 
 		const props = {
 			...pick(defaultProps, this.allowedProps),
