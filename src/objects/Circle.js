@@ -13,6 +13,7 @@ const allowedProps = [
 	'strokeWidth',
 	'strokeColor',
 	'strokeAlpha',
+	'origin',
 	'scale',
 	'visible',
 	'interactive',

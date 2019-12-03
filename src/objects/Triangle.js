@@ -14,6 +14,7 @@ const allowedProps = [
 	'y3',
 	'fillColor',
 	'alpha',
+	'origin',
 	'angle',
 	'strokeWidth',
 	'strokeColor',

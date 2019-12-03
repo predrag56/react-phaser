@@ -12,6 +12,7 @@ const allowedProps = [
 	'fillColor',
 	'alpha',
 	'angle',
+	'origin',
 	'strokeWidth',
 	'strokeColor',
 	'strokeAlpha',
