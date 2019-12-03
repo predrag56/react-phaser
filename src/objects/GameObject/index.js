@@ -113,7 +113,7 @@ class GameObject {
 
 	update(newProps, oldProps) {
 		if (!this.registered) return;
-		if (newProps.immutable) return;
+		if (oldProps && newProps.immutable) return;
 
 		const { instance, fullEventMap } = this;
 
