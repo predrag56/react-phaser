@@ -43,7 +43,7 @@ class Text extends GameObject {
 
 Object.assign(Text.prototype, {
 	texture: '',
-	type: TYPES.IMAGE,
+	type: TYPES.TEXT,
 	performedProps,
 	allowedProps
 });

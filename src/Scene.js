@@ -123,7 +123,9 @@ export default class Scene extends Phaser.Scene {
 		beforecreate && beforecreate.call(this, this, ...args);
 
 		for (let i = 0, l = pool.length; i < l; i++) {
-			pool[i].register(this);
+			if (!pool[i].destroyed) {
+				pool[i].register(this);
+			}
 		}
 
 		create && create.call(this, this, ...args);

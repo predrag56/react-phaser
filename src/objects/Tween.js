@@ -44,7 +44,6 @@ class Tween extends TransparentGameObject {
 
 	play(key) {
 		const { replaceAnimation } = this.props;
-		console.log(key, this.animationsConfig);
 		const { queue, complex } = this.animationsConfig[key];
 
 		if (complex) {

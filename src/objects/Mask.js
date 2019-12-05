@@ -54,6 +54,8 @@ class Mask extends TransparentGameObject {
 		for (const child of children) {
 			child.setMask && child.setMask(this.mask);
 		}
+
+		window.Mask = this;
 	}
 
 	createShape() {

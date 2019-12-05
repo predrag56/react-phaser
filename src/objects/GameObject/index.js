@@ -45,6 +45,7 @@ class GameObject {
 	constructor(props) {
 		this.props = props;
 		this.id = shortId.randomUUID(5);
+		this.interactive = props.interactive;
 
 		this.fullEventMap = {
 			...defaultEventMap,
@@ -52,6 +53,10 @@ class GameObject {
 		};
 
 		this.eventNames = Object.keys(this.fullEventMap);
+	}
+
+	postRegister() {
+		this.destroyed = false;
 	}
 
 	getChildren() {
@@ -112,10 +117,12 @@ class GameObject {
 	}
 
 	update(newProps, oldProps) {
+		this.props = newProps;
+
 		if (!this.registered) return;
 		if (oldProps && newProps.immutable) return;
 
-		const { instance, fullEventMap } = this;
+		const { instance, fullEventMap, interactive } = this;
 
 		const props = {
 			...pick(defaultProps, this.allowedProps),
@@ -136,7 +143,7 @@ class GameObject {
 				continue;
 			}
 
-			if (fullEventMap[key]) {
+			if (interactive && fullEventMap[key]) {
 				const eventName = fullEventMap[key];
 				if (oldProps && oldValue) {
 					instance.removeListener(eventName, oldValue, instance);
@@ -161,8 +168,6 @@ class GameObject {
 				instance[key] = value;
 			}
 		}
-
-		this.props = newProps;
 	}
 
 	hasTransition(key) {
@@ -242,8 +247,11 @@ class GameObject {
 	}
 
 	destroy() {
-		this.instance.destroy();
-		delete this.instance;
+		this.destroyed = true;
+		if (this.instance) {
+			this.instance.destroy();
+			delete this.instance;
+		}
 	}
 }
 
