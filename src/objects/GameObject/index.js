@@ -116,10 +116,18 @@ class GameObject {
 		this.update(props, emptyObject);
 	}
 
+	/* eslint-disable complexity */
 	update(newProps, oldProps) {
 		this.props = newProps;
 
 		if (!this.registered) return;
+
+		if (!this.initialUpdated) {
+			this.initialUpdated = true;
+			this.update(newProps, null);
+			return;
+		}
+
 		if (oldProps && newProps.immutable) return;
 
 		const { instance, fullEventMap, interactive } = this;
@@ -169,6 +177,7 @@ class GameObject {
 			}
 		}
 	}
+	/* eslint-enable complexity */
 
 	hasTransition(key) {
 		return this.transitionProps.indexOf(key) > -1 && this.transitionsConfig && this.transitionsConfig[key];

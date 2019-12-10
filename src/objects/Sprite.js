@@ -46,6 +46,10 @@ const performedProps = {
 	origin
 };
 
+const eventMap = {
+	onAnimationComplete: 'animationcomplete'
+};
+
 class Sprite extends GameObject {
 	register(scene) {
 		const { x, y, texture, frame } = this.props;
@@ -54,11 +58,11 @@ class Sprite extends GameObject {
 		this.registered = true;
 		scene.add.displayList.add(this.instance);
 		scene.add.updateList.add(this.instance);
+		this.texture = texture;
 		this.registerTransitions();
 		this.registerAnimations();
 		this.update(this.props);
 		this.postRegister();
-
 		return this.instance;
 	}
 
@@ -119,7 +123,8 @@ Object.assign(Sprite.prototype, {
 	type: TYPES.SPRITE,
 	allowedProps,
 	performedProps,
-	transitionProps
+	transitionProps,
+	eventMap
 });
 
 export default Sprite;
