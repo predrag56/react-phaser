@@ -136,8 +136,6 @@ class GameObject {
 			return;
 		}
 
-		if (!this.scene.sys.isActive()) return;
-
 		if (oldProps && newProps.immutable) return;
 
 		const { instance, fullEventMap, interactive } = this;
