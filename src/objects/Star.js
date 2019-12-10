@@ -36,9 +36,11 @@ class Star extends GameObject {
 	register(scene) {
 		const { x, y, points, innerRadius, outerRadius, fillColor } = this.props;
 		this.scene = scene;
+		this.preRegister();
 		this.instance = scene.add.star(x, y, points, innerRadius, outerRadius, fillColor);
 		this.registered = true;
 		this.update(this.props);
+		this.postRegister();
 
 		return this.instance;
 	}

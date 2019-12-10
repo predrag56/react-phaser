@@ -7,6 +7,8 @@ import {
 	Sprite,
 	Image,
 	Text,
+	CounterText,
+	CounterBitmapText,
 	BitmapText,
 	Audio,
 	Zone,
@@ -35,23 +37,78 @@ class DemoGame extends Component {
 	state = {
 		x: 300,
 		y: 10,
-		param: false
+		param: false,
+		playCounter: false
 	};
 
 	handleGem = () => {
-		this.setState(({ x, y }) => ({
+		this.setState(({ x, y, playCounter }) => ({
 			x: x === 60 ? 400 : 60,
-			y: y === 10 ? 400 : 10
+			y: y === 10 ? 400 : 10,
+			playCounter: !playCounter
 		}));
 	};
 
+	handleOnCompleteCounter = () => {
+		this.setState({
+			playCounter: false
+		});
+	};
+
+	onCreate = (scene) => {
+		console.log(scene);
+		this.scene = scene;
+		this.fpsText = scene.add.text(30, 20, '0', { fontSize: '30px' });
+	};
+
+	onUpdate = () => {
+		this.fpsText.text = this.scene.game.loop.actualFps.toFixed(2);
+	};
+
 	render() {
-		const { x, y, show } = this.state;
+		const { x, y, show, playCounter } = this.state;
 		return (
 			<Game config={config}>
-				<Scene name="demo" assets={assets} active>
+				<Scene name="demo" assets={assets} active onCreate={this.onCreate} onUpdate={this.onUpdate}>
 					<Audio name="background" play loop volume={0.1} />
 					<Image texture="background" x={0} y={0} />
+					<CounterText
+						x={515}
+						y={127}
+						style={{
+							fill: '#ff0',
+							fontSize: '50px'
+						}}
+						angle={30}
+						from={0}
+						to={500}
+						play={playCounter}
+						duration={3000}
+						locale="en"
+						delay={500}
+						pattern="£$1"
+						minimumFractionDigits={2}
+						maximumFractionDigits={2}
+						onComplete={this.handleOnCompleteCounter}
+					/>
+					<CounterBitmapText
+						x={615}
+						y={100}
+						font="bitfont"
+						size={50}
+						align="left"
+						angle={30}
+						from={0}
+						to={500}
+						play={playCounter}
+						duration={3000}
+						leadingZero={4}
+						fractionDigits={0}
+						delay={500}
+						minimumFractionDigits={2}
+						maximumFractionDigits={2}
+						onComplete={this.handleOnCompleteCounter}
+					/>
 					<Sprite
 						interactive
 						transition="x 150 Quad.easeInOut, y 150 Quad.easeInOut"

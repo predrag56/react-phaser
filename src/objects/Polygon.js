@@ -40,9 +40,11 @@ class Polygon extends GameObject {
 	register(scene) {
 		const { x, y, points, fillColor } = this.props;
 		this.scene = scene;
+		this.preRegister();
 		this.instance = scene.add.polygon(x, y, points, fillColor);
 		this.registered = true;
 		this.update(this.props);
+		this.postRegister();
 
 		return this.instance;
 	}

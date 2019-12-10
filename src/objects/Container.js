@@ -10,13 +10,13 @@ class Container extends GameObject {
 	register(scene) {
 		const { x, y } = this.props;
 		this.scene = scene;
+		this.preRegister();
 		this.instance = new Phaser.GameObjects.Container(scene, x, y);
 		scene.add.displayList.add(this.instance);
 		this.registered = true;
 		this.update(this.props);
 		this.registerChildren();
-
-		window.container = this;
+		this.postRegister();
 
 		return this.instance;
 	}

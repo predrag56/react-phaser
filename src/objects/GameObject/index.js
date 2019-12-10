@@ -1,7 +1,7 @@
 import Events from 'phaser/src/input/events';
 import emptyObject from 'fbjs/lib/emptyObject';
 import invariant from 'fbjs/lib/invariant';
-import { pick } from 'lodash';
+import { pick, noop } from 'lodash';
 import { insertBefore, shortId } from '../../utils';
 import { addToScene } from '../../Scene';
 
@@ -45,13 +45,23 @@ class GameObject {
 	constructor(props) {
 		this.props = props;
 		this.id = shortId.randomUUID(5);
+		this.interactive = props.interactive;
 
 		this.fullEventMap = {
 			...defaultEventMap,
 			...this.eventMap
 		};
 
+		this.allowedDefaultProps = {
+			...pick(defaultProps, this.allowedProps),
+			...this.defaultProps
+		};
+
 		this.eventNames = Object.keys(this.fullEventMap);
+	}
+
+	postRegister() {
+		this.destroyed = false;
 	}
 
 	getChildren() {
@@ -111,13 +121,27 @@ class GameObject {
 		this.update(props, emptyObject);
 	}
 
+	/* eslint-disable complexity */
 	update(newProps, oldProps) {
-		const { instance, fullEventMap } = this;
+		this.props = {
+			...this.allowedDefaultProps,
+			...newProps
+		};
+
 		if (!this.registered) return;
 
+		if (!this.initialUpdated) {
+			this.initialUpdated = true;
+			this.update(newProps, null);
+			return;
+		}
+
+		if (oldProps && newProps.immutable) return;
+
+		const { instance, fullEventMap, interactive } = this;
+
 		const props = {
-			...pick(defaultProps, this.allowedProps),
-			...this.defaultProps,
+			...this.allowedDefaultProps,
 			...pick(newProps, this.allowedProps),
 			...pick(newProps, this.eventNames)
 		};
@@ -134,7 +158,7 @@ class GameObject {
 				continue;
 			}
 
-			if (fullEventMap[key]) {
+			if (interactive && fullEventMap[key]) {
 				const eventName = fullEventMap[key];
 				if (oldProps && oldValue) {
 					instance.removeListener(eventName, oldValue, instance);
@@ -159,9 +183,8 @@ class GameObject {
 				instance[key] = value;
 			}
 		}
-
-		this.props = newProps;
 	}
+	/* eslint-enable complexity */
 
 	hasTransition(key) {
 		return this.transitionProps.indexOf(key) > -1 && this.transitionsConfig && this.transitionsConfig[key];
@@ -240,8 +263,11 @@ class GameObject {
 	}
 
 	destroy() {
-		this.instance.destroy();
-		delete this.instance;
+		this.destroyed = true;
+		if (this.instance) {
+			this.instance.destroy();
+			delete this.instance;
+		}
 	}
 }
 
@@ -251,6 +277,8 @@ Object.assign(GameObject.prototype, {
 	performedProps,
 	allowedProps,
 	transitionProps,
+	preRegister: noop,
+	postRegister: noop,
 	defaultProps: emptyObject,
 	eventMap: emptyObject
 });

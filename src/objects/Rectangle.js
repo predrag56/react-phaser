@@ -35,10 +35,11 @@ class Rectangle extends GameObject {
 	register(scene) {
 		const { x, y, width, height, fillColor } = this.props;
 		this.scene = scene;
+		this.preRegister();
 		this.instance = scene.add.rectangle(x, y, width, height, fillColor);
 		this.registered = true;
-		window.rectangle = this;
 		this.update(this.props);
+		this.postRegister();
 
 		return this.instance;
 	}

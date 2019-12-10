@@ -47,8 +47,6 @@ class Particles extends GameObject {
 
 		this.update(this.props);
 
-		window.particle = this;
-
 		return this.instance;
 	}
 

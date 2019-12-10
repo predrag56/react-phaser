@@ -22,10 +22,13 @@ class Zone extends GameObject {
 	register(scene) {
 		const { x, y, width, height } = this.props;
 		this.scene = scene;
+		this.preRegister();
 		this.instance = new Phaser.GameObjects.Zone(scene, x, y, width, height);
 		this.registered = true;
 		scene.add.displayList.add(this.instance);
 		this.update(this.props);
+		this.postRegister();
+
 		return this.instance;
 	}
 }

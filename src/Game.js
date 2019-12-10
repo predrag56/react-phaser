@@ -35,7 +35,6 @@ class GameContext extends Component {
 				]
 			}
 		});
-		window.game = game;
 
 		this[context] = game;
 		this[setRef](game);

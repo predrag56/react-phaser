@@ -36,9 +36,11 @@ class Ellipse extends GameObject {
 	register(scene) {
 		const { x, y, width, height, fillColor } = this.props;
 		this.scene = scene;
+		this.preRegister();
 		this.instance = scene.add.ellipse(x, y, width, height, fillColor);
 		this.registered = true;
 		this.update(this.props);
+		this.postRegister();
 
 		return this.instance;
 	}

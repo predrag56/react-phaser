@@ -31,9 +31,11 @@ class Circle extends GameObject {
 	register(scene) {
 		const { x, y, radius, fillColor } = this.props;
 		this.scene = scene;
+		this.preRegister();
 		this.instance = scene.add.circle(x, y, radius, fillColor);
 		this.registered = true;
 		this.update(this.props);
+		this.postRegister();
 
 		return this.instance;
 	}
