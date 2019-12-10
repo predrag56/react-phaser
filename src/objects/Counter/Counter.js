@@ -1,3 +1,7 @@
+const updateTween = (inst, value, object) => {
+	object.resetTween();
+};
+
 export const performedProps = {
 	play: (inst, { play }, object) => {
 		if (play) {
@@ -5,8 +9,14 @@ export const performedProps = {
 		} else {
 			object.stop();
 		}
-	}
+	},
+	from: updateTween,
+	to: updateTween,
+	duration: updateTween,
+	delay: updateTween
 };
+
+export const allowedProps = ['play', 'from', 'to', 'duration', 'delay'];
 
 const CounterMixin = {
 	defaultProps: {
@@ -46,10 +56,8 @@ const CounterMixin = {
 		return text;
 	},
 
-	preRegister(scene, parent) {
-		if (this.registered) return;
-
-		const { from, to, duration, locale, delay, pattern, onStart, onUpdate, onComplete } = this.props;
+	resetTween() {
+		const { from, to, duration, delay, onStart } = this.props;
 
 		this.counter = this.scene.tweens.addCounter({
 			delay,
@@ -63,8 +71,16 @@ const CounterMixin = {
 		});
 	},
 
+	preRegister() {
+		if (this.registered) return;
+
+		this.resetTween();
+	},
+
 	postRegister() {
 		this.instance.text = this.formatNumber(this.props.from);
+
+		window.tc = this;
 	},
 
 	play() {
