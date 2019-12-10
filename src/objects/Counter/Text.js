@@ -14,7 +14,8 @@ class CounterText extends Text {
 	handleOnUpdate = (tween, { value }) => {
 		const { onUpdate } = this.props;
 
-		this.instance.text = this.formatNumber(value);
+		const text = this.formatNumber(value);
+		this.instance.text = text;
 
 		if (onUpdate) onUpdate(value, text);
 	};
