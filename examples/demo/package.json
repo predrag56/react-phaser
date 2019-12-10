@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "precommit": "pretty-quick --staged",
-    "start": "node scripts/start.js",
+    "start": "PORT=4000 node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --config=.jestrc.json",
     "lint": "eslint ./src/index.js"

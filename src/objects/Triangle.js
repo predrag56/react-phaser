@@ -37,6 +37,7 @@ class Triangle extends GameObject {
 	register(scene) {
 		const { x, y, x1, y1, x2, y2, x3, y3, fillColor } = this.props;
 		this.scene = scene;
+		this.preRegister();
 		this.instance = scene.add.triangle(x, y, x1, y1, x2, y2, x3, y3, fillColor);
 		this.registered = true;
 		this.update(this.props);

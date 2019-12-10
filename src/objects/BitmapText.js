@@ -12,7 +12,7 @@ import {
 } from './GameObject/performedProps';
 import TYPES from '../types';
 
-const allowedProps = [
+export const allowedProps = [
 	'x',
 	'y',
 	'key',
@@ -27,7 +27,7 @@ const allowedProps = [
 	'visible'
 ];
 
-const performedProps = {
+export const performedProps = {
 	children: textChildren,
 	fontSize,
 	font: fontFn,
@@ -42,6 +42,7 @@ class BitmapText extends GameObject {
 	register(scene) {
 		const { x, y, children, font, size, align } = this.props;
 		this.scene = scene;
+		this.preRegister();
 		this.instance = new Phaser.GameObjects.BitmapText(scene, x, y, font, children, size, align);
 		scene.add.existing(this.instance);
 		this.registered = true;

@@ -8,6 +8,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 _put moar here_
 
+### Added
+
+- **CounterText** component
+- **CounterBitmapText** component
+
+### Changed
+
+- [internal] added #preRegister method to add game objects
+
 ## [v1.2.1](https://gitlab.com/firanolfind/react-phaser-bindings/compare/v1.2.0...v1.2.1) (2019-12-03)
 
 ### Changed

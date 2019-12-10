@@ -6,6 +6,8 @@ const TYPES = {
 	SPRITE: 'Sprite',
 	TEXT: 'Text',
 	BITMAPTEXT: 'BitmapText',
+	COUNTERTEXT: 'CounterText',
+	COUNTERBITMAPTEXT: 'CounterBitmapText',
 	TWEEN: 'Tween',
 	GRAPHICS: 'Graphics',
 	CIRCLE: 'Circle',
@@ -34,6 +36,8 @@ export const Image = TYPES.IMAGE;
 export const Sprite = TYPES.SPRITE;
 export const Text = TYPES.TEXT;
 export const BitmapText = TYPES.BITMAPTEXT;
+export const CounterText = TYPES.COUNTERTEXT;
+export const CounterBitmapText = TYPES.COUNTERBITMAPTEXT;
 export const Tween = TYPES.TWEEN;
 export const Audio = TYPES.AUDIO;
 export const Video = TYPES.VIDEO;
