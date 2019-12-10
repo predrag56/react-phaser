@@ -59,6 +59,10 @@ const CounterMixin = {
 	resetTween() {
 		const { from, to, duration, delay, onStart } = this.props;
 
+		if (this.counter) {
+			this.counter.remove();
+		}
+
 		this.counter = this.scene.tweens.addCounter({
 			delay,
 			from,
