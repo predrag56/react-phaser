@@ -23,8 +23,6 @@ class Tween extends TransparentGameObject {
 		this.tweenQueue = [];
 		this.animationPool = {};
 
-		window.tween = this;
-
 		this.animationsConfig = this.prepareConfig(animations);
 	}
 

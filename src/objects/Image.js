@@ -47,7 +47,6 @@ class Image extends GameObject {
 		scene.add.displayList.add(this.instance);
 		this.update(this.props);
 		this.postRegister();
-		window.img = this;
 		return this.instance;
 	}
 }

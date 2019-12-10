@@ -74,8 +74,6 @@ export default class Scene extends Phaser.Scene {
 		this[HOOKS] = hooks;
 		this[PROPS] = props;
 
-		window.sc = this;
-
 		this.update = hooks.update || this.update;
 	}
 
