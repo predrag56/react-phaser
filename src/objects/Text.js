@@ -3,7 +3,7 @@ import GameObject from './GameObject';
 import { width, height, interactive, origin, textChildren } from './GameObject/performedProps';
 import TYPES from '../types';
 
-const allowedProps = [
+export const allowedProps = [
 	'children',
 	'x',
 	'y',
@@ -19,7 +19,7 @@ const allowedProps = [
 	'interactive'
 ];
 
-const performedProps = {
+export const performedProps = {
 	width,
 	height,
 	children: textChildren,
@@ -31,6 +31,7 @@ class Text extends GameObject {
 	register(scene) {
 		const { x, y, style } = this.props;
 		this.scene = scene;
+		this.preRegister();
 		this.instance = new Phaser.GameObjects.Text(scene, x, y, undefined, style);
 		this.registered = true;
 		scene.add.displayList.add(this.instance);

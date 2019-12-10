@@ -52,6 +52,11 @@ class GameObject {
 			...this.eventMap
 		};
 
+		this.allowedDefaultProps = {
+			...pick(defaultProps, this.allowedProps),
+			...this.defaultProps
+		};
+
 		this.eventNames = Object.keys(this.fullEventMap);
 	}
 
@@ -117,7 +122,10 @@ class GameObject {
 	}
 
 	update(newProps, oldProps) {
-		this.props = newProps;
+		this.props = {
+			...this.allowedDefaultProps,
+			...newProps
+		};
 
 		if (!this.registered) return;
 		if (oldProps && newProps.immutable) return;
@@ -125,8 +133,7 @@ class GameObject {
 		const { instance, fullEventMap, interactive } = this;
 
 		const props = {
-			...pick(defaultProps, this.allowedProps),
-			...this.defaultProps,
+			...this.allowedDefaultProps,
 			...pick(newProps, this.allowedProps),
 			...pick(newProps, this.eventNames)
 		};
@@ -261,6 +268,7 @@ Object.assign(GameObject.prototype, {
 	performedProps,
 	allowedProps,
 	transitionProps,
+	preRegister: noop,
 	postRegister: noop,
 	defaultProps: emptyObject,
 	eventMap: emptyObject

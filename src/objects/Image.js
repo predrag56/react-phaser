@@ -33,8 +33,6 @@ const performedProps = {
 	interactive,
 	frame: frameFn,
 	texture: textureFn,
-	width,
-	height,
 	origin,
 	mask
 };
@@ -43,6 +41,7 @@ class Image extends GameObject {
 	register(scene) {
 		const { x, y, texture, frame } = this.props;
 		this.scene = scene;
+		this.preRegister();
 		this.instance = new Phaser.GameObjects.Image(scene, x, y, texture, frame);
 		this.registered = true;
 		scene.add.displayList.add(this.instance);

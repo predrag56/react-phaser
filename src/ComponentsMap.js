@@ -8,6 +8,8 @@ import Audio from './objects/Audio';
 import Video from './objects/Video';
 import Text from './objects/Text';
 import BitmapText from './objects/BitmapText';
+import CounterText from './objects/Counter/Text';
+import CounterBitmapText from './objects/Counter/BitmapText';
 import Circle from './objects/Circle';
 import Ellipse from './objects/Ellipse';
 import Triangle from './objects/Triangle';
@@ -30,6 +32,8 @@ export default {
 	[TYPES.VIDEO]: Video,
 	[TYPES.TEXT]: Text,
 	[TYPES.BITMAPTEXT]: BitmapText,
+	[TYPES.COUNTERTEXT]: CounterText,
+	[TYPES.COUNTERBITMAPTEXT]: CounterBitmapText,
 	[TYPES.CIRCLE]: Circle,
 	[TYPES.ELLIPSE]: Ellipse,
 	[TYPES.TRIANGLE]: Triangle,
