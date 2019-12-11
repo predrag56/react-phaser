@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 _put moar here_
 
+### Changed
+
+- Refactored Scene
+
 ## [v1.3.1](https://gitlab.com/firanolfind/react-phaser-bindings/compare/v1.3.0...v1.3.1) (2019-12-11)
 
 ### Changed
