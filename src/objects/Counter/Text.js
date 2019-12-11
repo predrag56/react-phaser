@@ -1,9 +1,9 @@
 import { omit } from 'lodash';
 import TYPES from '../../types';
 import Text, { allowedProps as allowedTextProps, performedProps as performedTextProps } from '../Text';
-import CounterMixin, { performedProps as performedCounterProps, handleOnUpdate, handleOnComplete } from './Counter';
+import CounterMixin, { performedProps as performedCounterProps, allowedProps as allowedCounterProps } from './Counter';
 
-const allowedProps = [...allowedTextProps, 'play'].filter((key) => key !== 'children');
+const allowedProps = [...allowedTextProps, ...allowedCounterProps].filter((key) => key !== 'children');
 
 const performedProps = {
 	...omit(performedTextProps, 'children'),
