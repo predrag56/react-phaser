@@ -16,7 +16,7 @@ export const performedProps = {
 	delay: updateTween
 };
 
-export const allowedProps = ['play', 'from', 'to', 'duration', 'delay'];
+export const allowedProps = ['from', 'to', 'duration', 'delay', 'play'];
 
 const CounterMixin = {
 	defaultProps: {
