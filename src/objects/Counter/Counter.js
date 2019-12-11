@@ -83,8 +83,6 @@ const CounterMixin = {
 
 	postRegister() {
 		this.instance.text = this.formatNumber(this.props.from);
-
-		window.tc = this;
 	},
 
 	play() {
