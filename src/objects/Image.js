@@ -37,6 +37,8 @@ const performedProps = {
 	mask
 };
 
+const transitionProps = ['x', 'y', 'alpha', 'angle', 'scale', 'tint'];
+
 class Image extends GameObject {
 	register(scene) {
 		const { x, y, texture, frame } = this.props;
@@ -45,6 +47,7 @@ class Image extends GameObject {
 		this.instance = new Phaser.GameObjects.Image(scene, x, y, texture, frame);
 		this.registered = true;
 		scene.add.displayList.add(this.instance);
+		this.registerTransitions();
 		this.update(this.props);
 		this.postRegister();
 		return this.instance;
@@ -53,6 +56,7 @@ class Image extends GameObject {
 
 Object.assign(Image.prototype, {
 	type: TYPES.IMAGE,
+	transitionProps,
 	performedProps,
 	allowedProps
 });

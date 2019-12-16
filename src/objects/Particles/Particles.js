@@ -51,6 +51,7 @@ class Particles extends GameObject {
 	}
 
 	update(newProps = emptyObject, oldProps = emptyObject) {
+		oldProps = oldProps || {};
 		const newConfig = {
 			...newProps.config,
 			frame: newProps.frame,

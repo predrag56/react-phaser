@@ -87,26 +87,24 @@ class Tween extends TransparentGameObject {
 			children.forEach((child) => child.forceUpdate(from));
 		}
 
-		setTimeout(() => {
-			const tween = scene.add.tween({
-				...config,
-				props,
-				targets: this.getChildren(),
-				onComplete: () => {
-					onComplete && onComplete(key);
-					this.handleOnComplete(key);
-				},
-				onLoop: () => {
-					onLoop && onLoop(key);
-					this.handleOnLoop(key);
-				},
-				onStart: () => {
-					onStart && onStart(key);
-				}
-			});
-
-			this.instance = tween;
+		const tween = scene.add.tween({
+			...config,
+			props,
+			targets: this.getChildren(),
+			onComplete: () => {
+				onComplete && onComplete(key);
+				this.handleOnComplete(key);
+			},
+			onLoop: () => {
+				onLoop && onLoop(key);
+				this.handleOnLoop(key);
+			},
+			onStart: () => {
+				onStart && onStart(key);
+			}
 		});
+
+		this.instance = tween;
 
 		return tween;
 	}
