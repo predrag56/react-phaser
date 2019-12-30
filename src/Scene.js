@@ -9,7 +9,7 @@ const ASSETS = Symbol('Scene.assets');
 const PROPS = Symbol('Scene.props');
 export const UPDATE = Symbol('Scene.update');
 
-const SCENE_HOOKS = ['init', 'preload', 'create', 'beforecreate', 'update'];
+const SCENE_HOOKS = ['onInit', 'onPreload', 'onCreate', 'onBeforeCreate', 'onUpdate'];
 
 const performedProps = {
 	active: (inst, { active, name }) => {
@@ -51,43 +51,33 @@ export default class Scene extends Phaser.Scene {
 	[IS_REGISTERED] = false;
 
 	constructor(props) {
-		const { assets = [], ...rest } = props;
-		const parsedProps = {};
-
-		for (let key in rest) {
-			const value = rest[key];
-			const isEvent = key.slice(0, 2) === 'on';
-			if (isEvent) {
-				key = key.substr(2).toLowerCase();
-			}
-
-			parsedProps[key] = value;
-		}
-
-		const sceneProps = omit(parsedProps, SCENE_HOOKS);
+		const sceneProps = omit(props, SCENE_HOOKS, 'assets', 'children');
 		sceneProps.key = props.name;
-		const hooks = pick(parsedProps, SCENE_HOOKS);
+
+		const hooks = pick(props, SCENE_HOOKS);
 
 		super(sceneProps);
-		this.key = props.name;
-		this[ASSETS] = assets;
-		this[HOOKS] = hooks;
-		this[PROPS] = props;
 
-		this.update = hooks.update || this.update;
+		this.key = props.name;
+		this[ASSETS] = props.assets;
+		this[HOOKS] = pick(hooks, SCENE_HOOKS);
+		this[PROPS] = props;
 	}
 
 	[UPDATE](newProps, oldProps) {
 		if (!this[IS_REGISTERED]) return;
 
-		for (const key in newProps) {
+		for (let key in newProps) {
 			const value = newProps[key];
-			if (oldProps && oldProps[key] === value) {
-				continue;
-			}
 
-			performedProps[key] && performedProps[key](this, newProps);
+			if (oldProps && oldProps[key] === value) continue;
+
+			if (performedProps[key]) {
+				performedProps[key](this, newProps);
+			}
 		}
+
+		this[HOOKS] = pick(newProps, SCENE_HOOKS);
 		this[PROPS] = newProps;
 	}
 
@@ -100,23 +90,24 @@ export default class Scene extends Phaser.Scene {
 	}
 
 	init(...args) {
-		const { init } = this[HOOKS];
+		const { onInit } = this[HOOKS];
 
-		init && init.call(this, this, ...args);
+		onInit && onInit.call(this, this, ...args);
 	}
 
 	preload(...args) {
+		const { onPreload } = this[HOOKS];
+
 		this[ASSETS].forEach(([type, ...assetArgs]) => {
 			this.load[type](...assetArgs);
 		});
 
-		const { preload } = this[HOOKS];
-		preload && preload.call(this, this, ...args);
+		onPreload && onPreload.call(this, this, ...args);
 	}
 
 	create(...args) {
 		const pool = this[POOL];
-		const { create, beforecreate } = this[HOOKS];
+		const { onCreate, beforecreate } = this[HOOKS];
 
 		beforecreate && beforecreate.call(this, this, ...args);
 
@@ -126,6 +117,12 @@ export default class Scene extends Phaser.Scene {
 			}
 		}
 
-		create && create.call(this, this, ...args);
+		onCreate && onCreate.call(this, this, ...args);
+	}
+
+	update(...args) {
+		const { onUpdate } = this[HOOKS];
+
+		onUpdate && onUpdate.call(this, this, ...args);
 	}
 }

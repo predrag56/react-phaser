@@ -12,6 +12,8 @@ const performedProps = {
 
 class CounterText extends BitmapText {
 	handleOnUpdate = (tween, { value }) => {
+		if (!this.instance) return;
+
 		const { onUpdate } = this.props;
 
 		const text = this.formatNumber(value);

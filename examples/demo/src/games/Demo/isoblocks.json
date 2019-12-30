@@ -5544,17 +5544,5 @@
         "y": 0.5
       }
     }
-  },
-  "meta": {
-    "app": "http://www.codeandweb.com/texturepacker",
-    "version": "1.0",
-    "image": "isoblocks.png",
-    "format": "RGBA8888",
-    "size": {
-      "w": 604,
-      "h": 1004
-    },
-    "scale": "1",
-    "smartupdate": "$TexturePacker:SmartUpdate:374bd21edcae959939158e7fd6e65dcf:cd5bc335d8675fde3d6915ee5faa4cac:072e5033960028874cc45b7e3d803902$"
   }
 }

@@ -250,6 +250,8 @@ class GameObject {
 	}
 
 	removeTransitionTween(key) {
+		const { onTransitionComplete } = this.props;
+
 		const tween = this.transitionsPool[key];
 
 		if (!tween) {
@@ -258,7 +260,9 @@ class GameObject {
 
 		if (tween.isPlaying()) {
 			tween.stop();
+			onTransitionComplete && setTimeout(() => onTransitionComplete(key), 2);
 		}
+
 		delete this.transitionsPool[key];
 	}
 

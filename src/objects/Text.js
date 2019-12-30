@@ -35,8 +35,8 @@ class Text extends GameObject {
 		this.instance = new Phaser.GameObjects.Text(scene, x, y, undefined, style);
 		this.registered = true;
 		scene.add.displayList.add(this.instance);
-		this.update(this.props);
 		this.postRegister();
+		this.update(this.props);
 
 		return this.instance;
 	}
