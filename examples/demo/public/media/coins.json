@@ -269,14 +269,5 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":559,"h":564},
 	"sourceSize": {"w":559,"h":564},
 	"pivot": {"x":0.5,"y":0.5}
-}],
-"meta": {
-	"app": "https://www.codeandweb.com/texturepacker",
-	"version": "1.0",
-	"image": "coins.png",
-	"format": "RGBA8888",
-	"size": {"w":1978,"h":3950},
-	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:85dd9c660e7177d5f89e1d333cde3113:3a1863f8bc2718ad1e47ca0bbc45790b:51f960d29b2cb2ae0010061540f14fb7$"
-}
+}]
 }
