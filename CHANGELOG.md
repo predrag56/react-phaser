@@ -4,9 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://gitlab.com/firanolfind/react-phaser-bindings/compare/develop...master) (2019-12-30)
+## [Unreleased](https://gitlab.com/firanolfind/react-phaser-bindings/compare/develop...master) (2019-01-02)
 
 _put moar here_
+
+## [v1.3.3](https://gitlab.com/firanolfind/react-phaser-bindings/compare/v1.3.2...v1.3.3) (2019-01-02)
+
+### Added
+
+- Added #.preDestroy and #.postDestroy hooks
+- Fixed memory leak bugs in Sprites and Particals Game Objects – remove created animations on destroy
 
 ## [v1.3.2](https://gitlab.com/firanolfind/react-phaser-bindings/compare/v1.3.1...v1.3.2) (2019-12-30)
 
