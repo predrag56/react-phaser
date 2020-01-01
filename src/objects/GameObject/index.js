@@ -268,10 +268,12 @@ class GameObject {
 
 	destroy() {
 		this.destroyed = true;
+		this.preDestroy();
 		if (this.instance) {
 			this.instance.destroy();
 			delete this.instance;
 		}
+		this.postDestroy();
 	}
 }
 
@@ -281,6 +283,8 @@ Object.assign(GameObject.prototype, {
 	performedProps,
 	allowedProps,
 	transitionProps,
+	preDestroy: noop,
+	postDestroy: noop,
 	preRegister: noop,
 	postRegister: noop,
 	defaultProps: emptyObject,

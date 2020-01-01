@@ -95,28 +95,37 @@ class Sprite extends GameObject {
 		const { anims, key: sceneKey } = this.scene;
 		const { animations } = this.props;
 
-		if (animations && Array.isArray(animations)) {
-			animations.forEach((config) => {
-				var anim;
-				var key = this.getAnimationName(config.key);
-				config.key = key;
+		if (!animations) return;
 
-				if (key) {
-					anim = anims.get(key);
-					if (anim) {
-						console.warn(`Animation "${key}" is already registered in this Scene "${sceneKey}"`);
-						return;
-					}
+		this.animKeys = [];
 
-					anim = new Phaser.Animations.Animation(anims, key, this.prepareAnimationConfig(config));
-					anims.anims.set(key, anim);
-					anims.emit(Phaser.Animations.Events.ADD_ANIMATION, key, anim);
+		for (const config of animations) {
+			let anim;
+			let key = this.getAnimationName(config.key);
+			config.key = key;
+			this.animKeys.push(key);
+
+			if (key) {
+				anim = anims.get(key);
+				if (anim) {
+					continue;
 				}
-			});
+
+				anim = new Phaser.Animations.Animation(anims, key, this.prepareAnimationConfig(config));
+				anims.anims.set(key, anim);
+				anims.emit(Phaser.Animations.Events.ADD_ANIMATION, key, anim);
+			}
 		}
 	}
 
-	// TODO: destroy registered private animation after destroy
+	postDestroy() {
+		const { animKeys, scene } = this;
+		if (!animKeys) return;
+
+		for (const key of animKeys) {
+			scene.anims.remove(key);
+		}
+	}
 }
 
 Object.assign(Sprite.prototype, {

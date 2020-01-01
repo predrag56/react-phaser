@@ -143,7 +143,9 @@ class Particles extends GameObject {
 		anims.emit(Phaser.Animations.Events.ADD_ANIMATION, key, anim);
 	}
 
-	// TODO: destroy registered private animation after destroy
+	postDestroy() {
+		this.scene.anims.remove(this.getAnimationName());
+	}
 }
 
 Object.assign(Particles.prototype, {

@@ -17,22 +17,32 @@ import Components from './ComponentsMap';
 /* eslint-disable no-unused-vars */
 const PhaserRenderer = Reconciler({
 	getChildHostContext() {
-		console.log('getChildHostContext', arguments);
+		if (process.env.NODE_ENV !== 'production') {
+			console.log('getChildHostContext', arguments);
+		}
 	},
 
 	getRootHostContext() {
-		console.log('getRootHostContext', arguments);
+		if (process.env.NODE_ENV !== 'production') {
+			console.log('getRootHostContext', arguments);
+		}
 	},
 
 	unmountResponderInstance() {
-		console.log('unmountResponderInstance', arguments);
+		if (process.env.NODE_ENV !== 'production') {
+			console.log('unmountResponderInstance', arguments);
+		}
 	},
 
 	mountResponderInstance() {
-		console.log('mountResponderInstance', arguments);
+		if (process.env.NODE_ENV !== 'production') {
+			console.log('mountResponderInstance', arguments);
+		}
 	},
 	updateContainerAtExpirationTime() {
-		console.log('updateContainerAtExpirationTime', arguments);
+		if (process.env.NODE_ENV !== 'production') {
+			console.log('updateContainerAtExpirationTime', arguments);
+		}
 	},
 
 	appendInitialChild(parent, child) {
