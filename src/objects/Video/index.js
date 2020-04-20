@@ -49,6 +49,9 @@ const performedProps = {
 			inst.stop();
 		}
 	},
+	muted: (inst, { muted }) => {
+		inst.setMute(muted);
+	},
 	pause,
 	origin
 };
