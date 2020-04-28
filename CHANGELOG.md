@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 _put moar here_
 
-## [v1.3.5](https://gitlab.com/firanolfind/react-phaser-bindings/compare/v1.3.4...v1.3.5) (2020-04-27)
+## [v1.4.0](https://gitlab.com/firanolfind/react-phaser-bindings/compare/v1.3.4...v1.4.0) (2020-04-28)
 
 ### Changed
 
