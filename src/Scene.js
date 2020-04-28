@@ -98,9 +98,11 @@ export default class Scene extends Phaser.Scene {
 	preload(...args) {
 		const { onPreload } = this[HOOKS];
 
-		this[ASSETS].forEach(([type, ...assetArgs]) => {
-			this.load[type](...assetArgs);
-		});
+		if (this[ASSETS]) {
+			this[ASSETS].forEach(([type, ...assetArgs]) => {
+				this.load[type](...assetArgs);
+			});
+		}
 
 		onPreload && onPreload.call(this, this, ...args);
 	}

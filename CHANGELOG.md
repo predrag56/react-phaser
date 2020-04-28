@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 _put moar here_
 
+## [v1.3.5](https://gitlab.com/firanolfind/react-phaser-bindings/compare/v1.3.4...v1.3.5) (2020-04-27)
+
+### Changed
+
+- Assets become optional for Scene
+
 ## [v1.3.4](https://gitlab.com/firanolfind/react-phaser-bindings/compare/v1.3.3...v1.3.4) (2020-04-20)
 
 ### Changed
